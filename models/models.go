@@ -16,7 +16,7 @@ type Turno struct {
 	Field  string    `db:"Field" json:"field"`
 	Date   time.Time `db:"Date" json:"date"`
 	Status string    `db:"Status" json:"status"`
-	Owner  User      `db:"User" json:"user"`
+	Owner  *User     `db:"User" json:"user" pg:"rel:has-one"`
 }
 
 const (

@@ -1,9 +1,12 @@
 package db
 
 import (
-	"database/sql"
+	"context"
+	"fmt"
+	"github.com/go-pg/pg/v10"
+	"github.com/go-pg/pg/v10/orm"
+	"github.com/guidoenr/padel-field/models"
 	_ "github.com/lib/pq"
-	"log"
 )
 
 const (
@@ -12,15 +15,34 @@ const (
 )
 
 func Init() {
-	db, err := sql.Open("postgres", uri)
+	db := pg.Connect(&pg.Options{
+		Addr: uri,
+	})
+
+	err := db.Ping(context.Background())
 	if err != nil {
-		log.Fatalf("Error loading the db: %v", err)
+		fmt.Printf("error: %v", err)
 	}
 
 	defer db.Close()
-	err = db.Ping()
-	if err != nil {
-		log.Fatalf("error: %v", err)
+	err = createSchema(db)
+
+}
+
+// createSchema creates database schema for User and Story models.
+func createSchema(db *pg.DB) error {
+	models := []interface{}{
+		(*models.User)(nil),
+		(*models.Turno)(nil),
 	}
 
+	for _, model := range models {
+		err := db.Model(model).CreateTable(&orm.CreateTableOptions{
+			Temp: true,
+		})
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
