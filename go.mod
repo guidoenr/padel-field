@@ -1,12 +1,12 @@
 module github.com/guidoenr/padel-field
 
-go 1.19
+go 1.18
 
 require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-pg/pg/v10 v10.10.6
 	github.com/go-sql-driver/mysql v1.6.0
-	github.com/lib/pq v1.10.6
+	github.com/joho/godotenv v1.4.0
 )
 
 require (
