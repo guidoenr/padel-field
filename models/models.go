@@ -21,16 +21,16 @@ func (u User) String() string {
 }
 
 type Turno struct {
-	Id     int64     `db:"id" json:"id"`
-	Day    string    `db:"day" json:"day"`
-	Field  string    `db:"field" json:"field"`
-	Date   time.Time `db:"date" json:"date"`
-	Status string    `db:"status" json:"status"`
-	Owner  *User     `db:"user" json:"user" pg:"rel:has-one"`
+	Id      int64     `db:"id" json:"id"`
+	Day     string    `db:"day" json:"day"`
+	Field   string    `db:"field" json:"field"`
+	Date    time.Time `db:"date" json:"date"`
+	Status  string    `db:"status" json:"status"`
+	OwnerId int64     `db:"user" json:"user" pg:"rel:has-one"`
 }
 
 func (t Turno) String() string {
-	return fmt.Sprintf("Turno<%d %s %s %s %v %s>", t.Id, t.Day, t.Field, t.Status, t.Owner, t.Date)
+	return fmt.Sprintf("Turno<%d %s %s %s %v %s>", t.Id, t.Day, t.Field, t.Status, t.OwnerId, t.Date)
 }
 
 const (
