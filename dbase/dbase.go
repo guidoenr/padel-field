@@ -1,4 +1,4 @@
-package db
+package dbase
 
 import (
 	"context"
@@ -13,28 +13,28 @@ import (
 )
 
 // Init only connects to the existing DB | sudo -u postgres psql
-func Init() {
+func Init() *bun.DB {
 	// load to connect driver string from config
 	pgconn := loadDBConnector()
 	sqldb := sql.OpenDB(pgconn)
 
-	// returning the db to operate
+	// returning the dbase to operate
 	db := bun.NewDB(sqldb, pgdialect.New())
 
 	// making ping
 	err := db.Ping()
 	if err != nil {
-		fmt.Printf("error making Ping() to db: %v", err)
+		fmt.Printf("error making Ping() to dbase: %v", err)
 	}
 	fmt.Println("connected succesfully")
-	defer db.Close()
 
 	createSchema(db)
+	return db
 }
 
 // createSchema creates database schema for User and Turno models.
 func createSchema(db *bun.DB) {
-
+	// TODO check if the schema exists
 	err1, _ := db.NewCreateTable().Model((*models.User)(nil)).Exec(context.Background())
 	err2, _ := db.NewCreateTable().Model((*models.Turno)(nil)).Exec(context.Background())
 	fmt.Println(err1, err2)
@@ -42,7 +42,7 @@ func createSchema(db *bun.DB) {
 
 // loadEnv load the environment variables from `local.env` // TODO, change later to heroku maybe?
 func loadDBConnector() *pgdriver.Connector {
-	err := godotenv.Load("db/local.env")
+	err := godotenv.Load("dbase/local.env")
 	if err != nil {
 		fmt.Printf("error reading 'local.env' file err: %v", err)
 	}

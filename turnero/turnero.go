@@ -2,6 +2,7 @@ package turnero
 
 import (
 	"fmt"
+	"github.com/guidoenr/padel-field/dbase"
 	"github.com/guidoenr/padel-field/models"
 	"time"
 )
@@ -17,7 +18,6 @@ var daysMap = map[string]string{
 }
 
 func InitializeTurnos() {
-
 	var turnos []models.Turno
 	initialHour := 9
 	today := time.Now()
@@ -27,16 +27,19 @@ func InitializeTurnos() {
 		turno.Date = today.AddDate(0, 0, i)
 		turno.Status = models.Available
 		turno.Day = getWeekDay(turno.Date)
-		for j := 0; j <= 15; j++ {
+		for j := 0; j <= 14; j++ {
 			t2 := time.Date(today.Year(), today.Month(), today.Day(), initialHour+j, 0, 0, 0, today.Location())
 			turno.Hour = t2.Hour()
 			turnos = append(turnos, turno)
 		}
 	}
 
+	db := dbase.Init()
 	for _, t := range turnos {
+		dbase.PersistTurno(db, &t)
 		fmt.Println(t.String())
 	}
+	defer db.Close()
 }
 
 func getWeekDay(datetime time.Time) string {
