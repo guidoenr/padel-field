@@ -8,11 +8,14 @@ import (
 )
 
 func PersistTurno(db *bun.DB, turno *models.Turno) {
-	result, err := db.NewInsert().Model(turno).Exec(context.Background())
+	_, err := db.NewInsert().
+		Model(turno).
+		Exec(context.Background())
+
 	if err != nil {
 		fmt.Printf("error persisting turno: %v", err)
 	}
-	fmt.Println(result)
+	fmt.Printf("added turno: %v\n", turno.String())
 }
 
 //

@@ -1,7 +1,6 @@
 package turnero
 
 import (
-	"fmt"
 	"github.com/guidoenr/padel-field/dbase"
 	"github.com/guidoenr/padel-field/models"
 	"time"
@@ -37,7 +36,6 @@ func InitializeTurnos() {
 	db := dbase.Init()
 	for _, t := range turnos {
 		dbase.PersistTurno(db, &t)
-		fmt.Println(t.String())
 	}
 	defer db.Close()
 }
