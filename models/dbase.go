@@ -27,19 +27,26 @@ func InitDB() *bun.DB {
 	}
 	fmt.Println("connected succesfully")
 
-	createSchema(db)
+	restartDb(db)
 	return db
 }
 
-// createSchema creates database schema for User and Turno models.
-func createSchema(db *bun.DB) {
-	// TODO check if the schema exists
-	err1, _ := db.NewCreateTable().Model((*User)(nil)).Exec(context.Background())
-	err2, _ := db.NewCreateTable().Model((*Turno)(nil)).Exec(context.Background())
-	fmt.Println(err1, err2)
+// restartDb creates database schema for User and Turno models.
+func restartDb(db *bun.DB) {
+	_, err := db.Query("DROP TABLE turnos;")
+	if err != nil {
+		return
+	}
+	_, err = db.Query("DROP TABLE users;")
+	if err != nil {
+
+	}
+	_, _ = db.NewCreateTable().Model((*User)(nil)).Exec(context.Background())
+	_, _ = db.NewCreateTable().Model((*Turno)(nil)).Exec(context.Background())
+	fmt.Println("DB restarted and created schemas")
 }
 
-// loadEnv load the environment variables from `local.env` // TODO, change later to heroku maybe?
+// loadDBConnector load the environment variables from `local.env` // TODO, change later to heroku maybe?
 func loadDBConnector() *pgdriver.Connector {
 	err := godotenv.Load("models/local.env")
 	if err != nil {

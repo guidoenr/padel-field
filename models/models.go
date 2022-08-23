@@ -29,9 +29,9 @@ type Turno struct {
 	Day           string    `bun:"day"`
 	Hour          int       `bun:"hour"`
 	Field         string    `bun:"field"`
-	Date          time.Time `bun:"date"`
 	Status        string    `bun:"status"`
 	OwnerId       int64     `bun:"owner"`
+	Date          time.Time `bun:"date"`
 }
 
 func (t Turno) String() string {
@@ -39,6 +39,6 @@ func (t Turno) String() string {
 }
 
 const (
-	Reserved  string = "RESERVADO"
-	Available string = "DISPONIBLE"
+	RESERVERD string = "RESERVADO"
+	AVAILABLE string = "DISPONIBLE"
 )
