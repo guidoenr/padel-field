@@ -27,7 +27,7 @@ func InitDB() *bun.DB {
 	}
 	fmt.Println("connected succesfully")
 
-	restartDb(db)
+	//restartDb(db)
 	return db
 }
 

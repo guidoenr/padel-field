@@ -6,6 +6,16 @@ import (
 	"github.com/guidoenr/padel-field/models"
 )
 
+func GetAvailableTurnos() {
+	db := models.InitDB()
+	turno := new(models.Turno)
+
+	err := db.NewSelect().Model(turno).Where("status = ?", "AVAILABLE").Scan(context.Background())
+	fmt.Println(err)
+
+	defer db.Close()
+}
+
 func CancelTurno(turno *models.Turno, ownerId int64) {
 	turno.OwnerId = 0
 	turno.Status = models.AVAILABLE

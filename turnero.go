@@ -1,4 +1,4 @@
-package turnero
+package main
 
 import (
 	"github.com/guidoenr/padel-field/controllers"

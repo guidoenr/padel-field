@@ -1,10 +1,5 @@
 package main
 
-import (
-	_ "github.com/guidoenr/padel-field/controllers"
-	"github.com/guidoenr/padel-field/models"
-)
-
 func main() {
 	//models.InitDB()
 	//turnero.InitializeTurnos()
@@ -14,5 +9,7 @@ func main() {
 	//	OwnerId:   1,
 	//}
 	//controllers.ReserveTurno(&turno, 0)
-	models.InitDB()
+	// models.InitDB()
+	//InitializeTurnos()
+	ListenAndServe()
 }
