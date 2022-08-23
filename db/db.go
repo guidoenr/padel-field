@@ -32,11 +32,12 @@ func Init() {
 	createSchema(db)
 }
 
-// createSchema creates database schema for User and Story models.
+// createSchema creates database schema for User and Turno models.
 func createSchema(db *bun.DB) {
-	err, _ := db.NewCreateTable().Model((*models.User)(nil)).Exec(context.Background())
+
+	err1, _ := db.NewCreateTable().Model((*models.User)(nil)).Exec(context.Background())
 	err2, _ := db.NewCreateTable().Model((*models.Turno)(nil)).Exec(context.Background())
-	fmt.Println(err, err2)
+	fmt.Println(err1, err2)
 }
 
 // loadEnv load the environment variables from `local.env` // TODO, change later to heroku maybe?

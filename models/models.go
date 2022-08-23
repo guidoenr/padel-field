@@ -27,6 +27,7 @@ type Turno struct {
 	bun.BaseModel `bun:"table:turnos,alias:t"`
 	ID            int64     `bun:"id,pk,autoincrement"`
 	Day           string    `bun:"day"`
+	Hour          int       `bun:"hour"`
 	Field         string    `bun:"field"`
 	Date          time.Time `bun:"date"`
 	Status        string    `bun:"status"`
@@ -34,7 +35,7 @@ type Turno struct {
 }
 
 func (t Turno) String() string {
-	return fmt.Sprintf("Turno<%d %s %s %s %v %s>", t.ID, t.Day, t.Field, t.Status, t.OwnerId, t.Date)
+	return fmt.Sprintf("Turno<%d %s %s %s %v %d>", t.ID, t.Day, t.Field, t.Status, t.OwnerId, t.Hour)
 }
 
 const (
