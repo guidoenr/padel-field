@@ -2,99 +2,62 @@ package db
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
-	"github.com/go-pg/pg/v10"
-	"github.com/go-pg/pg/v10/orm"
 	"github.com/guidoenr/padel-field/models"
 	"github.com/joho/godotenv"
-	_ "github.com/joho/godotenv"
-	"log"
+	"github.com/uptrace/bun"
+	"github.com/uptrace/bun/dialect/pgdialect"
+	"github.com/uptrace/bun/driver/pgdriver"
 	"os"
 )
 
-type EnvConfig struct {
-	Username string
-	Password string
-	Database string
-	Port     string
-}
-
-// Init only connects to the existing DB
+// Init only connects to the existing DB | sudo -u postgres psql
 func Init() {
+	// load to connect driver string from config
+	pgconn := loadDBConnector()
+	sqldb := sql.OpenDB(pgconn)
 
-	cfg := loadEnv()
-	db := pg.Connect(&pg.Options{
-		Database: cfg.Database,
-		User:     cfg.Username,
-		Password: cfg.Password,
-	})
+	// returning the db to operate
+	db := bun.NewDB(sqldb, pgdialect.New())
 
-	err := db.Ping(context.Background())
+	// making ping
+	err := db.Ping()
 	if err != nil {
-		fmt.Printf("error: %v", err)
+		fmt.Printf("error making Ping() to db: %v", err)
 	}
-
+	fmt.Println("connected succesfully")
 	defer db.Close()
-	err = createSchema(db)
-	if err != nil {
-		fmt.Printf("error creating schema: %v", err)
-	}
 
-	user1 := models.User{
-		Id:        0,
-		Username:  "guido",
-		Email:     "guido@email.com",
-		Password:  "random123",
-		Firstname: "Guido",
-		Lastname:  "Enrique",
-	}
-
-	_, err = db.Model(&user1).Insert()
-	if err != nil {
-		fmt.Printf("error inserting in the database: %v", err)
-	}
-
-	// Select all users.
-	var users []models.User
-	err = db.Model(&users).Select()
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(users)
-
+	createSchema(db)
 }
 
 // createSchema creates database schema for User and Story models.
-func createSchema(db *pg.DB) error {
-	modelsMap := []interface{}{
-		(*models.User)(nil),
-		(*models.Turno)(nil),
-	}
-
-	// create the tables
-	for _, model := range modelsMap {
-		err := db.Model(model).CreateTable(&orm.CreateTableOptions{
-			Temp: true,
-		})
-		if err != nil {
-			return err
-		}
-	}
-	return nil
+func createSchema(db *bun.DB) {
+	err, _ := db.NewCreateTable().Model((*models.User)(nil)).Exec(context.Background())
+	err2, _ := db.NewCreateTable().Model((*models.Turno)(nil)).Exec(context.Background())
+	fmt.Println(err, err2)
 }
 
 // loadEnv load the environment variables from `local.env` // TODO, change later to heroku maybe?
-func loadEnv() EnvConfig {
+func loadDBConnector() *pgdriver.Connector {
 	err := godotenv.Load("db/local.env")
 	if err != nil {
-		log.Fatalf("error reading 'local.env' file err: %v", err)
+		fmt.Printf("error reading 'local.env' file err: %v", err)
 	}
 
-	cfg := EnvConfig{
-		Username: os.Getenv("USER"),
-		Password: os.Getenv("PASSWORD"),
-		Database: os.Getenv("DATABASE"),
-		Port:     os.Getenv("PORT"),
-	}
-	return cfg
+	user := os.Getenv("USER")
+	password := os.Getenv("PASSWORD")
+	dbname := os.Getenv("DATABASE")
+	addr := os.Getenv("ADDR")
+
+	pgconn := pgdriver.NewConnector(
+		pgdriver.WithUser(user),
+		pgdriver.WithPassword(password),
+		pgdriver.WithDatabase(dbname),
+		pgdriver.WithAddr(addr),
+		pgdriver.WithNetwork("tcp"),
+	)
+
+	return pgconn
 }

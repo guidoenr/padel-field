@@ -4,33 +4,37 @@ package models
 
 import (
 	"fmt"
+	"github.com/uptrace/bun"
 	"time"
 )
 
 type User struct {
-	Id        int64  `db:"id" json:"id"`
-	Username  string `db:"username" json:"username"`
-	Password  string `db:"password" json:"password"`
-	Email     string `db:"email" json:"email"`
-	Firstname string `db:"firstname" json:"firstname"`
-	Lastname  string `db:"lastname" json:"lastname"`
+	bun.BaseModel `bun:"table:users,alias:u"`
+	ID            int64  `bun:"id,pk,autoincrement"`
+	Username      string `bun:"username,unique"`
+	Password      string `bun:"password"`
+	Phone         string `bun:"phone"`
+	Email         string `bun:"email"`
+	Firstname     string `bun:"firstname"`
+	Lastname      string `bun:"lastname"`
 }
 
 func (u User) String() string {
-	return fmt.Sprintf("User<%d %s %s %s>", u.Id, u.Username, u.Email, u.Password)
+	return fmt.Sprintf("User<%d %s %s %s>", u.ID, u.Username, u.Email, u.Password)
 }
 
 type Turno struct {
-	Id      int64     `db:"id" json:"id"`
-	Day     string    `db:"day" json:"day"`
-	Field   string    `db:"field" json:"field"`
-	Date    time.Time `db:"date" json:"date"`
-	Status  string    `db:"status" json:"status"`
-	OwnerId int64     `db:"user" json:"user" pg:"rel:has-one"`
+	bun.BaseModel `bun:"table:turnos,alias:t"`
+	ID            int64     `bun:"id,pk,autoincrement"`
+	Day           string    `bun:"day"`
+	Field         string    `bun:"field"`
+	Date          time.Time `bun:"date"`
+	Status        string    `bun:"status"`
+	OwnerId       int64     `bun:"owner"`
 }
 
 func (t Turno) String() string {
-	return fmt.Sprintf("Turno<%d %s %s %s %v %s>", t.Id, t.Day, t.Field, t.Status, t.OwnerId, t.Date)
+	return fmt.Sprintf("Turno<%d %s %s %s %v %s>", t.ID, t.Day, t.Field, t.Status, t.OwnerId, t.Date)
 }
 
 const (
