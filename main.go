@@ -1,5 +1,13 @@
 package main
 
+/*
+	author: @github.com/guidoenr
+	repo: github.com/guidoenr/padelfield
+*/
+
 func main() {
-	ListenAndServe()
+	// TODO, change port to heroku later?
+	// Listen and Serve on 8080
+	//ListenAndServe()
+	InitializeTurnos()
 }

@@ -5,7 +5,6 @@ package models
 import (
 	"fmt"
 	"github.com/uptrace/bun"
-	"time"
 )
 
 type User struct {
@@ -25,19 +24,19 @@ func (u User) String() string {
 
 type Turno struct {
 	bun.BaseModel `bun:"table:turnos,alias:t"`
-	ID            int64     `bun:"id,pk,autoincrement"`
-	Day           string    `bun:"day"`
-	Hour          int       `bun:"hour"`
-	Field         string    `bun:"field"`
-	Status        string    `bun:"status"`
-	OwnerId       int64     `bun:"owner"`
-	Date          time.Time `bun:"date"`
+	ID            int64  `bun:"id,pk,autoincrement"`
+	Day           string `bun:"day"`
+	Hour          int    `bun:"hour"`
+	Field         string `bun:"field"`
+	Status        string `bun:"status"`
+	OwnerId       int64  `bun:"owner"`
+	Date          string `bun:"date"`
 }
 
 func (t Turno) String() string {
 	return fmt.Sprintf("-------------------- \n"+
 		"[Turno] id: %d | day: %s | hour: %d | field: %s \n"+
-		"status: | %s | owner: %d \n", t.ID, t.Day, t.Hour, t.Field, t.Status, t.OwnerId)
+		"status: | %s | owner: %d | date: %s \n", t.ID, t.Day, t.Hour, t.Field, t.Status, t.OwnerId, t.Date)
 }
 
 const (

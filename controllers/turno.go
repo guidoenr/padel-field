@@ -73,7 +73,7 @@ func ReserveTurno(turno *models.Turno, ownerId int64) error {
 	return err
 }
 
-func persistTurno(turno *models.Turno) error {
+func PersistTurno(turno *models.Turno) error {
 	db := models.InitDB()
 	_, err := db.NewInsert().
 		Model(turno).

@@ -41,10 +41,14 @@ func index() gin.HandlerFunc {
 // indexTurnos is the main page for the turnos website
 func indexTurnos() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		turnos, err := controllers.GetAvailableTurnos()
 		c.HTML(http.StatusOK, "turnos.html", gin.H{
-			"title": "Turnos",
+			"title":           "Turnos",
+			"availableTurnos": turnos,
 		})
-		controllers.GetAvailableTurnos()
+		if err != nil {
+			c.String(500, "ERROR GETTING TURNOS")
+		}
 	}
 }
 
