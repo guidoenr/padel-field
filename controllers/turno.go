@@ -6,17 +6,33 @@ import (
 	"github.com/guidoenr/padel-field/models"
 )
 
-func GetAvailableTurnos() {
-	db := models.InitDB()
-	turno := new(models.Turno)
+// GetAvailableTurnos returns the entire list of available turnos of each weekday
+// TODO -> think if its better to filter per/day in the SQL query, in the front or in golang?
+func GetAvailableTurnos() ([]models.Turno, error) {
+	var availableTurnos []models.Turno
 
-	err := db.NewSelect().Model(turno).Where("status = ?", "AVAILABLE").Scan(context.Background())
-	fmt.Println(err)
+	// initialize the DB cursor
+	db := models.InitDB()
+
+	// select * from turnos where status = "DISPONIBLE"
+	_, err := db.NewSelect().
+		Model(&availableTurnos).
+		Where("status = ?", "DISPONIBLE").
+		//Where("day = ?", "LUNES").
+		ScanAndCount(context.Background())
+	if err != nil {
+		fmt.Printf("error getting available turnos: %v", err)
+	}
+
+	fmt.Println(availableTurnos)
 
 	defer db.Close()
+	return availableTurnos, err
 }
 
-func CancelTurno(turno *models.Turno, ownerId int64) {
+// CancelTurno changes the state of the turno to AVAILABLE and set the OwnerId = 0
+// which means that turno is not related to any user
+func CancelTurno(turno *models.Turno) error {
 	turno.OwnerId = 0
 	turno.Status = models.AVAILABLE
 
@@ -33,9 +49,12 @@ func CancelTurno(turno *models.Turno, ownerId int64) {
 	fmt.Printf("modified turno: %v\n", turno.String())
 
 	defer db.Close()
+	return err
 }
 
-func ReserveTurno(turno *models.Turno, ownerId int64) {
+// ReserveTurno changes the status of the turno to RESERVED and set the ownerId of the user
+// that made the request of reserve
+func ReserveTurno(turno *models.Turno, ownerId int64) error {
 	turno.OwnerId = ownerId
 	turno.Status = models.RESERVERD
 
@@ -49,12 +68,12 @@ func ReserveTurno(turno *models.Turno, ownerId int64) {
 	if err != nil {
 		fmt.Printf("error persisting turno: %v", err)
 	}
-	fmt.Printf("modified turno: %v\n", turno.String())
 
 	defer db.Close()
+	return err
 }
 
-func PersistTurno(turno *models.Turno) {
+func persistTurno(turno *models.Turno) error {
 	db := models.InitDB()
 	_, err := db.NewInsert().
 		Model(turno).
@@ -66,4 +85,5 @@ func PersistTurno(turno *models.Turno) {
 	fmt.Printf("added turno: %v\n", turno.String())
 
 	defer db.Close()
+	return err
 }

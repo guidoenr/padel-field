@@ -35,7 +35,9 @@ type Turno struct {
 }
 
 func (t Turno) String() string {
-	return fmt.Sprintf("Turno<id:%d %s %s %s owner:%v | hour:%d:00 %d/%s>", t.ID, t.Day, t.Field, t.Status, t.OwnerId, t.Hour, t.Date.Day(), t.Date.Month())
+	return fmt.Sprintf("-------------------- \n"+
+		"[Turno] id: %d | day: %s | hour: %d | field: %s \n"+
+		"status: | %s | owner: %d \n", t.ID, t.Day, t.Hour, t.Field, t.Status, t.OwnerId)
 }
 
 const (
