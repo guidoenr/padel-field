@@ -10,9 +10,12 @@ import (
 // routes and endpoints
 func ListenAndServe() {
 	router := gin.Default()
-	router.LoadHTMLGlob("views/*")
+	router.LoadHTMLGlob("static/html/*")
+	router.Static("/static", "./static")
 
 	router.GET("/", index())
+	router.GET("/login", login())
+	router.GET("/register", register())
 
 	turnos := router.Group("/turnos")
 	{
@@ -57,6 +60,25 @@ func indexUsers() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.HTML(http.StatusOK, "users.html", gin.H{
 			"title": "Users",
+		})
+	}
+}
+
+// ---------------------- LOGIN - REGISTER
+// login
+func login() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.HTML(http.StatusOK, "login.html", gin.H{
+			"title": "Login",
+		})
+	}
+}
+
+// register
+func register() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.HTML(http.StatusOK, "register.html", gin.H{
+			"title": "register",
 		})
 	}
 }
