@@ -1,0 +1,10 @@
+
+[INFO]:	2022/08/25 16:04:50 turnero.go:58: Updating out-of-date turnos
+[INFO]:	2022/08/25 16:04:50 dbase.go:28: connected to the db: DB<dialect=pg> 
+[ERROR]:	2022/08/25 16:04:50 main.go:15: asd without barra n
+[INFO]:	2022/08/25 16:04:57 turnero.go:58: Updating out-of-date turnos
+[INFO]:	2022/08/25 16:04:57 dbase.go:28: connected to the db: DB<dialect=pg> 
+[ERROR]:	2022/08/25 16:04:57 main.go:15: asd without barra n
+[ERROR]:	2022/08/25 16:05:06 main.go:15: asd without barra n
+[ERROR]:	2022/08/25 16:05:25 main.go:15: asd without barra n
+e

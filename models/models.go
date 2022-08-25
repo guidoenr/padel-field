@@ -45,12 +45,6 @@ func (t Turno) String() string {
 		"status: | %s | owner: %d | date: %s \n", t.ID, t.Day, t.Hour, t.Field, t.Status, t.OwnerId, t.Date)
 }
 
-func (t Turno) GetWeather() string {
-	return fmt.Sprintf("-------------------- \n"+
-		"[Turno] id: %d | day: %s | hour: %d | field: %s \n"+
-		"status: | %s | owner: %d | date: %s \n", t.ID, t.Day, t.Hour, t.Field, t.Status, t.OwnerId, t.Date)
-}
-
 const (
 	RESERVERD  string = "RESERVADO"
 	AVAILABLE  string = "DISPONIBLE"

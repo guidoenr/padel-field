@@ -3,6 +3,7 @@ package controllers
 import (
 	"context"
 	"fmt"
+	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
 )
 
@@ -11,7 +12,7 @@ import (
 // i think that it will be better in SQL, make some test then
 func GetAvailableTurnos() ([]models.Turno, error) {
 	var availableTurnos []models.Turno
-
+	logger.Loginfo.Println("getting availabale turnos")
 	// initialize the DB cursor
 	db := models.InitDB()
 
@@ -22,7 +23,7 @@ func GetAvailableTurnos() ([]models.Turno, error) {
 		//Where("day = ?", "LUNES").
 		ScanAndCount(context.Background())
 	if err != nil {
-		fmt.Printf("error getting available turnos: %v", err)
+		logger.Logerror.Printf("error getting available turnos: %v", err)
 	}
 
 	fmt.Println(availableTurnos)
@@ -34,6 +35,7 @@ func GetAvailableTurnos() ([]models.Turno, error) {
 // CancelTurno changes the state of the turno to AVAILABLE and set the OwnerId = 0
 // which means that turno is not related to any user
 func CancelTurno(turno *models.Turno) error {
+	logger.Loginfo.Println("canceling turno")
 	turno.OwnerId = 0
 	turno.Status = models.AVAILABLE
 
@@ -45,9 +47,9 @@ func CancelTurno(turno *models.Turno) error {
 		Exec(context.Background())
 
 	if err != nil {
-		fmt.Printf("error canceling turno: %v", err)
+		logger.Logerror.Printf("error canceling turno: %v", err)
 	}
-	fmt.Printf("modified turno: %v\n", turno.String())
+	logger.Loginfo.Printf("modified turno: %v\n", turno.String())
 
 	defer db.Close()
 	return err
@@ -59,6 +61,7 @@ func ReserveTurno(turno *models.Turno, ownerId int64) error {
 	turno.OwnerId = ownerId
 	turno.Status = models.RESERVERD
 
+	logger.Loginfo.Println("reserving turno")
 	db := models.InitDB()
 	_, err := db.NewUpdate().
 		Model(turno).
@@ -67,13 +70,14 @@ func ReserveTurno(turno *models.Turno, ownerId int64) error {
 		Exec(context.Background())
 
 	if err != nil {
-		fmt.Printf("error reserving turno: %v", err)
+		logger.Logerror.Printf("error reserving turno: %v", err)
 	}
 
 	defer db.Close()
 	return err
 }
 
+// PersistTurno is a built-in function to map turnos into the db
 func PersistTurno(turno *models.Turno) error {
 	db := models.InitDB()
 	_, err := db.NewInsert().
@@ -81,9 +85,9 @@ func PersistTurno(turno *models.Turno) error {
 		Exec(context.Background())
 
 	if err != nil {
-		fmt.Printf("error persisting turno: %v", err)
+		logger.Logerror.Printf("error persisting turno: %v", err)
 	}
-	fmt.Printf("added turno: %v\n", turno.ID)
+	logger.Loginfo.Printf("added turno: %v\n", turno.ID)
 
 	defer db.Close()
 	return err

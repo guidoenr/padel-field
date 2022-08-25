@@ -3,7 +3,7 @@ package models
 import (
 	"context"
 	"database/sql"
-	"fmt"
+	"github.com/guidoenr/padel-field/logger"
 	"github.com/joho/godotenv"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
@@ -23,9 +23,9 @@ func InitDB() *bun.DB {
 	// making ping
 	err := db.Ping()
 	if err != nil {
-		fmt.Printf("error making Ping() to dbase: %v", err)
+		logger.Logerror.Printf("error making Ping() to dbase: %v", err)
 	}
-	fmt.Println("connected succesfully")
+	logger.Loginfo.Printf("connected to the db: %v \n", db)
 
 	//restartDb(db)
 	return db
@@ -43,7 +43,7 @@ func RestartDb(db *bun.DB) error {
 	}
 	_, _ = db.NewCreateTable().Model((*User)(nil)).Exec(context.Background())
 	_, _ = db.NewCreateTable().Model((*Turno)(nil)).Exec(context.Background())
-	fmt.Println("DB restarted and created schemas")
+	logger.Loginfo.Println("DB restarted and created schemas")
 	return nil
 }
 
@@ -51,7 +51,7 @@ func RestartDb(db *bun.DB) error {
 func loadDBConnector() *pgdriver.Connector {
 	err := godotenv.Load("models/local.env")
 	if err != nil {
-		fmt.Printf("error reading 'local.env' file err: %v", err)
+		logger.Logerror.Printf("error reading 'local.env' file err: %v \n", err)
 	}
 
 	user := os.Getenv("USER")
