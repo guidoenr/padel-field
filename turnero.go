@@ -19,8 +19,8 @@ func InitializeTurnos() {
 	}
 
 	initialHour := 9 // that means the turnos start from 09:00 am
-	today := time.Now()
-
+	lastHour := 23
+	today := getTodayDate()
 	// daysOfTurno are all the turnos that we are going to load
 	// inside the database
 	daysOfTurno := 30
@@ -32,13 +32,12 @@ func InitializeTurnos() {
 		// every time that we iterate, we plus one day to the day
 		// (e.g) if today is 24 of July, in the second iteration it will be 25 of July and then
 		newDate := today.AddDate(0, 0, i)
-		turno.Date, _ = time.Parse("02-01-2006", newDate.Format("02-01-2006"))
+		turno.Date, _ = time.ParseInLocation("02-01-2006", newDate.Format("02-01-2006"), time.Local)
 		turno.Status = models.AVAILABLE
 		turno.Day = getWeekDay(newDate)
 		// for each turno in a day (time range from 09:00 to 23:00)
-		for j := 0; j < 15; j++ {
-			t2 := time.Date(today.Year(), today.Month(), today.Day(), initialHour+j, 0, 0, 0, today.Location())
-			turno.Hour = t2.Hour()
+		for j := initialHour; j <= lastHour; j++ {
+			turno.Hour = j
 			turnos = append(turnos, turno)
 		}
 	}
@@ -54,24 +53,36 @@ func InitializeTurnos() {
 
 // UpdateTurnos will update all the turnos that are older than today's date
 func UpdateTurnos() {
-	var outdatedTurnos []models.Turno
-	todayDate, _ := time.Parse("02-01-2006", time.Now().Format("02-01-2006"))
+	//var outdatedTurnos []models.Turno
+
+	todayDate := getTodayDate()
 	db := models.InitDB()
 
-	// select all the turnos where the date is older than today
-	count, err := db.NewSelect().
-		Model(&outdatedTurnos).
-		Where("date < ?", todayDate). // be aware of handling the = in >= or <=
-		ScanAndCount(context.Background())
+	turno := new(models.Turno)
+
+	// updating the turnos that are not fijos, setting the status to available
+	_, err := db.NewUpdate().
+		Model(turno).
+		Set("date = ?", todayDate.AddDate(0, 0, 30)).
+		Set("status = ?", models.AVAILABLE).
+		Where("fijo = ?", false).
+		Where("date < ?", todayDate).
+		Exec(context.Background())
+
+	// updating the date of the turnos that are fijos
+	_, err = db.NewUpdate().
+		Model(turno).
+		Set("date = ?", todayDate.AddDate(0, 0, 30)).
+		Where("fijo = ?", true).
+		Where("date < ?", todayDate).
+		Exec(context.Background())
 
 	defer db.Close()
 
 	if err != nil {
-		fmt.Printf("error getting turnos out of date: %v", err)
+		fmt.Printf("error updating outdated turnos: %v", err)
 	}
 
-	fmt.Printf("turnos out of date: %d \n", count)
-	fmt.Println(outdatedTurnos)
 }
 
 // daysMap a map with the purpose of be a dictionary of translations
@@ -100,4 +111,16 @@ func cleanDB() error {
 	}
 	defer db.Close()
 	return nil
+}
+
+func getTodayDate() time.Time {
+	location, err := time.LoadLocation("America/Buenos_Aires")
+	if err != nil {
+		fmt.Printf("error loading the location: %v", err)
+	}
+	todayDate, err := time.ParseInLocation("02-01-2006", time.Now().Format("02-01-2006"), location)
+	if err != nil {
+		fmt.Printf("error getting localTime: %v", err)
+	}
+	return todayDate
 }

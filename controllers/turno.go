@@ -82,7 +82,7 @@ func PersistTurno(turno *models.Turno) error {
 	if err != nil {
 		fmt.Printf("error persisting turno: %v", err)
 	}
-	fmt.Printf("added turno: %v\n", turno.String())
+	fmt.Printf("added turno: %v\n", turno.ID)
 
 	defer db.Close()
 	return err
