@@ -8,7 +8,7 @@ package main
 func main() {
 	// TODO, change port to heroku later?
 	// Listen and Serve on 8080
-	ListenAndServe()
+	//ListenAndServe()
 	//InitializeTurnos()
-
+	UpdateTurnos()
 }

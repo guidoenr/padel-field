@@ -5,6 +5,7 @@ package models
 import (
 	"fmt"
 	"github.com/uptrace/bun"
+	"time"
 )
 
 type User struct {
@@ -24,13 +25,14 @@ func (u User) String() string {
 
 type Turno struct {
 	bun.BaseModel `bun:"table:turnos,alias:t"`
-	ID            int64  `bun:"id,pk,autoincrement"`
-	Day           string `bun:"day"`
-	Hour          int    `bun:"hour"`
-	Field         string `bun:"field"`
-	Status        string `bun:"status"`
-	OwnerId       int64  `bun:"owner"`
-	Date          string `bun:"date"`
+	ID            int64     `bun:"id,pk,autoincrement"`
+	Day           string    `bun:"day"`
+	Hour          int       `bun:"hour"`
+	Field         string    `bun:"field"`
+	Status        string    `bun:"status"`
+	Fijo          bool      `bun:"fijo,default:false"`
+	OwnerId       int64     `bun:"owner"`
+	Date          time.Time `bun:"date"`
 }
 
 func (t Turno) String() string {
