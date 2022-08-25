@@ -53,9 +53,10 @@ textarea {
   text-align: center;
   width: 30px; }
 
+/* form background */
 form {
   width: 50%;
-  background: #c5b3b3;
+  background: #eeeeee;
   padding-top: 63px;
   padding-left: 49px;
   padding-right: 50px; }
@@ -64,10 +65,10 @@ h3 {
   font-size: 35px;
   text-align: center;
   margin-bottom: 38px;
-  color: #ff955e; }
+  color: #2a2a2a; }
 
 .form-wrapper {
-  color: #fff;
+  color: #181818;
   display: flex;
   align-items: center;
   margin-bottom: 16px; }
@@ -95,13 +96,15 @@ h3 {
   display: block;
   font-size: 13px;
   border: none;
-  border-bottom: 1px solid #7fbeb7;
+  border-bottom: 1px solid #262626;
   background: none;
-  color: #fff;
+  color: #1a1a1a;
   padding: 0; }
 
+
+/* focus area in text */
 input:focus, textarea:focus {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.8); }
+  border-bottom: 1px solid rgba(255, 106, 28, 0.8); }
 
 select.form-control {
   -moz-appearance: none;
@@ -112,23 +115,23 @@ select.form-control {
   font-size: 15px;
   transform: translateY(-1px); }
 
+/* Register button */
 button {
   height: 42px;
   width: 191px;
   display: inline-flex;
   border: none;
   font-size: 15px;
-  color: #fff;
+  color: #ffffff;
   align-items: center;
   justify-content: center;
   margin-top: 24px;
   cursor: pointer;
   transition: all 0.5s ease;
-  background-image: -moz-linear-gradient(top, #ff5c1a 0%, #ff7d4c 12%, #ff8f82 23%, #ffcfa8 78%, #321a69 88%, #251368 100%);
   /* FF3.6-15 */
-  background-image: -webkit-linear-gradient(top, #ff5c1a 0%, #ff7d4c 12%, #ff8f82 23%, #ffcfa8 78%, #321a69 88%, #251368 100%);
+  /* background-image: -webkit-linear-gradient(top, #ff0050 0%, rgba(255, 0, 0, 0.9) 12%, #ffffff 23%, #ff0013 78%, #321a69 88%, #251368 100%);
   /* Chrome10-25,Safari5.1-6 */
-  background-image: linear-gradient(to right, #ff5c1a 0%, #ff7d4c 12%, #ff8f82 23%, #ffcfa8 78%, #321a69 88%, #251368 100%);
+  background-image: linear-gradient(to right, #ffa27d 0%, #ff8f82 12%, #ff8f82 23%, #ffcfa8 78%, #321a69 20%, #251368 10%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */ }
   button:hover {
     background-size: 200% auto;
@@ -160,4 +163,3 @@ button {
   .wrapper {
     background: none; } }
 
-/*# sourceMappingURL=style.css.map */
