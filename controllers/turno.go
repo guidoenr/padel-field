@@ -8,6 +8,7 @@ import (
 
 // GetAvailableTurnos returns the entire list of available turnos of each weekday
 // TODO -> think if is better to filter per/day in the SQL query, in the front or in golang?
+// i think that it will be better in SQL, make some test then
 func GetAvailableTurnos() ([]models.Turno, error) {
 	var availableTurnos []models.Turno
 
@@ -44,7 +45,7 @@ func CancelTurno(turno *models.Turno) error {
 		Exec(context.Background())
 
 	if err != nil {
-		fmt.Printf("error persisting turno: %v", err)
+		fmt.Printf("error canceling turno: %v", err)
 	}
 	fmt.Printf("modified turno: %v\n", turno.String())
 
@@ -66,7 +67,7 @@ func ReserveTurno(turno *models.Turno, ownerId int64) error {
 		Exec(context.Background())
 
 	if err != nil {
-		fmt.Printf("error persisting turno: %v", err)
+		fmt.Printf("error reserving turno: %v", err)
 	}
 
 	defer db.Close()

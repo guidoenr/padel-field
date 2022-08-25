@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+// -------------------------- USER
+
 type User struct {
 	bun.BaseModel `bun:"table:users,alias:u"`
 	ID            int64  `bun:"id,pk,autoincrement"`
@@ -22,6 +24,8 @@ type User struct {
 func (u User) String() string {
 	return fmt.Sprintf("User<%d %s %s %s>", u.ID, u.Username, u.Email, u.Password)
 }
+
+// -------------------------- TURNO
 
 type Turno struct {
 	bun.BaseModel `bun:"table:turnos,alias:t"`
@@ -41,7 +45,14 @@ func (t Turno) String() string {
 		"status: | %s | owner: %d | date: %s \n", t.ID, t.Day, t.Hour, t.Field, t.Status, t.OwnerId, t.Date)
 }
 
+func (t Turno) GetWeather() string {
+	return fmt.Sprintf("-------------------- \n"+
+		"[Turno] id: %d | day: %s | hour: %d | field: %s \n"+
+		"status: | %s | owner: %d | date: %s \n", t.ID, t.Day, t.Hour, t.Field, t.Status, t.OwnerId, t.Date)
+}
+
 const (
-	RESERVERD string = "RESERVADO"
-	AVAILABLE string = "DISPONIBLE"
+	RESERVERD  string = "RESERVADO"
+	AVAILABLE  string = "DISPONIBLE"
+	TOURNAMENT string = "TORNEO"
 )

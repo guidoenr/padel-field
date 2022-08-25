@@ -113,6 +113,7 @@ func cleanDB() error {
 	return nil
 }
 
+// getTodayDate returns the current local datetime in America/Buenos_Aires
 func getTodayDate() time.Time {
 	location, err := time.LoadLocation("America/Buenos_Aires")
 	if err != nil {
