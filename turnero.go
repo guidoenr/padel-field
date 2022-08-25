@@ -108,7 +108,7 @@ func cleanDB() error {
 	db := models.InitDB()
 	err := models.RestartDb(db)
 	if err != nil {
-		return err
+		logger.Logerror.Printf("cleaning the db: %v", err)
 	}
 	defer db.Close()
 	return nil

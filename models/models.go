@@ -8,13 +8,25 @@ import (
 	"time"
 )
 
+const (
+	// turnos status
+	RESERVERD  string = "RESERVADO"
+	AVAILABLE  string = "DISPONIBLE"
+	TOURNAMENT string = "TORNEO"
+
+	// users roles
+	ADMIN  string = "admin"
+	NORMAL string = "normal"
+)
+
 // -------------------------- USER
 
 type User struct {
 	bun.BaseModel `bun:"table:users,alias:u"`
 	ID            int64  `bun:"id,pk,autoincrement"`
-	Username      string `bun:"username,unique"`
+	Username      string `bun:"username"`
 	Password      string `bun:"password"`
+	Role          string `bun:"role"`
 	Phone         string `bun:"phone"`
 	Email         string `bun:"email"`
 	Firstname     string `bun:"firstname"`
@@ -44,9 +56,3 @@ func (t Turno) String() string {
 		"[Turno] id: %d | day: %s | hour: %d | field: %s \n"+
 		"status: | %s | owner: %d | date: %s \n", t.ID, t.Day, t.Hour, t.Field, t.Status, t.OwnerId, t.Date)
 }
-
-const (
-	RESERVERD  string = "RESERVADO"
-	AVAILABLE  string = "DISPONIBLE"
-	TOURNAMENT string = "TORNEO"
-)

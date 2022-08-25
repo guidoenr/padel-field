@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"context"
-	"fmt"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
 )
@@ -26,10 +25,29 @@ func GetAvailableTurnos() ([]models.Turno, error) {
 		logger.Logerror.Printf("error getting available turnos: %v", err)
 	}
 
-	fmt.Println(availableTurnos)
-
 	defer db.Close()
 	return availableTurnos, err
+}
+
+// GetTurnosByOwnerId returns all the turnos that are linked to a specific user
+func GetTurnosByOwnerId(ownerId int64) ([]models.Turno, error) {
+	var turnosByOwner []models.Turno
+	logger.Loginfo.Printf("getting turnos for user '%d'", ownerId)
+	// initialize the DB cursor
+	db := models.InitDB()
+
+	// select * from turnos where status = "DISPONIBLE"
+	_, err := db.NewSelect().
+		Model(&turnosByOwner).
+		Where("ownerId = ?", ownerId).
+		ScanAndCount(context.Background())
+
+	if err != nil {
+		logger.Logerror.Printf("error getting turnos for iser '%d'", ownerId)
+	}
+
+	defer db.Close()
+	return turnosByOwner, err
 }
 
 // CancelTurno changes the state of the turno to AVAILABLE and set the OwnerId = 0

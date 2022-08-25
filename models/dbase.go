@@ -27,24 +27,29 @@ func InitDB() *bun.DB {
 	}
 	logger.Loginfo.Printf("connected to the db: %v \n", db)
 
-	//restartDb(db)
 	return db
 }
 
 // RestartDb creates database schema for User and Turno models.
 func RestartDb(db *bun.DB) error {
+	logger.Logwarning.Println("RESTARTING DB..")
 	_, err := db.Query("DROP TABLE turnos;")
-	if err != nil {
-		return err
-	}
 	_, err = db.Query("DROP TABLE users;")
-	if err != nil {
-		return err
-	}
-	_, _ = db.NewCreateTable().Model((*User)(nil)).Exec(context.Background())
-	_, _ = db.NewCreateTable().Model((*Turno)(nil)).Exec(context.Background())
-	logger.Loginfo.Println("DB restarted and created schemas")
-	return nil
+	return err
+}
+
+// CreateSchemas create all the tables of the database following the bun models
+func CreateSchemas(db *bun.DB) error {
+	var err error
+	_, err = db.NewCreateTable().
+		Model((*User)(nil)).
+		Exec(context.Background())
+
+	_, err = db.NewCreateTable().
+		Model((*Turno)(nil)).
+		Exec(context.Background())
+
+	return err
 }
 
 // loadDBConnector load the environment variables from `local.env` // TODO, change later to heroku maybe?
