@@ -10,8 +10,8 @@ import (
 // routes and endpoints
 func ListenAndServe() {
 	router := gin.Default()
-	router.LoadHTMLGlob("static/html/*")
-	router.Static("/static", "./static")
+	router.LoadHTMLGlob("deprecated-static/html/*")
+	router.Static("/deprecated-static", "./deprecated-static")
 
 	router.GET("/", index())
 	router.GET("/login", login())
