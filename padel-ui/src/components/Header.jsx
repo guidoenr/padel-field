@@ -35,7 +35,7 @@ const Header = () => {
                   smooth={true}
                   offset={-70}
                   duration={500}
-                  className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent transition ease-in-out p-0"
+                  className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                 >
                   Home
                 </Link>
@@ -47,7 +47,7 @@ const Header = () => {
                   smooth={true}
                   offset={-70}
                   duration={500}
-                  className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent transition ease-in-out p-0 text-accent"
+                  className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0 text-accent"
                 >
                   Reservas
                 </Link>
@@ -59,7 +59,7 @@ const Header = () => {
                   smooth={true}
                   offset={400}
                   duration={500}
-                  className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent transition ease-in-out p-0"
+                  className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                 >
                   Nosotros
                 </Link>
@@ -67,7 +67,7 @@ const Header = () => {
               <li className="text-sm">
                 <a
                   href="#home"
-                  className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent transition ease-in-out p-0"
+                  className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                 >
                   Contacto
                 </a>
