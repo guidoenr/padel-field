@@ -91,7 +91,7 @@ const Header = () => {
                   </svg>
 
                   <svg
-                    className="swap-on fill-current w-9 h-9 relative top-[.1rem]"
+                    className="swap-on fill-current w-9 h-9 relative"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 512 512"
                   >
@@ -104,40 +104,40 @@ const Header = () => {
               className={
                 !nav
                   ? "hidden"
-                  : "md:hidden absolute left-0 top-0 h-screen w-screen bg-very-dark-blue/90"
+                  : "md:hidden absolute left-16 top-0 h-screen w-screen bg-base-100 z-[60]"
               }
             >
-              <div className="flex flex-col w-[92%] h-[90vh] mx-auto">
-                <nav className="hidden">
-                  <ul className="menu menu-compact w-[100%] p-2 rounded-box">
-                    <li className="text-base border-b border-t rounded-none py-3 mt-8 flex">
+              <div className="flex flex-col w-[80%] h-[90vh] mx-auto">
+                <nav className="flex items-center h-[80vh]">
+                  <ul className="menu menu-compact w-[80%] p-2 rounded-box">
+                    <li className="text-base border-b border-b-primary/30 py-3 flex">
                       <Link
                         onClick={handleClose}
                         to="/"
-                        className="uppercase font-normal self-center text-lg tracking-widest"
+                        className="uppercase font-normal self-center text-lg tracking-widest hover:bg-base-100"
                       >
                         Reservas
                       </Link>
                     </li>
-                    <li className="border-b py-3 flex">
+                    <li className="border-b border-b-primary/30 py-3 flex">
                       <Link
                         onClick={handleClose}
                         to="/nosotros"
-                        className="uppercase font-normal self-center text-lg tracking-widest"
+                        className="uppercase font-normal self-center text-lg tracking-widest hover:bg-base-100"
                       >
                         Nosotros
                       </Link>
                     </li>
-                    <li className="border-b py-3 flex">
+                    <li className="border-b border-b-primary/30 py-3 flex">
                       <Link
                         onClick={handleClose}
                         to="/contacto"
-                        className="uppercase font-normal self-center text-lg tracking-widest"
+                        className="uppercase font-normal self-center text-lg tracking-widest hover:bg-base-100"
                       >
                         Contacto
                       </Link>
                     </li>
-                    <li className="py-3">
+                    <li className="py-6">
                       <Link
                         onClick={handleClose}
                         to="/login"
