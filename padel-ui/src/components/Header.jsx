@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link, animateScroll as scroll } from "react-scroll";
+import { Link } from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 // Tomorrow start with Palette Color configurations in DaisyUI...
@@ -14,15 +14,15 @@ const Header = () => {
   const handleClose = () => setNav(!nav);
 
   return (
-    <header className="w-full h-[10vh] flex shadow-2xl z-50 px-[20px]">
+    <header className="w-full h-[10vh] flex shadow-2xl z-50">
       <div className="container m-auto navbar flex justify-between">
         <div className="navbar-start">
-          <a
+          <Link
+            to="/"
             className="cursor-pointer font-secondary-font text-4xl text-primary"
-            href="#home"
           >
             Pádel-Logo
-          </a>
+          </Link>
         </div>
 
         <div className="flex justify-end">
@@ -30,49 +30,39 @@ const Header = () => {
             <ul className="menu menu-horizontal p-0 gap-8">
               <li className="text-sm">
                 <Link
-                  onClick={handleClose}
-                  to="features"
-                  smooth={true}
-                  offset={-70}
-                  duration={500}
-                  className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
-                >
-                  Home
-                </Link>
-              </li>
-              <li className="text-sm">
-                <Link
-                  onClick={handleClose}
-                  to="download"
-                  smooth={true}
-                  offset={-70}
-                  duration={500}
-                  className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0 text-accent"
+                  to="/"
+                  className="uppercase font-bold tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0 text-accent"
                 >
                   Reservas
                 </Link>
               </li>
               <li className="text-sm">
                 <Link
-                  onClick={handleClose}
-                  to="contact"
-                  smooth={true}
-                  offset={400}
-                  duration={500}
+                  to="/nosotros"
                   className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                 >
                   Nosotros
                 </Link>
               </li>
               <li className="text-sm">
-                <a
-                  href="#home"
+                <Link
+                  to="/contacto"
                   className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                 >
                   Contacto
-                </a>
+                </Link>
               </li>
-              <ThemeSwitcher className="" />
+              <li className="flex items-center">
+                <ThemeSwitcher className="" />
+              </li>
+              <li className="">
+                <Link
+                  to="/login"
+                  className="border-accent uppercase btn bg-primary/5 px-6 font-medium tracking-widest hover:border-accent/80 hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                >
+                  Entrar
+                </Link>
+              </li>
             </ul>
           </nav>
 
@@ -86,15 +76,22 @@ const Header = () => {
                 <label className="bg-transparent border-none swap swap-rotate">
                   <input type="checkbox" onClick={handleMenu} />
                   <svg
-                    className="swap-off fill-current w-8 h-8 relative top-[.1rem]"
                     xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="swap-off fill-current w-9 h-9 relative"
                   >
-                    <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"
+                    />
                   </svg>
 
                   <svg
-                    className="swap-on fill-current w-8 h-8 relative top-[.1rem]"
+                    className="swap-on fill-current w-9 h-9 relative top-[.1rem]"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 512 512"
                   >
@@ -116,47 +113,38 @@ const Header = () => {
                     <li className="text-base border-b border-t rounded-none py-3 mt-8 flex">
                       <Link
                         onClick={handleClose}
-                        to="features"
-                        smooth={true}
-                        offset={-70}
-                        duration={500}
+                        to="/"
                         className="uppercase font-normal self-center text-lg tracking-widest"
                       >
-                        Features
+                        Reservas
                       </Link>
                     </li>
                     <li className="border-b py-3 flex">
                       <Link
                         onClick={handleClose}
-                        to="download"
-                        smooth={true}
-                        offset={-70}
-                        duration={500}
+                        to="/nosotros"
                         className="uppercase font-normal self-center text-lg tracking-widest"
                       >
-                        Download
+                        Nosotros
                       </Link>
                     </li>
                     <li className="border-b py-3 flex">
                       <Link
                         onClick={handleClose}
-                        to="contact"
-                        smooth={true}
-                        offset={400}
-                        duration={500}
+                        to="/contacto"
                         className="uppercase font-normal self-center text-lg tracking-widest"
                       >
-                        Contact
+                        Contacto
                       </Link>
                     </li>
                     <li className="py-3">
-                      <a
+                      <Link
                         onClick={handleClose}
-                        href="#home"
-                        className="btn font-normal px-11 bg-accent border-2 border-bg-color text-bg-color text-lg tracking-widest mt-4"
+                        to="/login"
+                        className="border-accent uppercase btn bg-primary/5 px-6 font-medium tracking-widest hover:border-accent/80 hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                       >
-                        Login
-                      </a>
+                        Entrar
+                      </Link>
                     </li>
                   </ul>
                 </nav>
