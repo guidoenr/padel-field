@@ -30,16 +30,19 @@ func InitDB() *bun.DB {
 	return db
 }
 
-// RestartDb creates database schema for User and Turno models.
+// RestartDb drop the tables and creates database schema for User and Turno models.
 func RestartDb(db *bun.DB) error {
+	var err error
+	err = nil
 	logger.Logwarning.Println("RESTARTING DB..")
-	_, err := db.Query("DROP TABLE turnos;")
+	_, err = db.Query("DROP TABLE turnos;")
 	_, err = db.Query("DROP TABLE users;")
+	err = createSchemas(db)
 	return err
 }
 
 // CreateSchemas create all the tables of the database following the bun models
-func CreateSchemas(db *bun.DB) error {
+func createSchemas(db *bun.DB) error {
 	var err error
 	_, err = db.NewCreateTable().
 		Model((*User)(nil)).

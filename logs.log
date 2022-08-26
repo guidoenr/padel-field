@@ -1,22 +1,20 @@
-
-[INFO]:	2022/08/25 18:11:18 dbase.go:28: connected to the db: DB<dialect=pg> 
-[ERROR]:	2022/08/25 18:11:18 main.go:25: ERROR: cannot use column reference in DEFAULT expression (SQLSTATE=0A000)
-[INFO]:	2022/08/25 18:12:07 dbase.go:28: connected to the db: DB<dialect=pg> 
-[INFO]:	2022/08/25 18:16:06 dbase.go:28: connected to the db: DB<dialect=pg> 
-[WARNING]:	2022/08/25 18:16:06 dbase.go:35: RESTARTING DB..
-[ERROR]:	2022/08/25 18:16:06 main.go:20: ERROR: table "users" does not exist (SQLSTATE=42P01)
-[INFO]:	2022/08/25 18:16:36 dbase.go:28: connected to the db: DB<dialect=pg> 
-[WARNING]:	2022/08/25 18:16:36 dbase.go:35: RESTARTING DB..
-[ERROR]:	2022/08/25 18:16:36 main.go:20: ERROR: table "users" does not exist (SQLSTATE=42P01)
-[INFO]:	2022/08/25 18:16:59 dbase.go:28: connected to the db: DB<dialect=pg> 
-[WARNING]:	2022/08/25 18:16:59 dbase.go:35: RESTARTING DB..
-[INFO]:	2022/08/25 18:17:16 dbase.go:28: connected to the db: DB<dialect=pg> 
-[WARNING]:	2022/08/25 18:17:16 dbase.go:35: RESTARTING DB..
-[ERROR]:	2022/08/25 18:17:16 main.go:20: ERROR: table "users" does not exist (SQLSTATE=42P01)
-[INFO]:	2022/08/25 18:17:45 dbase.go:28: connected to the db: DB<dialect=pg> 
-[WARNING]:	2022/08/25 18:17:45 dbase.go:35: RESTARTING DB..
-[ERROR]:	2022/08/25 18:17:45 main.go:20: ERROR: table "users" does not exist (SQLSTATE=42P01)
-[INFO]:	2022/08/25 18:18:20 dbase.go:28: connected to the db: DB<dialect=pg> 
-[INFO]:	2022/08/25 18:18:49 dbase.go:28: connected to the db: DB<dialect=pg> 
-[INFO]:	2022/08/25 18:19:23 dbase.go:28: connected to the db: DB<dialect=pg> 
-[WARNING]:	2022/08/25 18:19:23 dbase.go:35: RESTARTING DB..
+[INFO]:	2022/08/26 17:03:06 dbase.go:28: connected to the db: DB<dialect=pg> 
+[WARNING]:	2022/08/26 17:03:06 dbase.go:37: RESTARTING DB..
+[WARNING]:	2022/08/26 17:03:06 turnero.go:14: Initialazing turnos..
+[INFO]:	2022/08/26 17:03:06 dbase.go:28: connected to the db: DB<dialect=pg> 
+[INFO]:	2022/08/26 17:03:06 turno.go:108: 450 turnos persisted
+[INFO]:	2022/08/26 17:03:06 dbase.go:28: connected to the db: DB<dialect=pg> 
+[INFO]:	2022/08/26 17:03:06 dbase.go:28: connected to the db: DB<dialect=pg> 
+[INFO]:	2022/08/26 17:03:27 dbase.go:28: connected to the db: DB<dialect=pg> 
+[WARNING]:	2022/08/26 17:03:27 dbase.go:37: RESTARTING DB..
+[WARNING]:	2022/08/26 17:03:27 turnero.go:14: Initialazing turnos..
+[INFO]:	2022/08/26 17:03:27 dbase.go:28: connected to the db: DB<dialect=pg> 
+[INFO]:	2022/08/26 17:03:27 turno.go:108: 450 turnos persisted
+[INFO]:	2022/08/26 17:03:27 dbase.go:28: connected to the db: DB<dialect=pg> 
+[INFO]:	2022/08/26 17:03:27 dbase.go:28: connected to the db: DB<dialect=pg> 
+[INFO]:	2022/08/26 17:03:42 dbase.go:28: connected to the db: DB<dialect=pg> 
+[WARNING]:	2022/08/26 17:03:42 dbase.go:37: RESTARTING DB..
+[WARNING]:	2022/08/26 17:03:42 turnero.go:14: Initialazing turnos..
+[INFO]:	2022/08/26 17:03:42 dbase.go:28: connected to the db: DB<dialect=pg> 
+[INFO]:	2022/08/26 17:03:42 turno.go:108: 450 turnos persisted
+[INFO]:	2022/08/26 17:03:42 dbase.go:28: connected to the db: DB<dialect=pg> 

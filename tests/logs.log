@@ -1,0 +1,1 @@
+[ERROR]:	2022/08/26 16:57:35 dbase.go:62: error reading 'local.env' file err: open models/local.env: no such file or directory 

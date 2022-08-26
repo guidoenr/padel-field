@@ -14,17 +14,13 @@ func InitializeTurnos() {
 	logger.Logwarning.Println("Initialazing turnos..")
 	var turnos []models.Turno
 
-	err := cleanDB()
-	if err != nil {
-		logger.Logerror.Printf("error cleaning the db: %v", err)
-	}
-
-	initialHour := 9 // that means the turnos start from 09:00 am
+	// turnos range from 9 -> 23 and in one month (30)
+	// [TODO, maybe create a config file]
+	initialHour := 9
 	lastHour := 23
-	today := getTodayDate()
-	// daysOfTurno are all the turnos that we are going to load
-	// inside the database
 	daysOfTurno := 30
+
+	today, location := getTodayDate()
 
 	// for each weekday
 	for i := 0; i < daysOfTurno; i++ {
@@ -33,7 +29,7 @@ func InitializeTurnos() {
 		// every time that we iterate, we plus one day to the day
 		// (e.g) if today is 24 of July, in the second iteration it will be 25 of July and then
 		newDate := today.AddDate(0, 0, i)
-		turno.Date, _ = time.ParseInLocation("02-01-2006", newDate.Format("02-01-2006"), time.Local)
+		turno.Date, _ = time.ParseInLocation("02-01-2006", newDate.Format("02-01-2006"), location)
 		turno.Status = models.AVAILABLE
 		turno.Day = getWeekDay(newDate)
 		// for each turno in a day (time range from 09:00 to 23:00)
@@ -43,11 +39,9 @@ func InitializeTurnos() {
 		}
 	}
 
-	for _, t := range turnos {
-		err = controllers.PersistTurno(&t)
-		if err != nil {
-			logger.Logerror.Printf("error persisting turno: %v", err)
-		}
+	err := controllers.PersistTurnos(turnos)
+	if err != nil {
+		logger.Logerror.Printf("initializing turnos: %v", err)
 	}
 
 }
@@ -56,7 +50,7 @@ func InitializeTurnos() {
 func UpdateTurnos() {
 	//var outdatedTurnos []models.Turno
 	logger.Loginfo.Println("Updating out-of-date turnos")
-	todayDate := getTodayDate()
+	todayDate, _ := getTodayDate()
 	db := models.InitDB()
 
 	turno := new(models.Turno)
@@ -115,7 +109,7 @@ func cleanDB() error {
 }
 
 // getTodayDate returns the current local datetime in America/Buenos_Aires
-func getTodayDate() time.Time {
+func getTodayDate() (time.Time, *time.Location) {
 	location, err := time.LoadLocation("America/Buenos_Aires")
 	if err != nil {
 		logger.Logerror.Printf("error loading the location: %v", err)
@@ -124,5 +118,5 @@ func getTodayDate() time.Time {
 	if err != nil {
 		logger.Logerror.Printf("error getting localTime: %v", err)
 	}
-	return todayDate
+	return todayDate, location
 }

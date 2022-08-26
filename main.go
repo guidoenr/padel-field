@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/guidoenr/padel-field/controllers"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
 )
@@ -10,9 +11,7 @@ import (
 	repo: github.com/guidoenr/padelfield
 */
 
-func main() {
-
-	//ListenAndServe() // Listen and Serve on 8080
+func cleanAll() {
 	db := models.InitDB()
 	//
 	err := models.RestartDb(db)
@@ -20,24 +19,26 @@ func main() {
 		logger.Logerror.Println(err)
 	}
 
-	err2 := models.CreateSchemas(db)
-	if err2 != nil {
-		logger.Logerror.Println(err2)
-	}
+	InitializeTurnos()
+	controllers.InitializeUsers()
 
 	defer db.Close()
+}
 
+func main() {
+	cleanAll()
+	// ListenAndServe() // gin gonic server on 8080
 	//UpdateTurnos()
-	//InitializeTurnos()
-	//
 	//dummyUser := models.User{
-	//	Username:  "guidoenr",
-	//	Password:  "aleatoryPassword",
-	//	Phone:     "2325684951",
-	//	Email:     "guidoenr4@gmail.com",
-	//	Firstname: "Guido",
-	//	Lastname:  "Enrique",
+	//	Username:  "johndoe123",
+	//	Password:  "easy_password123[';",
+	//	Phone:     "51250120",
+	//	Email:     "johndoe@outlook.com",
+	//	Firstname: "John",
+	//	Lastname:  "Doe",
 	//}
-	//
-	//controllers.Register(&dummyUser)
+	//err := controllers.Register(&dummyUser)
+	//if err != nil {
+	//	logger.Logerror.Printf("register: %v", err)
+	//}
 }

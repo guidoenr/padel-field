@@ -2,35 +2,65 @@ package controllers
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
 )
 
+// user roles
+const (
+	ADMIN  string = "admin"
+	NORMAL string = "normal"
+)
+
+// Register has the purpose of authenticate the user credentials
 func Register(user *models.User) error {
 
-	var usernames map[string]interface{}
-	var err error
+	user.Role = NORMAL
 	db := models.InitDB()
 
-	_ = db.NewSelect().
-		Model(&usernames).
+	// get all the usernames/email from the database
+	exists, err := db.NewSelect().
 		Table("users").
-		Column("id", "email").
-		Scan(context.Background())
+		Column("username").
+		Where("username = ?", user.Username).
+		Exists(context.Background())
 
-	_, exists := usernames[user.Username]
 	if exists {
-		logger.Logerror.Printf("the username '%s' already exists: %v", user.Username, err)
-	} else {
-		_, err = db.NewInsert().
-			Model(user).
-			Exec(context.Background())
+		msg := fmt.Sprintf("username '%s' exists \n", user.Username)
+		logger.Logerror.Println(msg)
+		return errors.New(msg)
+	}
 
-		if err != nil {
-			logger.Logerror.Printf("can't persist in the db: %v", err)
-		}
+	// inserting the new User in the database
+	_, err = db.NewInsert().
+		Model(user).
+		Exec(context.Background())
+
+	if err != nil {
+		logger.Logerror.Printf("can't persist in the db: %v", err)
 	}
 
 	defer db.Close()
 	return err
+}
+
+func InitializeUsers() {
+	db := models.InitDB()
+	rootUser := models.User{
+		Username:  "root",
+		Password:  "rootoor",
+		Role:      ADMIN,
+		Phone:     "",
+		Email:     "",
+		Firstname: "Root",
+		Lastname:  "Root",
+	}
+
+	_, _ = db.NewInsert().
+		Model(&rootUser).
+		Exec(context.Background())
+
+	defer db.Close()
 }

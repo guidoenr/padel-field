@@ -95,17 +95,17 @@ func ReserveTurno(turno *models.Turno, ownerId int64) error {
 	return err
 }
 
-// PersistTurno is a built-in function to map turnos into the db
-func PersistTurno(turno *models.Turno) error {
+// PersistTurnos is a built-in function to map turnos into the db
+func PersistTurnos(turnos []models.Turno) error {
 	db := models.InitDB()
 	_, err := db.NewInsert().
-		Model(turno).
+		Model(&turnos).
 		Exec(context.Background())
 
 	if err != nil {
-		logger.Logerror.Printf("error persisting turno: %v", err)
+		logger.Logerror.Printf("error persisting turnos: %v", err)
 	}
-	logger.Loginfo.Printf("added turno: %v\n", turno.ID)
+	logger.Loginfo.Printf("%d turnos persisted", len(turnos))
 
 	defer db.Close()
 	return err

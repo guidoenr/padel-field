@@ -13,10 +13,6 @@ const (
 	RESERVERD  string = "RESERVADO"
 	AVAILABLE  string = "DISPONIBLE"
 	TOURNAMENT string = "TORNEO"
-
-	// users roles
-	ADMIN  string = "admin"
-	NORMAL string = "normal"
 )
 
 // -------------------------- USER
