@@ -1,21 +1,12 @@
 import React from "react";
-import { RiMenu3Line, RiCloseLine, RiAwardFill } from "react-icons/ri";
-import { AiFillFacebook, AiFillTwitterSquare } from "react-icons/ai";
 import { useState } from "react";
 import { Link, animateScroll as scroll } from "react-scroll";
-import { useEffect } from "react";
-import { themeChange } from "theme-change";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 // Tomorrow start with Palette Color configurations in DaisyUI...
 // Fix some errors, and finish this project. :)
 
 const Header = () => {
-  useEffect(() => {
-    themeChange(false);
-    // 👆 false parameter is required for react project
-  }, []);
-
   const [nav, setNav] = useState(false);
 
   const handleMenu = () => setNav(!nav);
@@ -81,9 +72,7 @@ const Header = () => {
                   Contacto
                 </a>
               </li>
-              <li>
-                <ThemeSwitcher className="" />
-              </li>
+              <ThemeSwitcher className="" />
             </ul>
           </nav>
 

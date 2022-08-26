@@ -16,7 +16,7 @@ const Footer = () => {
         <ul className="social-links-list flex items-center gap-3 p-3">
           <li className="social-link pr-2 border-r border-r-secondary">
             <a
-              href="https://github.com/Marcosfitzsimons"
+              href="https://www.frontendmentor.io/profile/Marcosfitzsimons"
               target="_blank"
               rel="noreferrer"
             >
@@ -34,7 +34,7 @@ const Footer = () => {
           </li>
           <li className="social-link pr-2 border-r border-r-secondary">
             <a
-              href="https://twitter.com/Marcossf98"
+              href="https://www.frontendmentor.io/profile/Marcosfitzsimons"
               target="_blank"
               rel="noreferrer"
             >
