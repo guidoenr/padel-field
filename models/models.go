@@ -49,7 +49,7 @@ type Turno struct {
 	Field         string    `bun:"field" json:"field"`
 	Status        string    `bun:"status" json:"status"`
 	Fijo          bool      `bun:"fijo,default:false" json:"fijo"`
-	OwnerId       int64     `bun:"ownerID" json:"ownerID"`
+	OwnerId       int64     `bun:"owner" json:"owner"`
 	Date          time.Time `bun:"date" json:"date"`
 }
 

@@ -37,10 +37,10 @@ func GetTurnosByOwnerId(ownerId string) ([]models.Turno, error) {
 	db := models.InitDB()
 
 	// select * from turnos where status = "DISPONIBLE"
-	_, err := db.NewSelect().
+	err := db.NewSelect().
 		Model(&turnosByOwner).
-		Where("ownerID = ?", ownerId).
-		ScanAndCount(context.Background())
+		Where("owner = ?", ownerId).
+		Scan(context.Background())
 
 	if err != nil {
 		logger.Logerror.Printf("getting turnos for user '%d'", ownerId)
@@ -85,7 +85,7 @@ func CancelTurno(id string, ownerId int64) error {
 		Model(turno).
 		Set("status = ?", models.AVAILABLE).
 		Where("id = ?", id).
-		Where("ownerID = ?", ownerId).
+		Where("owner = ?", ownerId).
 		Exec(context.Background())
 
 	if err != nil {
@@ -109,7 +109,7 @@ func ReserveTurno(id string, ownerId int64) error {
 	_, err := db.NewUpdate().
 		Model(turno).
 		Set("status = ?", models.RESERVERD).
-		Set("ownerID = ?", ownerId).
+		Set("owner = ?", ownerId).
 		Where("id = ?", id).
 		Exec(context.Background())
 

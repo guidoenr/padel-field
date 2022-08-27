@@ -14,7 +14,7 @@ func ListenAndServe() {
 	turnos := router.Group("/turnos")
 	{
 		turnos.GET("/", showTurnos())
-		turnos.GET("/:id", showTurno())
+		turnos.GET("/:id", showTurnoByID())
 		turnos.POST("/:id/reserve", reserveTurno())
 		turnos.POST("/:id/cancel", cancelTurno())
 	}
@@ -40,8 +40,8 @@ func showTurnos() gin.HandlerFunc {
 	}
 }
 
-// showTurno is the main page for the turnos website
-func showTurno() gin.HandlerFunc {
+// showTurnoByID is the main page for the turnos website
+func showTurnoByID() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		turno, err := controllers.GetTurnoById(c.Param("id"))
 		if err != nil {
@@ -52,7 +52,7 @@ func showTurno() gin.HandlerFunc {
 	}
 }
 
-// showTurno is the main page for the turnos website
+// showTurnoByID is the main page for the turnos website
 func showTurnosByOwnerId() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		turnos, err := controllers.GetTurnosByOwnerId(c.Param("id"))
