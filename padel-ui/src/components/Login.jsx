@@ -3,10 +3,10 @@ import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   return (
-    <section className="login w-full h-[80vh]">
-      <div className="login-container container m-auto px-4 py-14 md:flex md:justify-between md:items-center md:max-w-6xl relative">
+    <section className="login w-full h-[80vh] mt-12">
+      <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container w-[95%] m-auto p-8 md:flex md:justify-between md:items-center md:max-w-6xl relative">
         <div className="form-container flex flex-col gap-2 md:w-[45%]">
-          <div className="md:absolute md:top-14 md:left-4">
+          <div className="md:absolute md:top-8 md:left-8">
             <a
               className="cursor-pointer font-secondary-font text-4xl text-primary"
               href="#home"
@@ -25,7 +25,7 @@ const Login = () => {
               <input
                 type="text"
                 placeholder="Nombre"
-                className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/40 placeholder:font-semibold"
+                className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
               />
             </div>
             <div className="row border-b border-b-primary/30">
@@ -34,7 +34,7 @@ const Login = () => {
                 placeholder="Email"
                 name="email"
                 id="email"
-                className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/40 placeholder:font-semibold"
+                className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
               />
             </div>
             <div className="row border-b border-b-primary/30">
@@ -43,13 +43,13 @@ const Login = () => {
                 placeholder="Contraseña"
                 name="password"
                 id="password"
-                className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/40 placeholder:font-semibold"
+                className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
               />
             </div>
             <div className="row pt-4">
               <button
                 type="submit"
-                className="btn w-full normal-case bg-accent text-neutral border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
+                className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
               >
                 Crear cuenta
               </button>
@@ -64,13 +64,13 @@ const Login = () => {
               </button>
             </div>
           </form>
-          <div className="log-in-container mt-4 flex flex-col gap-4">
+          <div className="log-in-container mt-8 flex flex-col gap-4">
             <p className="log-in-text text-xl font-semibold">
               ¿Ya tenes una cuenta?
             </p>
             <button
               type="button"
-              className="btn w-full normal-case bg-accent text-neutral border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
+              className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
             >
               Entrar
             </button>

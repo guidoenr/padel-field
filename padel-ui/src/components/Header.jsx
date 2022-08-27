@@ -3,9 +3,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher";
 
-// Tomorrow start with Palette Color configurations in DaisyUI...
-// Fix some errors, and finish this project. :)
-
 const Header = () => {
   const [nav, setNav] = useState(false);
 

@@ -24,7 +24,7 @@ module.exports = {
           "primary": "#e5e0df", // veryDarkGray
           "secondary": "#151515", // darkGray
           "accent": "#147B74", // themeColor
-          "neutral": "#f8fffe", // veryLightGray
+          "neutral": "#222222", // veryLightGray
           "base-100": "#222222", // lightGray df4996
         }
       },

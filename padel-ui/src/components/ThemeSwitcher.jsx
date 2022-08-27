@@ -17,7 +17,7 @@ const ThemeSwitcher = () => {
         data-act-class="ACTIVECLASS"
         className="flex items-center justify-center"
       >
-        <BiSun className="w-6 h-6 hover:scale-105 transition ease-in-out" />
+        <BiSun className="w-6 h-7 hover:scale-105 transition ease-in-out" />
       </button>
       <button
         type="button"
@@ -25,7 +25,7 @@ const ThemeSwitcher = () => {
         data-act-class="ACTIVECLASS"
         className="flex items-center justify-center"
       >
-        <BsMoonStars className="w-5 h-5 hover:scale-105 transition ease-in-out" />
+        <BsMoonStars className="w-5 h-6 hover:scale-105 transition ease-in-out" />
       </button>
     </div>
   );

@@ -20,7 +20,7 @@ const ReservationItem = () => {
           onClick={reservationBtnClick}
           className="reservation-btn-container reservation-btn px-3 border-none text-sm text-primary pl-10 relative flex items-center btn hover:bg-[#4bbb90] hover:scale-105 ease-in-out bg-[#3faa81]"
         >
-          <BiTennisBall className="absolute left-0 w-8 p-1 rounded-l-lg text-2xl cursor-pointer h-full bg-[#17382b] text-[#46bb8e]" />
+          <BiTennisBall className="absolute left-0 w-8 p-1 rounded-l-md text-2xl cursor-pointer h-full bg-[#17382b] text-[#46bb8e]" />
           Reservar
         </button>
       )}
