@@ -8,16 +8,10 @@ import (
 	"github.com/guidoenr/padel-field/models"
 )
 
-// user roles
-const (
-	ADMIN  string = "admin"
-	NORMAL string = "normal"
-)
-
 // Register has the purpose of authenticate the user credentials
 func Register(user *models.User) error {
 
-	user.Role = NORMAL
+	user.Role = models.NORMAL
 	db := models.InitDB()
 
 	// get all the usernames/email from the database
@@ -44,23 +38,4 @@ func Register(user *models.User) error {
 
 	defer db.Close()
 	return err
-}
-
-func InitializeUsers() {
-	db := models.InitDB()
-	rootUser := models.User{
-		Username:  "root",
-		Password:  "rootoor",
-		Role:      ADMIN,
-		Phone:     "",
-		Email:     "",
-		Firstname: "Root",
-		Lastname:  "Root",
-	}
-
-	_, _ = db.NewInsert().
-		Model(&rootUser).
-		Exec(context.Background())
-
-	defer db.Close()
 }

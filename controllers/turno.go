@@ -2,6 +2,8 @@ package controllers
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
 )
@@ -43,31 +45,56 @@ func GetTurnosByOwnerId(ownerId int64) ([]models.Turno, error) {
 		ScanAndCount(context.Background())
 
 	if err != nil {
-		logger.Logerror.Printf("error getting turnos for iser '%d'", ownerId)
+		logger.Logerror.Printf("getting turnos for iser '%d'", ownerId)
 	}
 
 	defer db.Close()
 	return turnosByOwner, err
 }
 
+// GetTurnoById returns all the turnos that are linked to a specific user
+func GetTurnoById(id string) (models.Turno, error) {
+	var turnoById models.Turno
+	logger.Loginfo.Printf("finding turno by id: '%d'", id)
+	// initialize the DB cursor
+	db := models.InitDB()
+
+	// select * from turnos where status = "DISPONIBLE"
+	err := db.NewSelect().
+		Model(&turnoById).
+		Where("id = ?", id).
+		Scan(context.Background())
+
+	if err != nil {
+		msg := fmt.Sprintf("turno '%s' not found", id)
+		logger.Logerror.Println(msg)
+		err = errors.New(msg)
+	}
+
+	defer db.Close()
+	return turnoById, err
+}
+
 // CancelTurno changes the state of the turno to AVAILABLE and set the OwnerId = 0
 // which means that turno is not related to any user
-func CancelTurno(turno *models.Turno) error {
+func CancelTurno(id string, ownerId int64) error {
 	logger.Loginfo.Println("canceling turno")
-	turno.OwnerId = 0
-	turno.Status = models.AVAILABLE
-
 	db := models.InitDB()
+
+	turno := new(models.Turno)
+
 	_, err := db.NewUpdate().
 		Model(turno).
-		Column("status", "owner").
-		WherePK().
+		Set("status = ?", models.AVAILABLE).
+		Where("id = ?", id).
+		Where("ownerID = ?", ownerId).
 		Exec(context.Background())
 
 	if err != nil {
-		logger.Logerror.Printf("error canceling turno: %v", err)
+		msg := fmt.Sprintf("reserving turno '%s' for user '%d': %v \n", id, ownerId, err)
+		logger.Logerror.Println(msg)
+		err = errors.New(msg)
 	}
-	logger.Loginfo.Printf("modified turno: %v\n", turno.String())
 
 	defer db.Close()
 	return err
@@ -75,20 +102,23 @@ func CancelTurno(turno *models.Turno) error {
 
 // ReserveTurno changes the status of the turno to RESERVED and set the ownerId of the user
 // that made the request of reserve
-func ReserveTurno(turno *models.Turno, ownerId int64) error {
-	turno.OwnerId = ownerId
-	turno.Status = models.RESERVERD
-
+func ReserveTurno(id string, ownerId int64) error {
 	logger.Loginfo.Println("reserving turno")
 	db := models.InitDB()
+
+	turno := new(models.Turno)
+
 	_, err := db.NewUpdate().
 		Model(turno).
-		Column("status", "owner").
-		WherePK().
+		Set("status = ?", models.RESERVERD).
+		Set("ownerID = ?", ownerId).
+		Where("id = ?", id).
 		Exec(context.Background())
 
 	if err != nil {
-		logger.Logerror.Printf("error reserving turno: %v", err)
+		msg := fmt.Sprintf("reserving turno '%s' for user '%d': %v \n", id, ownerId, err)
+		logger.Logerror.Println(msg)
+		err = errors.New(msg)
 	}
 
 	defer db.Close()

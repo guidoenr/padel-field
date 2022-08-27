@@ -15,6 +15,12 @@ const (
 	TOURNAMENT string = "TORNEO"
 )
 
+// user roles
+const (
+	ADMIN  string = "admin"
+	NORMAL string = "normal"
+)
+
 // -------------------------- USER
 
 type User struct {
@@ -37,14 +43,14 @@ func (u User) String() string {
 
 type Turno struct {
 	bun.BaseModel `bun:"table:turnos,alias:t"`
-	ID            int64     `bun:"id,pk,autoincrement"`
-	Day           string    `bun:"day"`
-	Hour          int       `bun:"hour"`
-	Field         string    `bun:"field"`
-	Status        string    `bun:"status"`
-	Fijo          bool      `bun:"fijo,default:false"`
-	OwnerId       int64     `bun:"owner"`
-	Date          time.Time `bun:"date"`
+	ID            int64     `bun:"id,pk,autoincrement" json:"id"`
+	Day           string    `bun:"day" json:"day"`
+	Hour          int       `bun:"hour" json:"hour"`
+	Field         string    `bun:"field" json:"field"`
+	Status        string    `bun:"status" json:"status"`
+	Fijo          bool      `bun:"fijo,default:false" json:"fijo"`
+	OwnerId       int64     `bun:"ownerID" json:"ownerID"`
+	Date          time.Time `bun:"date" json:"date"`
 }
 
 func (t Turno) String() string {

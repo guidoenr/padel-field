@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/guidoenr/padel-field/controllers"
+	"github.com/guidoenr/padel-field/api"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
 )
@@ -20,14 +20,14 @@ func cleanAll() {
 	}
 
 	InitializeTurnos()
-	controllers.InitializeUsers()
+	InitializeUsers()
 
 	defer db.Close()
 }
 
 func main() {
 	cleanAll()
-	// ListenAndServe() // gin gonic server on 8080
+	api.ListenAndServe() // gin gonic server on 8080
 	//UpdateTurnos()
 	//dummyUser := models.User{
 	//	Username:  "johndoe123",

@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+// -------------------------- TURNOS
+
 // InitializeTurnos it's a zero-day kind of function, it loads all the available turnos into the db
 // and clean the existing ones, put all the turnos on available status
 func InitializeTurnos() {
@@ -119,4 +121,25 @@ func getTodayDate() (time.Time, *time.Location) {
 		logger.Logerror.Printf("error getting localTime: %v", err)
 	}
 	return todayDate, location
+}
+
+// -------------------------- USERS
+
+func InitializeUsers() {
+	db := models.InitDB()
+	rootUser := models.User{
+		Username:  "root",
+		Password:  "rootoor",
+		Role:      models.ADMIN,
+		Phone:     "",
+		Email:     "",
+		Firstname: "Root",
+		Lastname:  "Root",
+	}
+
+	_, _ = db.NewInsert().
+		Model(&rootUser).
+		Exec(context.Background())
+
+	defer db.Close()
 }
