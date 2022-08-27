@@ -10,7 +10,7 @@ const ThemeSwitcher = () => {
     // 👆 false parameter is required for react project
   }, []);
   return (
-    <div className="switcher-container flex gap-4 rounded-lg bg-primary/20 px-2 py-1">
+    <div className="switcher-container flex gap-4 rounded-lg bg-primary/5 px-3 py-1">
       <button
         type="button"
         data-set-theme="light"
