@@ -17,3 +17,5 @@
 # Extras @guidoenr
 *.idea
 *.idea/
+*.log
+

@@ -9,8 +9,6 @@ import (
 )
 
 // GetAvailableTurnos returns the entire list of available turnos of each weekday
-// TODO -> think if is better to filter per/day in the SQL query, in the front or in golang?
-// i think that it will be better in SQL, make some test then
 func GetAvailableTurnos() ([]models.Turno, error) {
 	var availableTurnos []models.Turno
 	logger.Loginfo.Println("getting availabale turnos")
@@ -32,7 +30,7 @@ func GetAvailableTurnos() ([]models.Turno, error) {
 }
 
 // GetTurnosByOwnerId returns all the turnos that are linked to a specific user
-func GetTurnosByOwnerId(ownerId int64) ([]models.Turno, error) {
+func GetTurnosByOwnerId(ownerId string) ([]models.Turno, error) {
 	var turnosByOwner []models.Turno
 	logger.Loginfo.Printf("getting turnos for user '%d'", ownerId)
 	// initialize the DB cursor
@@ -41,18 +39,18 @@ func GetTurnosByOwnerId(ownerId int64) ([]models.Turno, error) {
 	// select * from turnos where status = "DISPONIBLE"
 	_, err := db.NewSelect().
 		Model(&turnosByOwner).
-		Where("ownerId = ?", ownerId).
+		Where("ownerID = ?", ownerId).
 		ScanAndCount(context.Background())
 
 	if err != nil {
-		logger.Logerror.Printf("getting turnos for iser '%d'", ownerId)
+		logger.Logerror.Printf("getting turnos for user '%d'", ownerId)
 	}
 
 	defer db.Close()
 	return turnosByOwner, err
 }
 
-// GetTurnoById returns all the turnos that are linked to a specific user
+// GetTurnoById returns one single turno linked to the turnoId
 func GetTurnoById(id string) (models.Turno, error) {
 	var turnoById models.Turno
 	logger.Loginfo.Printf("finding turno by id: '%d'", id)
@@ -91,7 +89,7 @@ func CancelTurno(id string, ownerId int64) error {
 		Exec(context.Background())
 
 	if err != nil {
-		msg := fmt.Sprintf("reserving turno '%s' for user '%d': %v \n", id, ownerId, err)
+		msg := fmt.Sprintf("canceling turno '%s' for user '%d': %v \n", id, ownerId, err)
 		logger.Logerror.Println(msg)
 		err = errors.New(msg)
 	}

@@ -26,11 +26,11 @@ const (
 type User struct {
 	bun.BaseModel `bun:"table:users,alias:u"`
 	ID            int64  `bun:"id,pk,autoincrement"`
-	Username      string `bun:"username"`
+	Username      string `bun:"username,unique"`
 	Password      string `bun:"password"`
 	Role          string `bun:"role"`
 	Phone         string `bun:"phone"`
-	Email         string `bun:"email"`
+	Email         string `bun:"email,unique"`
 	Firstname     string `bun:"firstname"`
 	Lastname      string `bun:"lastname"`
 }

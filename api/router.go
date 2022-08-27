@@ -19,6 +19,11 @@ func ListenAndServe() {
 		turnos.POST("/:id/cancel", cancelTurno())
 	}
 
+	users := router.Group("/users")
+	{
+		users.GET("/:id/turnos", showTurnosByOwnerId())
+	}
+
 	// listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 	router.Run()
 }
@@ -28,7 +33,7 @@ func showTurnos() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		turnos, err := controllers.GetAvailableTurnos()
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"data": err.Error()})
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"data": err.Error()})
 			return
 		}
 		c.IndentedJSON(200, gin.H{"data": turnos})
@@ -40,10 +45,22 @@ func showTurno() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		turno, err := controllers.GetTurnoById(c.Param("id"))
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 		c.IndentedJSON(200, gin.H{"turno": turno})
+	}
+}
+
+// showTurno is the main page for the turnos website
+func showTurnosByOwnerId() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		turnos, err := controllers.GetTurnosByOwnerId(c.Param("id"))
+		if err != nil {
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.IndentedJSON(200, gin.H{"turno": turnos})
 	}
 }
 
@@ -53,7 +70,7 @@ func reserveTurno() gin.HandlerFunc {
 		// TODO, check the ownerID logic?
 		err := controllers.ReserveTurno(c.Param("id"), 0)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 		c.IndentedJSON(200, gin.H{"turno": err})
@@ -66,7 +83,7 @@ func cancelTurno() gin.HandlerFunc {
 		// TODO, check the ownerID logic?
 		err := controllers.CancelTurno(c.Param("id"), 0)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 		c.IndentedJSON(200, gin.H{"turno": err})
