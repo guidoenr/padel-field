@@ -76,7 +76,9 @@ const Login = () => {
             </button>
           </div>
         </div>
-        <div className="login-img-container hidden md:flex w-[50%] h-[40rem] rounded-lg"></div>
+        <div className="login-img-container hidden md:flex w-[50%] h-[40rem] rounded-lg">
+          <div class="hero-overlay bg-opacity-30 bg-[#151515] rounded-lg"></div>
+        </div>
       </div>
     </section>
   );
