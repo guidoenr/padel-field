@@ -8,10 +8,13 @@ const Reservation = () => {
       <div className="introimg hero h-[35rem] w-full mb-10 relative">
         <div className="hero-overlay bg-opacity-60 bg-[#151515]"></div>
         <div className="hero-content text-center text-neutral-content">
-          <div className="max-w-md text-center flex flex-col items-center">
-            <h2 className="text-[#e5e0df] w-full mb-20 text-4xl lg:text-5xl">
+          <div className="max-w-md text-center flex flex-col items-center gap-6">
+            <h2 className="text-[#e5e0df] w-full text-4xl lg:text-5xl">
               Reserva tu turno
             </h2>
+            <p className="text-[#e5e0df] text-2xl w-full mb-20 lg:text-3xl">
+              $1000 la hora <span className="text-accent">pa</span>
+            </p>
             <Link
               to="reservation"
               smooth={true}
@@ -38,7 +41,7 @@ const Reservation = () => {
       </div>
 
       <div
-        className="container mx-auto flex flex-col items-center gap-4 py-10 xl:last:col-start-2 xl:last:col-end-3  md:grid md:grid-cols-2 md:place-items-center xl:grid-cols-3"
+        className="container mx-auto flex flex-col items-center gap-4 py-10 md:grid md:grid-cols-2 md:place-items-center xl:grid-cols-3"
         name="reservation"
       >
         <ReservationCard />
