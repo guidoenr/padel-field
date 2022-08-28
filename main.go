@@ -11,9 +11,10 @@ import (
 	repo: github.com/guidoenr/padelfield
 */
 
+// cleanAll restart the entire DB and create all the schemas
 func cleanAll() {
 	db := models.InitDB()
-	//
+
 	err := models.RestartDb(db)
 	if err != nil {
 		logger.Logerror.Println(err)
@@ -28,7 +29,7 @@ func cleanAll() {
 func main() {
 	cleanAll()
 	api.ListenAndServe() // gin gonic server on 8080
-	//UpdateTurnos()
+	UpdateTurnos()
 	//dummyUser := models.User{
 	//	Username:  "johndoe123",
 	//	Password:  "easy_password123[';",

@@ -11,8 +11,6 @@ import (
 func ListenAndServe() {
 	router := gin.Default()
 
-	//router.LoadHTMLFiles("../padel-ui/public/index.html")
-
 	router.GET("/", showIndex())
 
 	turnos := router.Group("/turnos")
@@ -32,7 +30,7 @@ func ListenAndServe() {
 	router.Run()
 }
 
-// showTurnos is the main page for the turnos website
+// showIndex is the main page for the turnos website
 func showIndex() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{
@@ -65,7 +63,7 @@ func showTurnoByID() gin.HandlerFunc {
 	}
 }
 
-// showTurnoByID is the main page for the turnos website
+// showTurnosByOwnerId is the main page for the turnos website
 func showTurnosByOwnerId() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		turnos, err := controllers.GetTurnosByOwnerId(c.Param("id"))

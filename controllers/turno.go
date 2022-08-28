@@ -57,7 +57,6 @@ func GetTurnoById(id string) (models.Turno, error) {
 	// initialize the DB cursor
 	db := models.InitDB()
 
-	// select * from turnos where status = "DISPONIBLE"
 	err := db.NewSelect().
 		Model(&turnoById).
 		Where("id = ?", id).

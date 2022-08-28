@@ -25,7 +25,7 @@ func InitDB() *bun.DB {
 	if err != nil {
 		logger.Logerror.Printf("error making Ping() to dbase: %v", err)
 	}
-	logger.Loginfo.Printf("connected to the db: %v \n", db)
+	logger.Loginfo.Printf("connected to the db: %v \n", db.DB.Stats())
 
 	return db
 }
