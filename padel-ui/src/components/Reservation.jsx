@@ -20,14 +20,16 @@ const Reservation = () => {
               smooth={true}
               offset={-50}
               duration={700}
-              className="text-[#e5e0df] w-20 h-20 animate-bounce absolute bottom-10 cursor-pointer hover:text-accent hover:scale-105 transition ease-in-out"
+              className=" text-[#e5e0df] w-20 h-20 animate-bounce absolute bottom-10 cursor-pointer hover:text-accent hover:scale-105 transition ease-in-out"
             >
               <svg
+                whileHover={{ scale: 1.1 }}
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
+                className=""
               >
                 <path
                   strokeLinecap="round"
@@ -41,7 +43,7 @@ const Reservation = () => {
       </div>
 
       <div
-        className="container mx-auto flex flex-col items-center gap-4 py-10 md:grid md:grid-cols-2 md:place-items-center xl:grid-cols-3"
+        className="container mx-auto flex flex-col items-center gap-4 py-10 md:grid md:grid-cols-2 md:place-items-center xl:grid-cols-3 first:bg-red-500"
         name="reservation"
       >
         <ReservationCard />
