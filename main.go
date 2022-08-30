@@ -27,7 +27,7 @@ func cleanAll() {
 }
 
 func main() {
-	//cleanAll()
+	cleanAll()
 	api.ListenAndServe() // gin gonic server on 8080
 
 }

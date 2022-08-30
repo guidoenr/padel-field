@@ -50,7 +50,8 @@ func ListenAndServe() {
 	{
 		auth.POST("/register", register())
 		auth.POST("/login", login())
-		auth.GET("/user", user())
+		auth.POST("/logout", logout())
+		auth.GET("/user", userGet())
 	}
 	// listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 	router.Run()
@@ -132,29 +133,6 @@ func cancelTurno() gin.HandlerFunc {
 // -------------------------- login/register
 
 // login
-func user() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		cookie, err := c.Cookie("jwt")
-		if err != nil {
-			c.IndentedJSON(http.StatusUnauthorized, err.Error())
-			return
-		}
-
-		token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-			return []byte(SecretKey), nil
-		})
-
-		if err != nil {
-			c.IndentedJSON(http.StatusUnauthorized, err.Error())
-			return
-		}
-		claims := token.Claims
-
-		c.IndentedJSON(http.StatusOK, claims)
-	}
-}
-
-// login
 func login() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		user := models.User{
@@ -170,7 +148,7 @@ func login() gin.HandlerFunc {
 			c.IndentedJSON(http.StatusBadRequest, err.Error())
 			return
 		}
-		c.IndentedJSON(http.StatusOK, gin.H{"ok": "User logged"})
+		c.IndentedJSON(http.StatusOK, gin.H{"ok": "Logged in"})
 	}
 }
 
@@ -192,4 +170,43 @@ func register() gin.HandlerFunc {
 		}
 		c.IndentedJSON(http.StatusOK, gin.H{"ok": "User registered"})
 	}
+}
+
+// login
+func userGet() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		cookie, err := c.Cookie("jwt")
+		if err != nil {
+			c.IndentedJSON(http.StatusUnauthorized, err.Error())
+			return
+		}
+
+		token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+			return []byte(SecretKey), nil
+		})
+
+		if err != nil {
+			c.IndentedJSON(http.StatusUnauthorized, gin.H{"error": "unauthenticated"})
+			return
+		}
+
+		claims := token.Claims.(*jwt.StandardClaims)
+		user, _ := controllers.GetUserById(claims.Issuer)
+
+		c.IndentedJSON(http.StatusOK, gin.H{"userGet": user})
+	}
+}
+
+func logout() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		cookie := http.Cookie{
+			Name:     "jwt",
+			Value:    "",
+			Expires:  time.Now().Add(-time.Hour), // this expires the cookie because set the expire time at the past
+			HttpOnly: true,
+		}
+		c.SetCookie(cookie.Name, cookie.Value, cookie.MaxAge, cookie.Path, cookie.Domain, cookie.Secure, cookie.HttpOnly)
+		c.IndentedJSON(http.StatusOK, gin.H{"ok": "logged out"})
+	}
+
 }

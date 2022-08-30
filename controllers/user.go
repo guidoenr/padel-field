@@ -119,3 +119,23 @@ func Login(user *models.User) (*http.Cookie, error) {
 	defer db.Close()
 	return &cookie, err
 }
+
+func GetUserById(id string) (models.User, error) {
+	var user models.User
+	db := models.InitDB()
+
+	err := db.NewSelect().
+		Model(&user).
+		Where("id = ?", id).
+		Scan(context.Background())
+
+	if err != nil {
+		msg := fmt.Sprintf("can not get user by id '%s'", id)
+		logger.Logerror.Println(msg)
+		return user, errors.New(msg)
+	}
+
+	defer db.Close()
+
+	return user, err
+}

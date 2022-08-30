@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
+	"strconv"
 )
 
 // GetAvailableTurnos returns the entire list of available turnos of each weekday
@@ -53,13 +54,15 @@ func GetTurnosByOwnerId(ownerId string) ([]models.Turno, error) {
 // GetTurnoById returns one single turno linked to the turnoId
 func GetTurnoById(id string) (models.Turno, error) {
 	var turnoById models.Turno
+	idConv, _ := strconv.Atoi(id)
+
 	logger.Loginfo.Printf("finding turno by id: '%d'", id)
 	// initialize the DB cursor
 	db := models.InitDB()
 
 	err := db.NewSelect().
 		Model(&turnoById).
-		Where("id = ?", id).
+		Where("id = ?", idConv).
 		Scan(context.Background())
 
 	if err != nil {
