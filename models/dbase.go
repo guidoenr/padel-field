@@ -62,7 +62,7 @@ func loadDBConnector() *pgdriver.Connector {
 		logger.Logerror.Printf("error reading 'local.env' file err: %v \n", err)
 	}
 
-	user := os.Getenv("USER")
+	user := os.Getenv("DB_USER")
 	password := os.Getenv("PASSWORD")
 	dbname := os.Getenv("DATABASE")
 	addr := os.Getenv("ADDR")
