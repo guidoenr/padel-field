@@ -18,7 +18,7 @@ const ReservationItem = ({ hr }) => {
       {available && (
         <button
           onClick={showReserved}
-          className="h-[2rem] rounded-md reservation-btn-container reservation-btn px-3 text-[.9rem] border-none text-primary transition pl-10 relative flex items-center hover:bg-[#4bbb90] hover:scale-105 ease-in-out bg-[#3faa81]"
+          className="h-[2rem] rounded-lg reservation-btn-container reservation-btn px-3 text-[.9rem] border-none text-primary transition pl-10 relative flex items-center hover:bg-[#4bbb90] hover:scale-105 ease-in-out bg-[#3faa81]"
         >
           <BiTennisBall className="absolute left-0 w-8 p-1 rounded-l-md text-2xl cursor-pointer h-full bg-[#17382b] text-[#46bb8e]" />
           Reservar
