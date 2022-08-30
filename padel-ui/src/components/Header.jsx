@@ -27,15 +27,12 @@ const Header = () => {
             <ul className="menu menu-horizontal p-0 gap-8">
               <li className="text-sm">
                 <NavLink
-                  style={({ isActive }) => {
-                    return {
-                      color: isActive ? "#147B74" : "",
-                      fontWeight: isActive ? "700" : "",
-                      backgroundColor: isActive ? "transparent" : "",
-                    };
-                  }}
                   to="/"
-                  className="uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-bold text-accent uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                      : "font-medium uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                  }
                 >
                   Reservas
                 </NavLink>
