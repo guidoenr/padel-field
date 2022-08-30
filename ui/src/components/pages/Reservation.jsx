@@ -13,7 +13,7 @@ const Reservation = () => {
               Reserva tu turno
             </h2>
             <p className="text-[#e5e0df] text-2xl w-full mb-20 lg:text-3xl">
-              $1000 la hora <span className="text-accent">pa</span>
+              $300/hr
             </p>
             <Link
               to="reservation"
@@ -42,16 +42,16 @@ const Reservation = () => {
       </div>
 
       <div
-        className="container mx-auto flex flex-col items-center gap-4 py-10 md:grid md:grid-cols-2 md:place-items-center xl:grid-cols-4 first:bg-red-500"
+        className="container mx-auto max-w-[95%] flex flex-col items-center py-10 sm:grid sm:grid-cols-2 sm:place-items-center lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 first:bg-red-500"
         name="reservation"
       >
-        <ReservationCard />
-        <ReservationCard />
-        <ReservationCard />
-        <ReservationCard />
-        <ReservationCard />
-        <ReservationCard />
-        <ReservationCard />
+        <ReservationCard day="LUNES - 22/08" />
+        <ReservationCard day="MARTES - 23/08" />
+        <ReservationCard day="MIERCOLES - 24/08" />
+        <ReservationCard day="JUEVES - 25/08" />
+        <ReservationCard day="VIERNES - 26/08" />
+        <ReservationCard day="SABADO - 27/08" />
+        <ReservationCard day="DOMINGO - 28/08" />
       </div>
     </main>
   );
