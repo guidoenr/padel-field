@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher";
+import { HiMenuAlt3 } from "react-icons/hi";
+import { MdOutlineClose } from "react-icons/md";
 
 const Header = () => {
   const [nav, setNav] = useState(false);
@@ -71,58 +73,38 @@ const Header = () => {
             </ul>
           </nav>
 
-          <div className="navbar-end">
+          <div className="navbar-end relative">
             <div className="flex items-center justify-end gap-4">
               <div className="theme-container z-[90] md:hidden">
                 <ThemeSwitcher />
               </div>
 
-              <div className="hamburger-container md:hidden z-[90] flex items-center">
-                <label className="bg-transparent border-none swap swap-rotate">
-                  <input type="checkbox" onClick={handleMenu} />
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="swap-off fill-current w-9 h-9 relative"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"
-                    />
-                  </svg>
-
-                  <svg
-                    className="swap-on fill-current w-9 h-9 relative"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                  >
-                    <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
-                  </svg>
-                </label>
+              <div className="md:hidden mr-4 z-[90]" onClick={handleMenu}>
+                {!nav ? (
+                  <HiMenuAlt3 className="text-4xl cursor-pointer" />
+                ) : (
+                  <MdOutlineClose className="text-4xl cursor-pointer" />
+                )}
               </div>
             </div>
             <div
               className={
                 !nav
                   ? "hidden"
-                  : "md:hidden absolute left-16 top-0 h-screen w-screen bg-base-100 z-[60]"
+                  : "md:hidden absolute right-5 top-[4.2rem] h-[17rem] bg-base-100 w-[12rem] z-[60] rounded-box border border-primary/30"
               }
             >
-              <div className="flex flex-col w-[80%] h-[90vh] mx-auto">
-                <nav className="flex items-center h-[80vh]">
-                  <ul className="menu menu-compact w-[80%] p-2 rounded-box">
-                    <li className="text-base border-b border-b-primary/30 py-3 flex">
+              <div className="flex flex-col w-full h-full justify-start relative">
+                <nav className="flex items-center w-full h-full">
+                  <ul className="menu menu-compact w-full bg-base-100 rounded-box">
+                    <li className="border-b border-b-primary/30 py-3 flex">
                       <NavLink
                         onClick={handleClose}
                         to="/"
                         className={({ isActive }) =>
                           isActive
-                            ? "text-accent font-semibold uppercase self-center text-lg tracking-widest hover:bg-base-100"
-                            : "uppercase font-normal self-center text-lg tracking-widest hover:bg-base-100"
+                            ? "text-accent font-semibold uppercase self-center text-base tracking-widest hover:bg-base-100"
+                            : "uppercase font-normal self-center base tracking-widest hover:bg-base-100"
                         }
                       >
                         Reservas
@@ -134,8 +116,8 @@ const Header = () => {
                         to="/misturnos"
                         className={({ isActive }) =>
                           isActive
-                            ? "text-accent font-semibold uppercase self-center text-lg tracking-widest hover:bg-base-100"
-                            : "uppercase font-normal self-center text-lg tracking-widest hover:bg-base-100"
+                            ? "text-accent font-semibold uppercase self-center text-base tracking-widest hover:bg-base-100"
+                            : "uppercase font-normal self-center text-base tracking-widest hover:bg-base-100"
                         }
                       >
                         Mis Turnos
@@ -145,18 +127,18 @@ const Header = () => {
                       <Link
                         onClick={handleClose}
                         to="/contacto"
-                        className="uppercase font-normal self-center text-lg tracking-widest hover:bg-base-100"
+                        className="uppercase font-normal self-center text-base tracking-widest hover:bg-base-100"
                       >
                         Contacto
                       </Link>
                     </li>
-                    <li className="py-6">
+                    <li className="py-3">
                       <Link
                         onClick={handleClose}
-                        to="/login"
-                        className="border-accent uppercase btn bg-primary/5 px-6 font-medium tracking-widest hover:border-accent/80 hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                        to="/profile"
+                        className="uppercase font-normal self-center text-base tracking-widest hover:bg-base-100"
                       >
-                        Entrar
+                        Profile
                       </Link>
                     </li>
                   </ul>
