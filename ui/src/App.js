@@ -1,7 +1,8 @@
 import Header from './components/Header'
-import Reservation from './components/Reservation';
 import Footer from './components/Footer'
-import Login from './components/Login'
+import Reservation from './components/pages/Reservation';
+import MyTurns from './components/pages/MyTurns';
+import Login from './components/pages/Login'
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Reservation />} />
+        <Route path="misturnos" element={<MyTurns />} />
         <Route path="login" element={<Login />} />
       </Routes>
       <Footer />

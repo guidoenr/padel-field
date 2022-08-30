@@ -38,12 +38,16 @@ const Header = () => {
                 </NavLink>
               </li>
               <li className="text-sm">
-                <Link
-                  to="/nosotros"
-                  className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                <NavLink
+                  to="/misturnos"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-bold text-accent uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                      : "font-medium uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                  }
                 >
-                  Nosotros
-                </Link>
+                  Mis Turnos
+                </NavLink>
               </li>
               <li className="text-sm">
                 <Link
@@ -112,22 +116,30 @@ const Header = () => {
                 <nav className="flex items-center h-[80vh]">
                   <ul className="menu menu-compact w-[80%] p-2 rounded-box">
                     <li className="text-base border-b border-b-primary/30 py-3 flex">
-                      <Link
+                      <NavLink
                         onClick={handleClose}
                         to="/"
-                        className="uppercase font-normal self-center text-lg tracking-widest hover:bg-base-100"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "text-accent font-semibold uppercase self-center text-lg tracking-widest hover:bg-base-100"
+                            : "uppercase font-normal self-center text-lg tracking-widest hover:bg-base-100"
+                        }
                       >
                         Reservas
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="border-b border-b-primary/30 py-3 flex">
-                      <Link
+                      <NavLink
                         onClick={handleClose}
-                        to="/nosotros"
-                        className="uppercase font-normal self-center text-lg tracking-widest hover:bg-base-100"
+                        to="/misturnos"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "text-accent font-semibold uppercase self-center text-lg tracking-widest hover:bg-base-100"
+                            : "uppercase font-normal self-center text-lg tracking-widest hover:bg-base-100"
+                        }
                       >
-                        Nosotros
-                      </Link>
+                        Mis Turnos
+                      </NavLink>
                     </li>
                     <li className="border-b border-b-primary/30 py-3 flex">
                       <Link
