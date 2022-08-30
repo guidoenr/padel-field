@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 const Header = () => {
@@ -26,12 +26,19 @@ const Header = () => {
           <nav className="navbar-center hidden md:flex">
             <ul className="menu menu-horizontal p-0 gap-8">
               <li className="text-sm">
-                <Link
+                <NavLink
+                  style={({ isActive }) => {
+                    return {
+                      color: isActive ? "#147B74" : "",
+                      fontWeight: isActive ? "700" : "",
+                      backgroundColor: isActive ? "transparent" : "",
+                    };
+                  }}
                   to="/"
-                  className="uppercase font-bold tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0 text-accent"
+                  className="uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                 >
                   Reservas
-                </Link>
+                </NavLink>
               </li>
               <li className="text-sm">
                 <Link
