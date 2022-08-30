@@ -8,8 +8,8 @@ import (
 	"time"
 )
 
+// turnos status
 const (
-	// turnos status
 	RESERVERD  string = "RESERVADO"
 	AVAILABLE  string = "DISPONIBLE"
 	TOURNAMENT string = "TORNEO"

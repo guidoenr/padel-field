@@ -27,19 +27,7 @@ func cleanAll() {
 }
 
 func main() {
-	cleanAll()
+	//cleanAll()
 	api.ListenAndServe() // gin gonic server on 8080
-	UpdateTurnos()
-	//dummyUser := models.User{
-	//	Username:  "johndoe123",
-	//	Password:  "easy_password123[';",
-	//	Phone:     "51250120",
-	//	Email:     "johndoe@outlook.com",
-	//	Firstname: "John",
-	//	Lastname:  "Doe",
-	//}
-	//err := controllers.Register(&dummyUser)
-	//if err != nil {
-	//	logger.Logerror.Printf("register: %v", err)
-	//}
+
 }
