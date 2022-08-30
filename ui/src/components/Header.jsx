@@ -103,8 +103,8 @@ const Header = () => {
                         to="/"
                         className={({ isActive }) =>
                           isActive
-                            ? "text-accent font-semibold uppercase self-center text-base tracking-widest hover:bg-base-100"
-                            : "uppercase font-normal self-center base tracking-widest hover:bg-base-100"
+                            ? "text-accent font-bold uppercase self-center text-base tracking-widest hover:bg-base-100"
+                            : "uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
                         }
                       >
                         Reservas
@@ -116,8 +116,8 @@ const Header = () => {
                         to="/misturnos"
                         className={({ isActive }) =>
                           isActive
-                            ? "text-accent font-semibold uppercase self-center text-base tracking-widest hover:bg-base-100"
-                            : "uppercase font-normal self-center text-base tracking-widest hover:bg-base-100"
+                            ? "text-accent font-bold uppercase self-center text-base tracking-widest hover:bg-base-100"
+                            : "uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
                         }
                       >
                         Mis Turnos
@@ -127,7 +127,7 @@ const Header = () => {
                       <Link
                         onClick={handleClose}
                         to="/contacto"
-                        className="uppercase font-normal self-center text-base tracking-widest hover:bg-base-100"
+                        className="uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
                       >
                         Contacto
                       </Link>
@@ -136,7 +136,7 @@ const Header = () => {
                       <Link
                         onClick={handleClose}
                         to="/profile"
-                        className="uppercase font-normal self-center text-base tracking-widest hover:bg-base-100"
+                        className="uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
                       >
                         Profile
                       </Link>
