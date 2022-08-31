@@ -4,17 +4,18 @@ import { NavLink, Link } from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineClose } from "react-icons/md";
+import profileImg from "../assets/profile-example.jpg";
 
 const Header = () => {
   const [nav, setNav] = useState(false);
   const [profileMenu, setProfileMenu] = useState(false);
 
   const handleMenu = () => setNav(!nav);
-
+  const handleProfileMenu = () => setProfileMenu(!profileMenu);
   const handleClose = () => setNav(!nav);
 
   return (
-    <header className="w-full h-[9vh] flex shadow-2xl z-50">
+    <header className="relative w-full h-[9vh] flex shadow-2xl z-50">
       <div className="container m-auto px-1 navbar flex justify-between">
         <div className="navbar-start w-auto">
           <Link
@@ -63,7 +64,7 @@ const Header = () => {
               <li className="flex items-center">
                 <ThemeSwitcher className="" />
               </li>
-              <li className="">
+              <li className="hidden">
                 <Link
                   to="/login"
                   className="border-accent uppercase btn bg-primary/5 px-6 font-medium tracking-widest hover:border-accent/80 hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
@@ -148,17 +149,22 @@ const Header = () => {
             </div>
           </div>
 
-          <div className="navbar-end relative">
-            <div className="flex items-center justify-end gap-4">
-              <div className="mr-4 z-[90]">
-                <div className="img-profile"></div>
-              </div>
+          <div className="navbar-end hidden md:flex md:ml-8 w-11 h-11 lg:w-12 lg:h-12 relative">
+            <div
+              className="z-[90] w-11 h-11 lg:w-12 lg:h-12 rounded-full cursor-pointer relative"
+              onClick={handleProfileMenu}
+            >
+              <img
+                src={profileImg}
+                alt="profile"
+                className="w-11 h-11 rounded-full border-2 border-accent lg:w-12 lg:h-12 relative bottom-[.1rem]"
+              />
             </div>
             <div
               className={
                 !profileMenu
                   ? "hidden"
-                  : "absolute right-5 top-[4.2rem] h-[17rem] bg-base-100 w-[12rem] z-[60] rounded-box border border-primary/30"
+                  : "hidden md:flex absolute right-5 top-[4.2rem] h-[17rem] bg-base-100 w-[12rem] z-[60] rounded-box border border-primary/30"
               }
             >
               <div className="flex flex-col w-full h-full justify-start relative">
