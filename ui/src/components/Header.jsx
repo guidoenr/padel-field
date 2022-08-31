@@ -2,8 +2,12 @@ import React from "react";
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher";
-import { HiMenuAlt3 } from "react-icons/hi";
+import { HiMenuAlt3, HiOutlineUser } from "react-icons/hi";
 import { MdOutlineClose } from "react-icons/md";
+import { BsListTask } from "react-icons/bs";
+import { GiTennisCourt } from "react-icons/gi";
+import { MdOutlinePermContactCalendar } from "react-icons/md";
+
 import profileImg from "../assets/profile-example.jpg";
 
 const Header = () => {
@@ -34,8 +38,8 @@ const Header = () => {
                   to="/"
                   className={({ isActive }) =>
                     isActive
-                      ? "font-bold text-accent uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
-                      : "font-medium uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                      ? "italic font-bold text-accent uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                      : "italic font-medium uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                   }
                 >
                   Reservas
@@ -46,8 +50,8 @@ const Header = () => {
                   to="/misturnos"
                   className={({ isActive }) =>
                     isActive
-                      ? "font-bold text-accent uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
-                      : "font-medium uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                      ? "italic font-bold text-accent uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                      : "italic font-medium uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                   }
                 >
                   Mis Turnos
@@ -56,7 +60,7 @@ const Header = () => {
               <li className="text-sm">
                 <Link
                   to="/contacto"
-                  className="uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                  className="italic uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                 >
                   Contacto
                 </Link>
@@ -67,7 +71,7 @@ const Header = () => {
               <li className="hidden">
                 <Link
                   to="/login"
-                  className="border-accent uppercase btn bg-primary/5 px-6 font-medium tracking-widest hover:border-accent/80 hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                  className="italic border-accent uppercase btn bg-primary/5 px-6 font-medium tracking-widest hover:border-accent/80 hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                 >
                   Entrar
                 </Link>
@@ -93,52 +97,52 @@ const Header = () => {
               className={
                 !nav
                   ? "hidden"
-                  : "md:hidden absolute right-5 top-[4.2rem] h-[17rem] bg-base-100 w-[12rem] z-[60] rounded-box border border-primary/30"
+                  : "md:hidden absolute right-5 top-[4rem] h-[15rem] bg-base-100 w-[12rem] z-[60] rounded-box border border-primary/30"
               }
             >
               <div className="flex flex-col w-full h-full justify-start relative">
                 <nav className="flex items-center w-full h-full">
                   <ul className="menu menu-compact w-full bg-base-100 rounded-box">
-                    <li className="border-b border-b-primary/30 py-3 flex">
+                    <li className="border-b border-b-primary/30 py-2 flex">
                       <NavLink
                         onClick={handleClose}
                         to="/"
                         className={({ isActive }) =>
                           isActive
-                            ? "text-accent font-bold uppercase self-center text-base tracking-widest hover:bg-base-100"
-                            : "uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
+                            ? "italic text-accent font-bold uppercase self-center text-base tracking-widest hover:bg-base-100"
+                            : "italic uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
                         }
                       >
                         Reservas
                       </NavLink>
                     </li>
-                    <li className="border-b border-b-primary/30 py-3 flex">
+                    <li className="border-b border-b-primary/30 py-2 flex">
                       <NavLink
                         onClick={handleClose}
                         to="/misturnos"
                         className={({ isActive }) =>
                           isActive
-                            ? "text-accent font-bold uppercase self-center text-base tracking-widest hover:bg-base-100"
-                            : "uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
+                            ? "italic text-accent font-bold uppercase self-center text-base tracking-widest hover:bg-base-100"
+                            : "italic uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
                         }
                       >
                         Mis Turnos
                       </NavLink>
                     </li>
-                    <li className="border-b border-b-primary/30 py-3 flex">
+                    <li className="border-b border-b-primary/30 py-2 flex">
                       <Link
                         onClick={handleClose}
                         to="/contacto"
-                        className="uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
+                        className="italic uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
                       >
                         Contacto
                       </Link>
                     </li>
-                    <li className="py-3">
+                    <li className="py-2">
                       <Link
                         onClick={handleClose}
                         to="/profile"
-                        className="uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
+                        className="italic uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
                       >
                         Profile
                       </Link>
@@ -149,7 +153,7 @@ const Header = () => {
             </div>
           </div>
 
-          <div className="navbar-end hidden md:flex md:ml-8 w-11 h-11 lg:w-12 lg:h-12 relative">
+          <div className="hidden md:flex md:ml-8 w-11 h-11 lg:w-12 lg:h-12 relative">
             <div
               className="z-[90] w-11 h-11 lg:w-12 lg:h-12 rounded-full cursor-pointer relative"
               onClick={handleProfileMenu}
@@ -164,55 +168,67 @@ const Header = () => {
               className={
                 !profileMenu
                   ? "hidden"
-                  : "hidden md:flex absolute right-5 top-[4.2rem] h-[17rem] bg-base-100 w-[12rem] z-[60] rounded-box border border-primary/30"
+                  : "hidden md:flex absolute right-0 top-[3.5rem] h-[16rem] w-[11rem] z-[60] rounded-box"
               }
             >
               <div className="flex flex-col w-full h-full justify-start relative">
                 <nav className="flex items-center w-full h-full">
-                  <ul className="menu menu-compact w-full bg-base-100 rounded-box">
-                    <li className="border-b border-b-primary/30 py-3 flex">
+                  <ul className="menu menu-compact w-full bg-base-100 rounded-box border border-primary/30 shadow-lg">
+                    <li className="border-b border-b-primary/30 py-2 flex">
+                      <NavLink
+                        onClick={handleClose}
+                        to="/profile"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "relative right-3 italic text-accent font-bold uppercase self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                            : "relative right-3 italic uppercase font-semibold self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                        }
+                      >
+                        <HiOutlineUser className="text-2xl relative left-1" />
+                        Mi Perfil
+                      </NavLink>
+                    </li>
+                    <li className="border-b border-b-primary/30 py-2 flex">
                       <NavLink
                         onClick={handleClose}
                         to="/"
                         className={({ isActive }) =>
                           isActive
-                            ? "text-accent font-bold uppercase self-center text-base tracking-widest hover:bg-base-100"
-                            : "uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
+                            ? "relative right-2 italic text-accent font-bold uppercase self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                            : "relative right-2 italic uppercase font-semibold self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
                         }
                       >
+                        <BsListTask className="text-2xl relative top-[.1rem] left-1" />
                         Reservas
                       </NavLink>
                     </li>
-                    <li className="border-b border-b-primary/30 py-3 flex">
+                    <li className="border-b border-b-primary/30 py-2 flex">
                       <NavLink
                         onClick={handleClose}
                         to="/misturnos"
                         className={({ isActive }) =>
                           isActive
-                            ? "text-accent font-bold uppercase self-center text-base tracking-widest hover:bg-base-100"
-                            : "uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
+                            ? "relative italic text-accent font-bold uppercase self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                            : "relative italic uppercase font-semibold self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
                         }
                       >
+                        <GiTennisCourt className="text-2xl relative left-1" />
                         Mis Turnos
                       </NavLink>
                     </li>
-                    <li className="border-b border-b-primary/30 py-3 flex">
-                      <Link
+                    <li className="py-2 flex">
+                      <NavLink
                         onClick={handleClose}
                         to="/contacto"
-                        className="uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "relative right-1 italic text-accent font-bold uppercase self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                            : "relative right-1 italic uppercase font-semibold self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                        }
                       >
+                        <MdOutlinePermContactCalendar className="text-2xl relative left-1" />
                         Contacto
-                      </Link>
-                    </li>
-                    <li className="py-3">
-                      <Link
-                        onClick={handleClose}
-                        to="/profile"
-                        className="uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
-                      >
-                        Profile
-                      </Link>
+                      </NavLink>
                     </li>
                   </ul>
                 </nav>
