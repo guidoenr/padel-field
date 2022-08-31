@@ -6,7 +6,7 @@ import { HiMenuAlt3, HiOutlineUser } from "react-icons/hi";
 import { MdOutlineClose } from "react-icons/md";
 import { BsListTask } from "react-icons/bs";
 import { GiTennisCourt } from "react-icons/gi";
-import { MdOutlinePermContactCalendar } from "react-icons/md";
+import { FiLogOut } from "react-icons/fi";
 
 import profileImg from "../assets/profile-example.jpg";
 
@@ -222,12 +222,12 @@ const Header = () => {
                         to="/contacto"
                         className={({ isActive }) =>
                           isActive
-                            ? "relative right-1 italic text-accent font-bold uppercase self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
-                            : "relative right-1 italic uppercase font-semibold self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                            ? "relative right-7 italic text-accent font-bold uppercase self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                            : "relative right-7 italic uppercase text-red-700 font-semibold self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
                         }
                       >
-                        <MdOutlinePermContactCalendar className="text-2xl relative left-1" />
-                        Contacto
+                        <FiLogOut className="text-2xl relative left-2" />
+                        Salir
                       </NavLink>
                     </li>
                   </ul>
