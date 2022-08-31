@@ -7,14 +7,16 @@ import { MdOutlineClose } from "react-icons/md";
 import { BsListTask } from "react-icons/bs";
 import { GiTennisCourt } from "react-icons/gi";
 import { FiLogOut } from "react-icons/fi";
-
-import profileImg from "../assets/profile-example.jpg";
+import profileImage from "../assets/profile-example.jpg";
 
 const Header = () => {
   const [nav, setNav] = useState(false);
   const [profileMenu, setProfileMenu] = useState(false);
+  const [profileImg, setProfileImg] = useState(true);
+  const [signOut, setSignOut] = useState(false);
 
   const handleMenu = () => setNav(!nav);
+  const handleProfileImg = () => setProfileImg(!profileImg);
   const handleProfileMenu = () => setProfileMenu(!profileMenu);
   const handleClose = () => setNav(!nav);
 
@@ -68,14 +70,16 @@ const Header = () => {
               <li className="flex items-center">
                 <ThemeSwitcher className="" />
               </li>
-              <li className="hidden">
-                <Link
-                  to="/login"
-                  className="italic border-accent uppercase btn bg-primary/5 px-6 font-medium tracking-widest hover:border-accent/80 hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
-                >
-                  Entrar
-                </Link>
-              </li>
+              {signOut && (
+                <li className="">
+                  <Link
+                    to="/login"
+                    className="italic border-accent uppercase btn bg-primary/5 px-6 font-medium tracking-widest hover:border-accent/80 hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                  >
+                    Entrar
+                  </Link>
+                </li>
+              )}
             </ul>
           </nav>
 
@@ -103,77 +107,6 @@ const Header = () => {
               <div className="flex flex-col w-full h-full justify-start relative">
                 <nav className="flex items-center w-full h-full">
                   <ul className="menu menu-compact w-full bg-base-100 rounded-box">
-                    <li className="border-b border-b-primary/30 py-2 flex">
-                      <NavLink
-                        onClick={handleClose}
-                        to="/"
-                        className={({ isActive }) =>
-                          isActive
-                            ? "italic text-accent font-bold uppercase self-center text-base tracking-widest hover:bg-base-100"
-                            : "italic uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
-                        }
-                      >
-                        Reservas
-                      </NavLink>
-                    </li>
-                    <li className="border-b border-b-primary/30 py-2 flex">
-                      <NavLink
-                        onClick={handleClose}
-                        to="/misturnos"
-                        className={({ isActive }) =>
-                          isActive
-                            ? "italic text-accent font-bold uppercase self-center text-base tracking-widest hover:bg-base-100"
-                            : "italic uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
-                        }
-                      >
-                        Mis Turnos
-                      </NavLink>
-                    </li>
-                    <li className="border-b border-b-primary/30 py-2 flex">
-                      <Link
-                        onClick={handleClose}
-                        to="/contacto"
-                        className="italic uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
-                      >
-                        Contacto
-                      </Link>
-                    </li>
-                    <li className="py-2">
-                      <Link
-                        onClick={handleClose}
-                        to="/profile"
-                        className="italic uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
-                      >
-                        Profile
-                      </Link>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-
-          <div className="hidden md:flex md:ml-8 w-11 h-11 lg:w-12 lg:h-12 relative">
-            <div
-              className="z-[90] w-11 h-11 lg:w-12 lg:h-12 rounded-full cursor-pointer relative"
-              onClick={handleProfileMenu}
-            >
-              <img
-                src={profileImg}
-                alt="profile"
-                className="w-11 h-11 rounded-full border-2 border-accent lg:w-12 lg:h-12 relative bottom-[.1rem]"
-              />
-            </div>
-            <div
-              className={
-                !profileMenu
-                  ? "hidden"
-                  : "hidden md:flex absolute right-0 top-[3.5rem] h-[16rem] w-[11rem] z-[60] rounded-box"
-              }
-            >
-              <div className="flex flex-col w-full h-full justify-start relative">
-                <nav className="flex items-center w-full h-full">
-                  <ul className="menu menu-compact w-full bg-base-100 rounded-box border border-primary/30 shadow-lg">
                     <li className="border-b border-b-primary/30 py-2 flex">
                       <NavLink
                         onClick={handleClose}
@@ -219,10 +152,10 @@ const Header = () => {
                     <li className="py-2 flex">
                       <NavLink
                         onClick={handleClose}
-                        to="/contacto"
+                        to="/"
                         className={({ isActive }) =>
                           isActive
-                            ? "relative right-7 italic text-accent font-bold uppercase self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                            ? "relative right-7 italic text-red-700 font-bold uppercase self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
                             : "relative right-7 italic uppercase text-red-700 font-semibold self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
                         }
                       >
@@ -235,6 +168,95 @@ const Header = () => {
               </div>
             </div>
           </div>
+
+          {profileImg && (
+            <div className="hidden md:flex md:ml-8 w-11 h-11 lg:w-12 lg:h-12 relative">
+              <div
+                className="z-[90] w-11 h-11 lg:w-12 lg:h-12 rounded-full cursor-pointer relative"
+                onClick={handleProfileMenu}
+              >
+                <img
+                  src={profileImage}
+                  alt="profile"
+                  className="w-11 h-11 rounded-full border-2 border-accent lg:w-12 lg:h-12 relative bottom-[.1rem]"
+                />
+              </div>
+              <div
+                className={
+                  !profileMenu
+                    ? "hidden"
+                    : "hidden md:flex absolute right-0 top-[3.5rem] h-[16rem] w-[11rem] z-[60] rounded-box"
+                }
+              >
+                <div className="flex flex-col w-full h-full justify-start relative">
+                  <nav className="flex items-center w-full h-full">
+                    <ul className="menu menu-compact w-full bg-base-100 rounded-box border border-primary/30 shadow-lg">
+                      <li className="border-b border-b-primary/30 py-2 flex">
+                        <NavLink
+                          onClick={handleProfileMenu}
+                          to="/profile"
+                          className={({ isActive }) =>
+                            isActive
+                              ? "relative right-3 italic text-accent font-bold uppercase self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                              : "relative right-3 italic uppercase font-semibold self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                          }
+                        >
+                          <HiOutlineUser className="text-2xl relative left-1" />
+                          Mi Perfil
+                        </NavLink>
+                      </li>
+                      <li className="border-b border-b-primary/30 py-2 flex">
+                        <NavLink
+                          onClick={handleProfileMenu}
+                          to="/"
+                          className={({ isActive }) =>
+                            isActive
+                              ? "relative right-2 italic text-accent font-bold uppercase self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                              : "relative right-2 italic uppercase font-semibold self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                          }
+                        >
+                          <BsListTask className="text-2xl relative top-[.1rem] left-1" />
+                          Reservas
+                        </NavLink>
+                      </li>
+                      <li className="border-b border-b-primary/30 py-2 flex">
+                        <NavLink
+                          onClick={handleProfileMenu}
+                          to="/misturnos"
+                          className={({ isActive }) =>
+                            isActive
+                              ? "relative italic text-accent font-bold uppercase self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                              : "relative italic uppercase font-semibold self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                          }
+                        >
+                          <GiTennisCourt className="text-2xl relative left-1" />
+                          Mis Turnos
+                        </NavLink>
+                      </li>
+                      <li className="py-2 flex">
+                        <NavLink
+                          onClick={() => {
+                            handleProfileMenu();
+                            setSignOut(true);
+                            handleProfileImg(false);
+                          }}
+                          to="/"
+                          className={({ isActive }) =>
+                            isActive
+                              ? "relative right-7 italic text-red-700 font-bold uppercase self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                              : "relative right-7 italic uppercase text-red-700 font-semibold self-center text-sm tracking-widest hover:bg-transparent focus:bg-transparent"
+                          }
+                        >
+                          <FiLogOut className="text-2xl relative left-2" />
+                          Salir
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </header>
