@@ -25,7 +25,7 @@ const ReservationItem = ({ hr }) => {
         </button>
       )}
       {recerved && (
-        <button className="h-[2rem] rounded-md reservation-btn-container reservation-btn px-3 border-none text-sm text-primary hover:bg-[#911b2afd] pl-10 relative flex items-center cursor-not-allowed bg-[#911b2afd]">
+        <button className="h-[2rem] rounded-lg reservation-btn-container reservation-btn px-3 border-none text-sm text-primary hover:bg-[#911b2afd] pl-10 relative flex items-center cursor-not-allowed bg-[#911b2afd]">
           <BiTennisBall className="cursor-not-allowed absolute left-0 w-8 p-1 rounded-l-lg text-2xl h-full bg-[#440713] text-[#c4032ac2]" />
           Reservado
         </button>

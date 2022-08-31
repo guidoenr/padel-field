@@ -13,9 +13,9 @@ const Header = () => {
   const handleClose = () => setNav(!nav);
 
   return (
-    <header className="w-full h-[10vh] flex shadow-2xl z-50">
-      <div className="container m-auto navbar flex justify-between">
-        <div className="navbar-start">
+    <header className="w-full h-[9vh] flex shadow-2xl z-50">
+      <div className="container m-auto px-1 navbar flex justify-between">
+        <div className="navbar-start w-auto">
           <Link
             to="/"
             className="cursor-pointer font-secondary-font text-4xl text-primary"
