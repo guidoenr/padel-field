@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/guidoenr/padel-field/controllers"
+	"github.com/guidoenr/padel-field/api/controllers"
 	"github.com/guidoenr/padel-field/models"
 	"testing"
 )
 
 /*
-	TESTING payload fields
+TESTING payload fields
 */
 func TestUsernameExists(t *testing.T) {
 	johnDoe := models.User{

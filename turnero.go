@@ -2,9 +2,10 @@ package main
 
 import (
 	"context"
-	"github.com/guidoenr/padel-field/controllers"
+	"github.com/guidoenr/padel-field/api/controllers"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
+	"github.com/guidoenr/padel-field/tools"
 	"time"
 )
 
@@ -22,7 +23,7 @@ func InitializeTurnos() error {
 	lastHour := 23
 	daysOfTurno := 30
 
-	today, location := getTodayDate()
+	today, location := tools.GetTodayDate()
 
 	// for each weekday
 	for i := 0; i < daysOfTurno; i++ {
@@ -52,7 +53,7 @@ func InitializeTurnos() error {
 func UpdateTurnos() {
 	//var outdatedTurnos []models.Turno
 	logger.Loginfo.Println("Updating out-of-date turnos")
-	todayDate, _ := getTodayDate()
+	todayDate, _ := tools.GetTodayDate()
 	db := models.InitDB()
 
 	turno := new(models.Turno)
@@ -97,19 +98,6 @@ var daysMap = map[string]string{
 // english string into a spanish string (e.g Monday -> LUNES)
 func getWeekDay(datetime time.Time) string {
 	return daysMap[datetime.Weekday().String()]
-}
-
-// getTodayDate returns the current local datetime in America/Buenos_Aires
-func getTodayDate() (time.Time, *time.Location) {
-	location, err := time.LoadLocation("America/Buenos_Aires")
-	if err != nil {
-		logger.Logerror.Printf("error loading the location: %v", err)
-	}
-	todayDate, err := time.ParseInLocation("02-01-2006", time.Now().Format("02-01-2006"), location)
-	if err != nil {
-		logger.Logerror.Printf("error getting localTime: %v", err)
-	}
-	return todayDate, location
 }
 
 // -------------------------- USERS

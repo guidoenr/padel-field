@@ -4,7 +4,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/guidoenr/padel-field/controllers"
+	controllers2 "github.com/guidoenr/padel-field/api/controllers"
 	"github.com/guidoenr/padel-field/models"
 	"net/http"
 	"time"
@@ -37,6 +37,7 @@ func ListenAndServe() {
 	{
 		turnos.GET("/", showTurnos())
 		turnos.GET("/:id", showTurnoByID())
+		turnos.GET("/day/:day", showTurnosByDay())
 		turnos.POST("/:id/reserve", reserveTurno())
 		turnos.POST("/:id/cancel", cancelTurno())
 	}
@@ -71,7 +72,20 @@ func showIndex() gin.HandlerFunc {
 // showTurnos is the main page for the turnos website
 func showTurnos() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		turnos, err := controllers.GetAvailableTurnos()
+		turnos, err := controllers2.GetAvailableTurnos()
+		if err != nil {
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.IndentedJSON(200, gin.H{"data": turnos})
+	}
+}
+
+// showTurnos is the main page for the turnos website
+func showTurnosByDay() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		day := c.Param("day")
+		turnos, err := controllers2.GetAvailableTurnosByDay(day)
 		if err != nil {
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
@@ -83,7 +97,7 @@ func showTurnos() gin.HandlerFunc {
 // showTurnoByID is the main page for the turnos website
 func showTurnoByID() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		turno, err := controllers.GetTurnoById(c.Param("id"))
+		turno, err := controllers2.GetTurnoById(c.Param("id"))
 		if err != nil {
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
@@ -95,7 +109,7 @@ func showTurnoByID() gin.HandlerFunc {
 // showTurnosByOwnerId is the main page for the turnos website
 func showTurnosByOwnerId() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		turnos, err := controllers.GetTurnosByOwnerId(c.Param("id"))
+		turnos, err := controllers2.GetTurnosByOwnerId(c.Param("id"))
 		if err != nil {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -108,7 +122,7 @@ func showTurnosByOwnerId() gin.HandlerFunc {
 func reserveTurno() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// TODO, check the ownerID logic?
-		err := controllers.ReserveTurno(c.Param("id"), 0)
+		err := controllers2.ReserveTurno(c.Param("id"), 0)
 		if err != nil {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -121,7 +135,7 @@ func reserveTurno() gin.HandlerFunc {
 func cancelTurno() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// TODO, check the ownerID logic?
-		err := controllers.CancelTurno(c.Param("id"), 0)
+		err := controllers2.CancelTurno(c.Param("id"), 0)
 		if err != nil {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -141,7 +155,7 @@ func login() gin.HandlerFunc {
 		}
 		var cookie *http.Cookie
 
-		cookie, err := controllers.Login(&user)
+		cookie, err := controllers2.Login(&user)
 		c.SetCookie(cookie.Name, cookie.Value, cookie.MaxAge, cookie.Path, cookie.Domain, cookie.Secure, cookie.HttpOnly)
 
 		if err != nil {
@@ -163,7 +177,7 @@ func register() gin.HandlerFunc {
 			Phone:    c.Request.PostFormValue("phone"),
 		}
 
-		err := controllers.Register(&newUser)
+		err := controllers2.Register(&newUser)
 		if err != nil {
 			c.IndentedJSON(http.StatusBadRequest, err.Error())
 			return
@@ -191,7 +205,7 @@ func userGet() gin.HandlerFunc {
 		}
 
 		claims := token.Claims.(*jwt.StandardClaims)
-		user, _ := controllers.GetUserById(claims.Issuer)
+		user, _ := controllers2.GetUserById(claims.Issuer)
 
 		c.IndentedJSON(http.StatusOK, gin.H{"userGet": user})
 	}

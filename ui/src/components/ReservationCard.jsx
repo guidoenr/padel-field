@@ -14,6 +14,7 @@ const ReservationCard = ({ day }) => {
         </div>
         <div className="card-content">
           <ul className="reservation-list">
+            
             <ReservationItem hr="9:00" />
             <ReservationItem hr="10:00" />
             <ReservationItem hr="11:00" />
