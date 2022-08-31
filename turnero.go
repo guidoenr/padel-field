@@ -13,7 +13,7 @@ import (
 // InitializeTurnos it's a zero-day kind of function, it loads all the available turnos into the db
 // and clean the existing ones, put all the turnos on available status
 func InitializeTurnos() error {
-	logger.Logwarning.Println("Initialazing turnos..")
+	logger.Logwarning.Println("initialazing turnos..")
 	var turnos []models.Turno
 
 	// turnos range from 9 -> 23 and in one month (30)
@@ -99,17 +99,6 @@ func getWeekDay(datetime time.Time) string {
 	return daysMap[datetime.Weekday().String()]
 }
 
-// cleanDb drop al the tables of the db
-func cleanDB() error {
-	db := models.InitDB()
-	err := models.RestartDb(db)
-	if err != nil {
-		logger.Logerror.Printf("cleaning the db: %v", err)
-	}
-	defer db.Close()
-	return nil
-}
-
 // getTodayDate returns the current local datetime in America/Buenos_Aires
 func getTodayDate() (time.Time, *time.Location) {
 	location, err := time.LoadLocation("America/Buenos_Aires")
@@ -126,6 +115,7 @@ func getTodayDate() (time.Time, *time.Location) {
 // -------------------------- USERS
 
 func InitializeUsers() error {
+	logger.Logwarning.Println("initialazing users..")
 	db := models.InitDB()
 	rootUser := models.User{
 		Username:  "root",

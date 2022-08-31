@@ -25,7 +25,6 @@ func InitDB() *bun.DB {
 	if err != nil {
 		logger.Logerror.Printf("error making Ping() to dbase: %v", err)
 	}
-	logger.Loginfo.Printf("connected to the db: %v \n", db.DB.Stats())
 
 	return db
 }
@@ -34,7 +33,6 @@ func InitDB() *bun.DB {
 func RestartDb(db *bun.DB) error {
 	var err error
 	err = nil
-	logger.Logwarning.Println("RESTARTING DB..")
 	_, err = db.Query("DROP TABLE turnos;")
 	_, err = db.Query("DROP TABLE users;")
 	err = createSchemas(db)

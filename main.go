@@ -35,11 +35,13 @@ func resetDbAndCreateSchemas() {
 		logger.Logerror.Println(err)
 	}
 
+	defer logger.Loginfo.Println("Listen and Serving..")
 	defer db.Close()
 }
 
 func startServer() {
 	api.ListenAndServe() // gin gonic server on 8080
+	defer logger.Loginfo.Println("Listen and Serving..")
 }
 
 func main() {
@@ -56,4 +58,5 @@ func main() {
 		fmt.Println("starting server..")
 		startServer()
 	}
+
 }
