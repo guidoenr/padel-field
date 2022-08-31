@@ -12,7 +12,7 @@ import (
 
 // InitializeTurnos it's a zero-day kind of function, it loads all the available turnos into the db
 // and clean the existing ones, put all the turnos on available status
-func InitializeTurnos() {
+func InitializeTurnos() error {
 	logger.Logwarning.Println("Initialazing turnos..")
 	var turnos []models.Turno
 
@@ -45,7 +45,7 @@ func InitializeTurnos() {
 	if err != nil {
 		logger.Logerror.Printf("initializing turnos: %v", err)
 	}
-
+	return err
 }
 
 // UpdateTurnos will update all the turnos that are older than today's date
@@ -125,7 +125,7 @@ func getTodayDate() (time.Time, *time.Location) {
 
 // -------------------------- USERS
 
-func InitializeUsers() {
+func InitializeUsers() error {
 	db := models.InitDB()
 	rootUser := models.User{
 		Username:  "root",
@@ -137,9 +137,10 @@ func InitializeUsers() {
 		Lastname:  "Root",
 	}
 
-	_, _ = db.NewInsert().
+	_, err := db.NewInsert().
 		Model(&rootUser).
 		Exec(context.Background())
 
 	defer db.Close()
+	return err
 }
