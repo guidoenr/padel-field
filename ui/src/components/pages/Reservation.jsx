@@ -20,7 +20,7 @@ const Reservation = () => {
               smooth={true}
               offset={-50}
               duration={700}
-              className=" text-[#e5e0df] w-20 h-20 animate-bounce absolute bottom-10 cursor-pointer hover:text-accent hover:scale-105 transition ease-in-out"
+              className=" text-[#e5e0df] w-20 h-20 animate-bounce absolute bottom-10 cursor-pointer hover:text-accent/70 hover:scale-105 transition ease-in-out"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
