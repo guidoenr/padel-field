@@ -1,9 +1,8 @@
-
 # install
 install: go get . && npm install padel-ui/
 
 # compile
-compile: go build .
+compile: go build -o .
 
 # run
 run: compile \
