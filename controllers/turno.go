@@ -135,7 +135,6 @@ func PersistTurnos(turnos []models.Turno) error {
 	if err != nil {
 		logger.Logerror.Printf("error persisting turnos: %v", err)
 	}
-	logger.Loginfo.Printf("%d turnos persisted", len(turnos))
 
 	defer db.Close()
 	return err
