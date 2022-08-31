@@ -1,11 +1,38 @@
-import React, {useState} from "react";
+import React, {SyntheticEvent, useState} from "react";
 import { FcGoogle } from "react-icons/fc";
-import {Link} from "react-router-dom";
 
 
-const Login = () => {
+const Register = () => {
+  const [name, setName] = useState('')
+  const [surname, setSurname] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
+
+  const submit = async (e: SyntheticEvent) => {
+    e.preventDefault()
+    const response = await fetch('http://localhost:8080/auth/register', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        name,
+        surname,
+        email,
+        phone,
+        password,
+        username
+      })
+    });
+    const bbb = response.body
+    console.log(response)
+    console.log(bbb)
+
+  }
+
   return (
-    <section className="login w-full h-[80vh] mt-12">
+
+    <section className="register w-full h-[80vh] mt-12">
       <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container w-[95%] m-auto p-8 md:flex md:justify-between md:items-center md:max-w-6xl relative">
         <div className="form-container flex flex-col gap-2 md:w-[45%]">
           <div className="md:absolute md:top-8 md:left-8">
@@ -22,12 +49,31 @@ const Login = () => {
           <p className="form-text text-sm text-primary/60">
             Crea una cuenta para poder reservar tu turno.
           </p>
-          <form action="#" className="flex flex-col gap-3">
+          <form action="#" className="flex flex-col gap-3" onSubmit={submit}>
             <div className="row border-b border-b-primary/30">
               <input
                 type="text"
                 placeholder="Nombre"
+                onChange={e => setName(e.target.value)}
                 className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+              />
+            </div>
+            <div className="row border-b border-b-primary/30">
+              <input
+                  type="text"
+                  placeholder="Apellido"
+                  onChange={e => setSurname(e.target.value)}
+                  className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+              />
+            </div>
+            <div className="row border-b border-b-primary/30">
+              <input
+                  type="username"
+                  placeholder="Nombre de usuario"
+                  name="username"
+                  id="username"
+                  onChange={e => setUsername(e.target.value)}
+                  className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
               />
             </div>
             <div className="row border-b border-b-primary/30">
@@ -36,7 +82,8 @@ const Login = () => {
                 placeholder="Email"
                 name="email"
                 id="email"
-                className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+                onChange={e => setEmail(e.target.value)}
+                className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
               />
             </div>
             <div className="row border-b border-b-primary/30">
@@ -45,7 +92,18 @@ const Login = () => {
                 placeholder="Contraseña"
                 name="password"
                 id="password"
-                className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+                onChange={e => setPassword(e.target.value)}
+                className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+              />
+            </div>
+            <div className="row border-b border-b-primary/30">
+              <input
+                  type="text"
+                  placeholder="Celular"
+                  name="phone"
+                  id="phone"
+                  onChange={e => setPhone(e.target.value)}
+                  className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
               />
             </div>
             <div className="row pt-4">
@@ -53,7 +111,7 @@ const Login = () => {
                 type="submit"
                 className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
               >
-              Crear cuenta
+                Crear cuenta
               </button>
             </div>
             <div className="row">
@@ -86,4 +144,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

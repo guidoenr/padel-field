@@ -3,7 +3,9 @@ import Footer from './components/Footer'
 import Reservation from './components/pages/Reservation';
 import MyTurns from './components/pages/MyTurns';
 import Login from './components/pages/Login'
+import Register from "./components/pages/Register";
 import { Routes, Route } from "react-router-dom";
+
 
 function App() {
 
@@ -14,6 +16,7 @@ function App() {
         <Route path="/" element={<Reservation />} />
         <Route path="misturnos" element={<MyTurns />} />
         <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
       </Routes>
       <Footer />
     </div>

@@ -5,6 +5,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	controllers2 "github.com/guidoenr/padel-field/api/controllers"
+	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
 	"net/http"
 	"time"
@@ -21,7 +22,7 @@ func ListenAndServe() {
 
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
-		AllowHeaders:     []string{"Origin"},
+		AllowHeaders:     []string{"Origin", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
@@ -169,14 +170,22 @@ func login() gin.HandlerFunc {
 // register
 func register() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// var data map[string]string
-		newUser := models.User{
-			Username: c.Request.PostFormValue("username"),
-			Email:    c.Request.PostFormValue("email"),
-			Password: c.Request.PostFormValue("password"),
-			Phone:    c.Request.PostFormValue("phone"),
+
+		logger.Loginfo.Println(c.Request.Body)
+		for _, l := range c.Request.PostForm {
+			logger.Loginfo.Printf("post form: %s", l)
 		}
 
+		newUser := models.User{
+			Firstname: c.Request.PostFormValue("name"),
+			Lastname:  c.Request.PostFormValue("surname"),
+			Username:  c.Request.PostFormValue("username"),
+			Email:     c.Request.PostFormValue("email"),
+			Password:  c.Request.PostFormValue("password"),
+			Phone:     c.Request.PostFormValue("phone"),
+		}
+
+		logger.Loginfo.Println(newUser.String())
 		err := controllers2.Register(&newUser)
 		if err != nil {
 			c.IndentedJSON(http.StatusBadRequest, err.Error())
