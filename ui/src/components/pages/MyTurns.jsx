@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { TbMoodEmpty } from "react-icons/tb";
 
 const MyTurns = () => {
-  const [nextTurns, setNextTurns] = useState(true);
   const [emptyTurns, setEmptyTurns] = useState(true);
+  const [nextTurns, setNextTurns] = useState(false);
 
   return (
     <section className="myturns h-[80vh] py-8 w-full">
@@ -17,9 +18,12 @@ const MyTurns = () => {
           <div className="absolute bottom-[-.25rem] w-[1.5rem] h-[.25rem] bg-accent"></div>
         </div>
         {emptyTurns && (
-          <div className="text-lg empty-turns pt-8 text-center">
-            <p className="max-w-md w-[95%] mx-auto py-4 my-2 text-base rounded-md border border-primary/30 bg-primary/10">
-              No tenes ningún turno reservado :(
+          <div className="text-lg empty-turns pt-8 flex flex-col items-center gap-2 my-6">
+            <p className="flex flex-col gap-3 max-w-md w-[95%] text-center mx-auto py-6 text-lg rounded-md border border-primary/30 bg-primary/10">
+              <span className="w-full flex justify-center">
+                <TbMoodEmpty className="text-[8rem]" />
+              </span>
+              No tenes ningún turno reservado
             </p>
             <Link
               to="/"

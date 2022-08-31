@@ -7,6 +7,7 @@ import { MdOutlineClose } from "react-icons/md";
 
 const Header = () => {
   const [nav, setNav] = useState(false);
+  const [profileMenu, setProfileMenu] = useState(false);
 
   const handleMenu = () => setNav(!nav);
 
@@ -92,6 +93,72 @@ const Header = () => {
                 !nav
                   ? "hidden"
                   : "md:hidden absolute right-5 top-[4.2rem] h-[17rem] bg-base-100 w-[12rem] z-[60] rounded-box border border-primary/30"
+              }
+            >
+              <div className="flex flex-col w-full h-full justify-start relative">
+                <nav className="flex items-center w-full h-full">
+                  <ul className="menu menu-compact w-full bg-base-100 rounded-box">
+                    <li className="border-b border-b-primary/30 py-3 flex">
+                      <NavLink
+                        onClick={handleClose}
+                        to="/"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "text-accent font-bold uppercase self-center text-base tracking-widest hover:bg-base-100"
+                            : "uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
+                        }
+                      >
+                        Reservas
+                      </NavLink>
+                    </li>
+                    <li className="border-b border-b-primary/30 py-3 flex">
+                      <NavLink
+                        onClick={handleClose}
+                        to="/misturnos"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "text-accent font-bold uppercase self-center text-base tracking-widest hover:bg-base-100"
+                            : "uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
+                        }
+                      >
+                        Mis Turnos
+                      </NavLink>
+                    </li>
+                    <li className="border-b border-b-primary/30 py-3 flex">
+                      <Link
+                        onClick={handleClose}
+                        to="/contacto"
+                        className="uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
+                      >
+                        Contacto
+                      </Link>
+                    </li>
+                    <li className="py-3">
+                      <Link
+                        onClick={handleClose}
+                        to="/profile"
+                        className="uppercase font-semibold self-center text-base tracking-widest hover:bg-base-100"
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+
+          <div className="navbar-end relative">
+            <div className="flex items-center justify-end gap-4">
+              <div className="mr-4 z-[90]">
+                <div className="img-profile"></div>
+              </div>
+            </div>
+            <div
+              className={
+                !profileMenu
+                  ? "hidden"
+                  : "absolute right-5 top-[4.2rem] h-[17rem] bg-base-100 w-[12rem] z-[60] rounded-box border border-primary/30"
               }
             >
               <div className="flex flex-col w-full h-full justify-start relative">
