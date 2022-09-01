@@ -40,11 +40,9 @@ const Register = () => {
               Pádel-Logo
             </a>
           </div>
-          <h3 className="form-title text-2xl font-semibold">
-            Crear una cuenta
-          </h3>
+          <h3 className="form-title text-2xl font-semibold">Crear cuenta</h3>
           <p className="form-text text-sm text-primary/60">
-            Crea una cuenta para poder reservar tu turno.
+            Una vez que tengas tu cuenta, podrás reservar tu turno.
           </p>
           <form className="flex flex-col gap-3 " onSubmit={submit}>
             <div className="lg:flex lg:w-full lg:gap-4">
@@ -127,7 +125,7 @@ const Register = () => {
           </form>
           <div className="log-in-container mt-8 flex flex-col gap-4">
             <p className="log-in-text text-xl font-semibold">
-              ¿Ya tenes una cuenta?
+              ¿Ya tenes cuenta?
             </p>
             <button
               type="button"

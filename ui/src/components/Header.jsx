@@ -60,14 +60,18 @@ const Header = () => {
                 </NavLink>
               </li>
               <li className="text-sm">
-                <Link
-                  to="/contacto"
-                  className="italic uppercase font-medium tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                <NavLink
+                  to="/nosotros"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "italic font-bold text-accent uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                      : "italic font-medium uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
+                  }
                 >
-                  Contacto
-                </Link>
+                  Nosotros
+                </NavLink>
               </li>
-              <li className="flex items-center">
+              <li className="flex items-center border-r border-l border-r-primary/30 border-l-primary/30 px-7">
                 <ThemeSwitcher className="" />
               </li>
               {signOut && (
