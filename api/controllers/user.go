@@ -3,8 +3,8 @@ package controllers
 import (
 	"context"
 	"errors"
-	"fmt"
 	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/guidoenr/padel-field/api/errs"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
 	"net/http"
@@ -17,7 +17,7 @@ const (
 )
 
 // Register has the purpose of authenticate the user credentials
-func Register(newUser *models.User) error {
+func Register(newUser *models.User) errs.RequestError {
 	db := models.InitDB()
 	newUser.Role = models.NORMAL
 
@@ -29,9 +29,7 @@ func Register(newUser *models.User) error {
 		Exists(context.Background())
 
 	if exists {
-		msg := fmt.Sprintf("username '%s' exists \n", newUser.Username)
-		logger.Logerror.Println(msg)
-		return errors.New(msg)
+		return errs.ThrowError(errors.New("select error"), "username exists", 1)
 	}
 
 	// get all the emails from the database
@@ -42,9 +40,7 @@ func Register(newUser *models.User) error {
 		Exists(context.Background())
 
 	if exists {
-		msg := fmt.Sprintf("email '%s' exists \n", newUser.Email)
-		logger.Logerror.Println(msg)
-		return errors.New(msg)
+		return errs.ThrowError(err, "email exists", 2)
 	}
 
 	// inserting the new User in the database
@@ -53,16 +49,17 @@ func Register(newUser *models.User) error {
 		Exec(context.Background())
 
 	if err != nil {
-		logger.Logerror.Printf("can't persist in the db: %v", err)
+		return errs.ThrowError(err, "cannot persist into the db", -1)
 	}
-	logger.Loginfo.Printf("persisted user {'%s'-%s} into the database", newUser.Username, newUser.Email)
+
+	logger.Loginfo.Printf("persisted user '%s' into the database", newUser.Username)
 
 	defer db.Close()
-	return err
+	return errs.ThrowEmptyError()
 }
 
 // Login has the purpose of authenticate the user credentials
-func Login(user *models.User) (*http.Cookie, error) {
+func Login(user *models.User) (*http.Cookie, errs.RequestError) {
 	db := models.InitDB()
 
 	// find if the username or email exists
@@ -74,11 +71,10 @@ func Login(user *models.User) (*http.Cookie, error) {
 
 	// if the user does not exist
 	if !exists {
-		msg := fmt.Sprintf("username '%s' does not exist \n", user.Username)
-		logger.Logerror.Println(msg)
-		return &http.Cookie{}, errors.New(msg)
+		return &http.Cookie{}, errs.ThrowError(err, "username does not exist", 3)
 	}
 
+	// the username exists
 	var userFound models.User
 	err = db.NewSelect().
 		Model(&userFound).
@@ -86,15 +82,11 @@ func Login(user *models.User) (*http.Cookie, error) {
 		Scan(context.Background())
 
 	if err != nil {
-		msg := fmt.Sprintf("getting user: %v", err)
-		logger.Logerror.Println(msg)
-		return &http.Cookie{}, errors.New(msg)
+		return &http.Cookie{}, errs.ThrowError(err, "cannot get user from db", -1)
 	}
 
 	if user.Password != userFound.Password {
-		msg := fmt.Sprintf("wrong password")
-		logger.Logerror.Println(msg)
-		return &http.Cookie{}, errors.New(msg)
+		return &http.Cookie{}, errs.ThrowError(errors.New("password does not match"), "password does not match", 4)
 	}
 
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
@@ -104,9 +96,7 @@ func Login(user *models.User) (*http.Cookie, error) {
 
 	token, err := claims.SignedString([]byte(SecretKey))
 	if err != nil {
-		msg := fmt.Sprintf("could not log in")
-		logger.Logerror.Println(msg)
-		return &http.Cookie{}, errors.New(msg)
+		return &http.Cookie{}, errs.ThrowError(err, "could not get token", -1)
 	}
 
 	cookie := http.Cookie{
@@ -117,10 +107,10 @@ func Login(user *models.User) (*http.Cookie, error) {
 	}
 
 	defer db.Close()
-	return &cookie, err
+	return &cookie, errs.ThrowEmptyError()
 }
 
-func GetUserById(id string) (models.User, error) {
+func GetUserById(id string) (models.User, errs.RequestError) {
 	var user models.User
 	db := models.InitDB()
 
@@ -130,12 +120,10 @@ func GetUserById(id string) (models.User, error) {
 		Scan(context.Background())
 
 	if err != nil {
-		msg := fmt.Sprintf("can not get user by id '%s'", id)
-		logger.Logerror.Println(msg)
-		return user, errors.New(msg)
+		return user, errs.ThrowError(err, "can not get user by id", -1)
 	}
 
 	defer db.Close()
 
-	return user, err
+	return user, errs.ThrowEmptyError()
 }

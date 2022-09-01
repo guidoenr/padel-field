@@ -2,8 +2,7 @@ package controllers
 
 import (
 	"context"
-	"errors"
-	"fmt"
+	"github.com/guidoenr/padel-field/api/errs"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
 	"github.com/guidoenr/padel-field/tools"
@@ -12,7 +11,7 @@ import (
 )
 
 // GetAvailableTurnos returns the entire list of available turnos of each weekday
-func GetAvailableTurnos() ([]models.Turno, error) {
+func GetAvailableTurnos() ([]models.Turno, errs.RequestError) {
 	var availableTurnos []models.Turno
 	logger.Loginfo.Println("getting availabale turnos")
 	// initialize the DB cursor
@@ -23,16 +22,17 @@ func GetAvailableTurnos() ([]models.Turno, error) {
 		Model(&availableTurnos).
 		Where("status = ?", "DISPONIBLE").
 		Scan(context.Background())
+
 	if err != nil {
-		logger.Logerror.Printf("error getting available turnos: %v", err)
+		return []models.Turno{}, errs.ThrowError(err, "can not get available turnos", -1)
 	}
 
 	defer db.Close()
-	return availableTurnos, err
+	return availableTurnos, errs.ThrowEmptyError()
 }
 
 // GetAvailableTurnosByDay returns the entire list of available turnos by a day
-func GetAvailableTurnosByDay(day string) ([]models.Turno, error) {
+func GetAvailableTurnosByDay(day string) ([]models.Turno, errs.RequestError) {
 	var availableTurnos []models.Turno
 	logger.Loginfo.Printf("getting availabale turnos for day: %s", day)
 	// initialize the DB cursor
@@ -49,15 +49,15 @@ func GetAvailableTurnosByDay(day string) ([]models.Turno, error) {
 		Scan(context.Background())
 
 	if err != nil {
-		logger.Logerror.Printf("error getting available turnos: %v", err)
+		return []models.Turno{}, errs.ThrowError(err, "can not get available turnos for this day", -1)
 	}
 
 	defer db.Close()
-	return availableTurnos, err
+	return availableTurnos, errs.ThrowEmptyError()
 }
 
 // GetTurnosByOwnerId returns all the turnos that are linked to a specific user
-func GetTurnosByOwnerId(ownerId string) ([]models.Turno, error) {
+func GetTurnosByOwnerId(ownerId string) ([]models.Turno, errs.RequestError) {
 	var turnosByOwner []models.Turno
 	logger.Loginfo.Printf("getting turnos for user '%d'", ownerId)
 	// initialize the DB cursor
@@ -70,15 +70,15 @@ func GetTurnosByOwnerId(ownerId string) ([]models.Turno, error) {
 		Scan(context.Background())
 
 	if err != nil {
-		logger.Logerror.Printf("getting turnos for user '%d'", ownerId)
+		return []models.Turno{}, errs.ThrowError(err, "can not get turnos for that user", -1)
 	}
 
 	defer db.Close()
-	return turnosByOwner, err
+	return turnosByOwner, errs.ThrowEmptyError()
 }
 
 // GetTurnoById returns one single turno linked to the turnoId
-func GetTurnoById(id string) (models.Turno, error) {
+func GetTurnoById(id string) (models.Turno, errs.RequestError) {
 	var turnoById models.Turno
 	idConv, _ := strconv.Atoi(id)
 
@@ -92,18 +92,16 @@ func GetTurnoById(id string) (models.Turno, error) {
 		Scan(context.Background())
 
 	if err != nil {
-		msg := fmt.Sprintf("turno '%s' not found", id)
-		logger.Logerror.Println(msg)
-		err = errors.New(msg)
+		return models.Turno{}, errs.ThrowError(err, "turno not found", -1)
 	}
 
 	defer db.Close()
-	return turnoById, err
+	return turnoById, errs.ThrowEmptyError()
 }
 
 // CancelTurno changes the state of the turno to AVAILABLE and set the OwnerId = 0
 // which means that turno is not related to any user
-func CancelTurno(id string, ownerId int64) error {
+func CancelTurno(id string, ownerId int64) errs.RequestError {
 	logger.Loginfo.Println("canceling turno")
 	db := models.InitDB()
 
@@ -117,18 +115,16 @@ func CancelTurno(id string, ownerId int64) error {
 		Exec(context.Background())
 
 	if err != nil {
-		msg := fmt.Sprintf("canceling turno '%s' for user '%d': %v \n", id, ownerId, err)
-		logger.Logerror.Println(msg)
-		err = errors.New(msg)
+		return errs.ThrowError(err, "can not cancel the turno", -1)
 	}
 
 	defer db.Close()
-	return err
+	return errs.ThrowEmptyError()
 }
 
 // ReserveTurno changes the status of the turno to RESERVED and set the ownerId of the user
 // that made the request of reserve
-func ReserveTurno(id string, ownerId int64) error {
+func ReserveTurno(id string, ownerId int64) errs.RequestError {
 	logger.Loginfo.Println("reserving turno")
 	db := models.InitDB()
 
@@ -142,26 +138,24 @@ func ReserveTurno(id string, ownerId int64) error {
 		Exec(context.Background())
 
 	if err != nil {
-		msg := fmt.Sprintf("reserving turno '%s' for user '%d': %v \n", id, ownerId, err)
-		logger.Logerror.Println(msg)
-		err = errors.New(msg)
+		return errs.ThrowError(err, "can not get reserve turno", -1)
 	}
 
 	defer db.Close()
-	return err
+	return errs.ThrowEmptyError()
 }
 
 // PersistTurnos is a built-in function to map turnos into the db
-func PersistTurnos(turnos []models.Turno) error {
+func PersistTurnos(turnos []models.Turno) errs.RequestError {
 	db := models.InitDB()
 	_, err := db.NewInsert().
 		Model(&turnos).
 		Exec(context.Background())
 
 	if err != nil {
-		logger.Logerror.Printf("error persisting turnos: %v", err)
+		return errs.ThrowError(err, "can not persist turnos", -1)
 	}
 
 	defer db.Close()
-	return err
+	return errs.ThrowEmptyError()
 }

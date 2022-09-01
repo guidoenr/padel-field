@@ -43,10 +43,10 @@ func InitializeTurnos() error {
 	}
 
 	err := controllers.PersistTurnos(turnos)
-	if err != nil {
+	if err.Err != nil {
 		logger.Logerror.Printf("initializing turnos: %v", err)
 	}
-	return err
+	return err.Err
 }
 
 // UpdateTurnos will update all the turnos that are older than today's date

@@ -73,7 +73,7 @@ func showIndex() gin.HandlerFunc {
 func showTurnos() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		turnos, err := controllers.GetAvailableTurnos()
-		if err != nil {
+		if err.Err != nil {
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
@@ -86,7 +86,7 @@ func showTurnosByDay() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		day := c.Param("day")
 		turnos, err := controllers.GetAvailableTurnosByDay(day)
-		if err != nil {
+		if err.Err != nil {
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
@@ -98,7 +98,7 @@ func showTurnosByDay() gin.HandlerFunc {
 func showTurnoByID() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		turno, err := controllers.GetTurnoById(c.Param("id"))
-		if err != nil {
+		if err.Err != nil {
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
@@ -110,7 +110,7 @@ func showTurnoByID() gin.HandlerFunc {
 func showTurnosByOwnerId() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		turnos, err := controllers.GetTurnosByOwnerId(c.Param("id"))
-		if err != nil {
+		if err.Err != nil {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
@@ -123,7 +123,7 @@ func reserveTurno() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// TODO, check the ownerID logic?
 		err := controllers.ReserveTurno(c.Param("id"), 0)
-		if err != nil {
+		if err.Err != nil {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
@@ -136,7 +136,7 @@ func cancelTurno() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// TODO, check the ownerID logic?
 		err := controllers.CancelTurno(c.Param("id"), 0)
-		if err != nil {
+		if err.Err != nil {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
@@ -156,13 +156,20 @@ func login() gin.HandlerFunc {
 		var cookie *http.Cookie
 
 		cookie, err := controllers.Login(&user)
-		c.SetCookie(cookie.Name, cookie.Value, cookie.MaxAge, cookie.Path, cookie.Domain, cookie.Secure, cookie.HttpOnly)
-
-		if err != nil {
+		switch err.StatusCode {
+		case -1:
+			c.IndentedJSON(http.StatusInternalServerError, err.Error())
+		case 3: // username does not exist
 			c.IndentedJSON(http.StatusBadRequest, err.Error())
-			return
+		case 4: // wrong password
+			c.IndentedJSON(http.StatusUnauthorized, err.Error())
+		case 5: // wrong email
+			c.IndentedJSON(http.StatusUnauthorized, err.Error())
+		default:
+			c.SetCookie(cookie.Name, cookie.Value, cookie.MaxAge, cookie.Path, cookie.Domain, cookie.Secure, cookie.HttpOnly)
+			c.IndentedJSON(http.StatusOK, gin.H{"ok": "Logged in"})
 		}
-		c.IndentedJSON(http.StatusOK, gin.H{"ok": "Logged in"})
+
 	}
 }
 
@@ -178,13 +185,18 @@ func register() gin.HandlerFunc {
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "can not unmarshal request body"})
 			return
 		}
-
-		err = controllers.Register(&newUser)
-		if err != nil {
-			c.IndentedJSON(http.StatusBadRequest, err.Error())
-			return
+		reqErr := controllers.Register(&newUser)
+		switch reqErr.StatusCode {
+		case -1:
+			c.IndentedJSON(http.StatusInternalServerError, err.Error())
+		case 1: // existing username
+			c.IndentedJSON(http.StatusConflict, gin.H{"error": "the username already exist"})
+		case 2: // existing email
+			c.IndentedJSON(http.StatusConflict, gin.H{"error": "the email already exist"})
+		default:
+			c.IndentedJSON(http.StatusOK, gin.H{"ok": "User registered"})
 		}
-		c.IndentedJSON(http.StatusOK, gin.H{"ok": "User registered"})
+
 	}
 }
 
