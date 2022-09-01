@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-    <section className="login w-full h-[80vh] mt-12">
-      <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container w-[95%] m-auto p-8 md:flex md:justify-between md:items-center md:max-w-6xl relative">
+    <section className="login w-full h-[90vh] flex items-center">
+      <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container pt-12 lg:pt-0 w-[95%] h-[74%] lg:h-[85%] m-auto p-8 md:flex md:justify-between md:items-center md:max-w-6xl relative">
         <div className="form-container flex flex-col gap-2 md:w-[45%]">
-          <div className="md:absolute md:top-8 md:left-8">
+          <div className="md:absolute md:top-8 md:left-8 pb-2">
             <a
               className="cursor-pointer font-secondary-font text-4xl text-primary"
               href="#home"
