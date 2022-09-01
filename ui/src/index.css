@@ -23,4 +23,7 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
+  .profile-img-container {
+    box-shadow: rgba(0, 0, 0, 0.2) -1px 1px 3px inset;
+  }
 }

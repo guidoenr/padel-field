@@ -1,7 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import {Link} from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -16,20 +15,11 @@ const Login = () => {
               Pádel-Logo
             </a>
           </div>
-          <h3 className="form-title text-2xl font-semibold">
-            Crear una cuenta
-          </h3>
+          <h3 className="form-title text-2xl font-semibold">Iniciar sesion</h3>
           <p className="form-text text-sm text-primary/60">
-            Crea una cuenta para poder reservar tu turno.
+            Entra a tu cuenta para poder reservar tu turno.
           </p>
-          <form action="#" className="flex flex-col gap-3">
-            <div className="row border-b border-b-primary/30">
-              <input
-                type="text"
-                placeholder="Nombre"
-                className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
-              />
-            </div>
+          <form className="flex flex-col gap-3">
             <div className="row border-b border-b-primary/30">
               <input
                 type="email"
@@ -53,29 +43,29 @@ const Login = () => {
                 type="submit"
                 className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
               >
-              Crear cuenta
+                Entrar
               </button>
             </div>
             <div className="row">
               <button
                 type="button"
-                className="btn w-full bg-transparent flex gap-1 normal-case text-primary border-primary hover:border-primary hover:bg-primary/10 hover:scale-105 transition ease-in-out"
+                className="btn w-full bg-transparent flex gap-2 normal-case text-primary border-primary hover:border-primary hover:bg-primary/10 hover:scale-105 transition ease-in-out"
               >
                 <FcGoogle className="text-2xl" />
-                Crear cuenta con Google
+                Entrar con Google
               </button>
             </div>
           </form>
           <div className="log-in-container mt-8 flex flex-col gap-4">
             <p className="log-in-text text-xl font-semibold">
-              ¿Ya tenes una cuenta?
+              ¿No tenes cuenta?
             </p>
-            <button
-              type="button"
+            <Link
+              to="/register"
               className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
             >
-              Entrar
-            </button>
+              Crear cuenta
+            </Link>
           </div>
         </div>
         <div className="login-img-container hidden md:flex w-[50%] h-[40rem] rounded-lg">

@@ -151,7 +151,11 @@ const Header = () => {
                     </li>
                     <li className="py-2 flex">
                       <NavLink
-                        onClick={handleClose}
+                        onClick={() => {
+                          handleClose();
+                          setSignOut(true);
+                          handleProfileImg(false);
+                        }}
                         to="/"
                         className={({ isActive }) =>
                           isActive
@@ -178,7 +182,7 @@ const Header = () => {
                 <img
                   src={profileImage}
                   alt="profile"
-                  className="w-11 h-11 rounded-full border-2 border-accent lg:w-12 lg:h-12 relative bottom-[.1rem]"
+                  className="w-11 h-11 rounded-full border border-accent lg:w-12 lg:h-12 relative bottom-[.1rem]"
                 />
               </div>
               <div

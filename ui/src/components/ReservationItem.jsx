@@ -4,7 +4,6 @@ import { useState } from "react";
 
 const ReservationItem = ({ hr }) => {
   const [available, setAvailable] = useState(true);
-
   const [recerved, setRecerved] = useState(false);
 
   const showReserved = () => {
