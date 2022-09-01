@@ -1,7 +1,7 @@
 import React from "react";
 
 const ConfirmReservation = () => {
-  return <div>ConfirmReservation</div>;
+  return <div className="asd">asd</div>;
 };
 
 export default ConfirmReservation;
