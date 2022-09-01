@@ -36,7 +36,8 @@ type User struct {
 }
 
 func (u User) String() string {
-	return fmt.Sprintf("User<%d %s %s %s>", u.ID, u.Username, u.Email, u.Password)
+	return fmt.Sprintf("User<id:%d username:%s email:%s password:%s firstname:%s lastname:%s phone:%s>",
+		u.ID, u.Username, u.Email, u.Password, u.Firstname, u.Lastname, u.Phone)
 }
 
 // -------------------------- TURNO

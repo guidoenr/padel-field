@@ -4,8 +4,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	controllers2 "github.com/guidoenr/padel-field/api/controllers"
-	"github.com/guidoenr/padel-field/logger"
+	controllers "github.com/guidoenr/padel-field/api/controllers"
 	"github.com/guidoenr/padel-field/models"
 	"net/http"
 	"time"
@@ -73,7 +72,7 @@ func showIndex() gin.HandlerFunc {
 // showTurnos is the main page for the turnos website
 func showTurnos() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		turnos, err := controllers2.GetAvailableTurnos()
+		turnos, err := controllers.GetAvailableTurnos()
 		if err != nil {
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
@@ -86,7 +85,7 @@ func showTurnos() gin.HandlerFunc {
 func showTurnosByDay() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		day := c.Param("day")
-		turnos, err := controllers2.GetAvailableTurnosByDay(day)
+		turnos, err := controllers.GetAvailableTurnosByDay(day)
 		if err != nil {
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
@@ -98,7 +97,7 @@ func showTurnosByDay() gin.HandlerFunc {
 // showTurnoByID is the main page for the turnos website
 func showTurnoByID() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		turno, err := controllers2.GetTurnoById(c.Param("id"))
+		turno, err := controllers.GetTurnoById(c.Param("id"))
 		if err != nil {
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
@@ -110,7 +109,7 @@ func showTurnoByID() gin.HandlerFunc {
 // showTurnosByOwnerId is the main page for the turnos website
 func showTurnosByOwnerId() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		turnos, err := controllers2.GetTurnosByOwnerId(c.Param("id"))
+		turnos, err := controllers.GetTurnosByOwnerId(c.Param("id"))
 		if err != nil {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -123,7 +122,7 @@ func showTurnosByOwnerId() gin.HandlerFunc {
 func reserveTurno() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// TODO, check the ownerID logic?
-		err := controllers2.ReserveTurno(c.Param("id"), 0)
+		err := controllers.ReserveTurno(c.Param("id"), 0)
 		if err != nil {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -136,7 +135,7 @@ func reserveTurno() gin.HandlerFunc {
 func cancelTurno() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// TODO, check the ownerID logic?
-		err := controllers2.CancelTurno(c.Param("id"), 0)
+		err := controllers.CancelTurno(c.Param("id"), 0)
 		if err != nil {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -156,7 +155,7 @@ func login() gin.HandlerFunc {
 		}
 		var cookie *http.Cookie
 
-		cookie, err := controllers2.Login(&user)
+		cookie, err := controllers.Login(&user)
 		c.SetCookie(cookie.Name, cookie.Value, cookie.MaxAge, cookie.Path, cookie.Domain, cookie.Secure, cookie.HttpOnly)
 
 		if err != nil {
@@ -171,22 +170,16 @@ func login() gin.HandlerFunc {
 func register() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		logger.Loginfo.Println(c.Request.Body)
-		for _, l := range c.Request.PostForm {
-			logger.Loginfo.Printf("post form: %s", l)
+		var newUser models.User
+
+		// unmarshal body data into user struct
+		err := c.BindJSON(&newUser)
+		if err != nil {
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "can not unmarshal request body"})
+			return
 		}
 
-		newUser := models.User{
-			Firstname: c.Request.PostFormValue("name"),
-			Lastname:  c.Request.PostFormValue("surname"),
-			Username:  c.Request.PostFormValue("username"),
-			Email:     c.Request.PostFormValue("email"),
-			Password:  c.Request.PostFormValue("password"),
-			Phone:     c.Request.PostFormValue("phone"),
-		}
-
-		logger.Loginfo.Println(newUser.String())
-		err := controllers2.Register(&newUser)
+		err = controllers.Register(&newUser)
 		if err != nil {
 			c.IndentedJSON(http.StatusBadRequest, err.Error())
 			return
@@ -214,7 +207,7 @@ func userGet() gin.HandlerFunc {
 		}
 
 		claims := token.Claims.(*jwt.StandardClaims)
-		user, _ := controllers2.GetUserById(claims.Issuer)
+		user, _ := controllers.GetUserById(claims.Issuer)
 
 		c.IndentedJSON(http.StatusOK, gin.H{"userGet": user})
 	}
