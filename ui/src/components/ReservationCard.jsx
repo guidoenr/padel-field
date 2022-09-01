@@ -1,7 +1,6 @@
 import React from "react";
 import ReservationItem from "./ReservationItem";
 import Weather from "./Weather";
-
 const ReservationCard = ({ day }) => {
   return (
     <article className="cardd w-[90%] max-w-sm md:max-w-xs relative rounded-lg mb-20 border border-primary/30 bg-neutral/80 shadow-lg">
@@ -14,7 +13,6 @@ const ReservationCard = ({ day }) => {
         </div>
         <div className="card-content">
           <ul className="reservation-list">
-            
             <ReservationItem hr="9:00" />
             <ReservationItem hr="10:00" />
             <ReservationItem hr="11:00" />

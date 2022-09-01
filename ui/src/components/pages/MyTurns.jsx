@@ -12,14 +12,14 @@ const MyTurns = () => {
       <div className="myturns-container container mx-auto px-1 flex flex-col">
         <div className="myturns-header relative py-4">
           <h3 className="text-2xl lg:text-3xl font-medium">
-            Tus proximos turnos:
+            Mis próximos turnos:
           </h3>
           <div className="absolute bottom-1 w-[3rem] h-[.25rem] bg-accent"></div>
           <div className="absolute bottom-[-.25rem] w-[1.5rem] h-[.25rem] bg-accent"></div>
         </div>
         {emptyTurns && (
           <div className="text-lg empty-turns pt-8 flex flex-col items-center gap-2 my-6">
-            <p className="flex flex-col gap-3 max-w-md w-[95%] text-center mx-auto py-6 text-lg rounded-md border border-primary/30 bg-primary/10">
+            <p className="flex flex-col gap-3 max-w-md w-[95%] text-center mx-auto py-6 text-lg rounded-md">
               <span className="w-full flex justify-center">
                 <TbMoodEmpty className="text-[8rem]" />
               </span>
