@@ -7,11 +7,13 @@ const ConfirmReservation = ({ day = "23/10", hr = "20:00", price = 300 }) => {
 
   return (
     <section className="login w-full h-[80vh] flex items-center">
-      <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container w-[95%] h-[50%] max-w-lg mx-auto p-8 relative">
+      <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container w-[95%] max-w-lg mx-auto p-8 relative">
         <div className="form-container flex flex-col gap-2">
-          <h3 className="form-title text-2xl font-semibold">Confirmar turno</h3>
-          <h2 className="">
-            Reservar turno para el día {day} a las {hr}
+          <h3 className="form-title text-2xl font-semibold text-center">
+            Confirmar Turno
+          </h3>
+          <h2 className="flex flex-col max-w-md py-4 text-lg border-b border-b-accent font-medium text-center">
+            Día: {day} - Horario: {hr}
           </h2>
           <form className="flex flex-col gap-7 mt-6">
             <div className="row flex gap-2 items-center">
