@@ -18,7 +18,13 @@
     background-size: cover;
   }
   .login-img-container {
-    background-image: url("./assets/padel-background-4.jpg");
+    background-image: url("./assets/padel-background-3.jpg");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .register-img-container {
+    background-image: url("./assets/padel-background-2.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;

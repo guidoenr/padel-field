@@ -1,7 +1,6 @@
 import React, { SyntheticEvent, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Navigate } from 'react-router-dom';
-
+import { Navigate } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -10,7 +9,7 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [redirect, setRedirect] = useState(false)
+  const [redirect, setRedirect] = useState(false);
 
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -26,12 +25,12 @@ const Register = () => {
         username,
       }),
     });
-    if (response.ok){
-      setRedirect(true)
+    if (response.ok) {
+      setRedirect(true);
     }
-  }
+  };
   if (redirect) {
-    return <Navigate to="/login"> </Navigate>
+    return <Navigate to="/login"> </Navigate>;
   }
 
   /*
@@ -60,12 +59,16 @@ ej: (ponelo como quieras me chupa un huevo a mi)
 
 happy coding
 
+
+@MARCOS: Listorti, habia puesto la misma img solo de ejemplo :)
+
+
 */
   return (
     <section className="register w-full h-[90vh] flex items-center">
       <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container w-[95%] mt-5 lg:mt-0 lg:w-[90%] lg:h-[90%] mx-auto p-8 lg:flex lg:justify-between lg:items-center lg:max-w-7xl relative">
-        <div className="form-container flex flex-col gap-2 lg:w-[45%]">
-          <div className="lg:absolute lg:top-8 lg:left-8">
+        <div className="form-container flex flex-col gap-2 lg:w-[50%] lg:order-2">
+          <div className="lg:absolute lg:top-8 lg:right-8">
             <a
               className="cursor-pointer font-secondary-font text-4xl text-primary"
               href="#home"
@@ -120,21 +123,21 @@ happy coding
             </div>
             <div className="row border-b border-b-primary/30">
               <input
-                type="text"
-                placeholder="Celular"
-                name="phone"
-                id="phone"
-                onChange={(e) => setPhone(e.target.value)}
-                className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
-              />
-            </div>
-            <div className="row border-b border-b-primary/30">
-              <input
                 type="email"
                 placeholder="Email"
                 name="email"
                 id="email"
                 onChange={(e) => setEmail(e.target.value)}
+                className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+              />
+            </div>
+            <div className="row border-b border-b-primary/30">
+              <input
+                type="text"
+                placeholder="Celular"
+                name="phone"
+                id="phone"
+                onChange={(e) => setPhone(e.target.value)}
                 className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
               />
             </div>
@@ -168,8 +171,8 @@ happy coding
             </button>
           </div>
         </div>
-        <div className="login-img-container hidden lg:flex w-[50%] h-[40rem] rounded-lg">
-          <div className="hero-overlay bg-opacity-30 bg-[#151515] rounded-lg"></div>
+        <div className="register-img-container hidden lg:flex w-[45%] h-[40rem] rounded-lg">
+          <div className="hero-overlay bg-opacity-20 bg-[#151515] rounded-lg"></div>
         </div>
       </div>
     </section>

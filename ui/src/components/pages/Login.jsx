@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import {Link, Navigate} from "react-router-dom";
-import {SyntheticEvent} from "react";
+import { Link, Navigate } from "react-router-dom";
+import { SyntheticEvent } from "react";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [redirect, setRedirect] = useState(false)
+  const [redirect, setRedirect] = useState(false);
 
   const submit = async (e: SyntheticEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     const response = await fetch("http://localhost:8080/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -19,12 +19,12 @@ const Login = () => {
         password,
       }),
     });
-    if (response.ok){
-      setRedirect(true)
+    if (response.ok) {
+      setRedirect(true);
     }
-  }
+  };
   if (redirect) {
-    return <Navigate to="/"> </Navigate>
+    return <Navigate to="/"> </Navigate>;
   }
   /*
   @marcos: asi no me olvido
@@ -55,13 +55,40 @@ const Login = () => {
 
   happy coding
 
+
+  @MARCOS: 
+  
+  Joyaaa. 
+
+  "puedo hacer ifs para chequear el estado de algunas variables que van cambiando a medida
+  que el user va usando la pag" ---> Si.
+
+  Puedo mostrar distintos mensajes dependiendo
+  de lo que escribe el usuario en el input
+      Ejemplo: 
+          Si el nombre de usuario ya existe,
+          que salte un cartel "nombre de usuario ya registrado".
+
+  Tmb puedo mostrar un layout u otro dependiendo
+  de que se cumpla o no alguna condicion.
+      Ejemplo:
+          If (userLoggedIn === 'false') {
+
+              Fijar un cartel o un button en la pantalla
+              que diga que se tiene que loguear 
+              primero para poder sacar turno.
+
+              O tmb que cuando haga click en Reservar, redireccionarlo
+              a Login y no a confirmar reserva.
+          }
+          
   */
 
   return (
     <section className="login w-full h-[90vh] flex items-center">
-      <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container pt-12 lg:pt-0 w-[95%] h-[74%] lg:h-[85%] m-auto p-8 md:flex md:justify-between md:items-center md:max-w-6xl relative">
-        <div className="form-container flex flex-col gap-2 md:w-[45%]">
-          <div className="md:absolute md:top-8 md:left-8 pb-2">
+      <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container pt-12 lg:pt-8 w-[95%] h-[74%] lg:h-[90%] m-auto p-8 lg:flex lg:justify-between lg:items-center lg:max-w-7xl relative">
+        <div className="form-container flex flex-col gap-2 lg:w-[50%]">
+          <div className="lg:absolute lg:top-8 lg:left-8 pb-2">
             <a
               className="cursor-pointer font-secondary-font text-4xl text-primary"
               href="#home"
@@ -81,7 +108,7 @@ const Login = () => {
                 name="username"
                 id="username"
                 required
-                onChange={e => setUsername(e.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
                 className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
               />
             </div>
@@ -92,7 +119,7 @@ const Login = () => {
                 name="password"
                 id="password"
                 required
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
               />
             </div>
@@ -126,7 +153,7 @@ const Login = () => {
             </Link>
           </div>
         </div>
-        <div className="login-img-container hidden md:flex w-[50%] h-[40rem] rounded-lg">
+        <div className="login-img-container hidden lg:flex w-[45%] h-[40rem] rounded-lg">
           <div className="hero-overlay bg-opacity-30 bg-[#151515] rounded-lg"></div>
         </div>
       </div>

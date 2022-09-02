@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -22,16 +22,14 @@ const Header = () => {
   const handleClose = () => setNav(!nav);
 
   useEffect(() => {
-    (
-        async () => {
-          const response = await fetch("http://localhost:8080/auth/user", {
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-          });
-          const content = await response.json();
-          setUsername(content["userData"])
-        }
-    )();
+    (async () => {
+      const response = await fetch("http://localhost:8080/auth/user", {
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      const content = await response.json();
+      setUsername(content["userData"]);
+    })();
   });
 
   return (
