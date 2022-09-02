@@ -62,6 +62,8 @@ happy coding
 
 @MARCOS: Listorti, habia puesto la misma img solo de ejemplo :)
 
+----------------------------------------------------- ready --------------------------------------------------------------
+
 
 */
   return (
@@ -80,65 +82,99 @@ happy coding
           <p className="form-text text-sm text-primary/60">
             Una vez que tengas tu cuenta, podrás reservar tu turno.
           </p>
-          <form className="flex flex-col gap-3 " onSubmit={submit}>
-            <div className="lg:flex lg:w-full lg:gap-4">
-              <div className="row border-b border-b-primary/30">
+          <form className="flex flex-col gap-3" onSubmit={submit}>
+            <div className="flex flex-col gap-2 lg:flex-row lg:w-full lg:gap-4">
+              <div className="row flex flex-col gap-1">
+                <label
+                  htmlFor="name"
+                  className="text-primary/60 font-semibold text-sm"
+                >
+                  Nombre:
+                </label>
                 <input
                   type="text"
-                  placeholder="Nombre"
+                  id="name"
+                  name="name"
                   onChange={(e) => setName(e.target.value)}
-                  className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+                  className="focus:outline-accent input h-10 w-full lg:max-w-xs p-1 border-r border-l bg-transparent border-primary/30"
                 />
               </div>
-              <div className="row border-b border-b-primary/30">
+              <div className="row flex flex-col gap-1">
+                <label
+                  htmlFor="lastname"
+                  className="text-primary/60 font-semibold text-sm"
+                >
+                  Apellido:
+                </label>
                 <input
+                  id="lastname"
+                  name="lastname"
                   type="text"
-                  placeholder="Apellido"
                   onChange={(e) => setSurname(e.target.value)}
-                  className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+                  className="form-control focus:outline-accent input h-10 w-full lg:max-w-xs p-1 border-r border-l bg-transparent border-primary/30"
                 />
               </div>
             </div>
-            <div className="lg:flex lg:w-full lg:gap-4">
-              <div className="row border-b border-b-primary/30">
+            <div className="flex flex-col gap-2 lg:flex-row lg:w-full lg:gap-4">
+              <div className="row flex flex-col gap-1">
+                <label
+                  htmlFor="username"
+                  className="text-primary/60 font-semibold text-sm"
+                >
+                  Nombre de usuario:
+                </label>
                 <input
                   type="username"
-                  placeholder="Nombre de usuario"
-                  name="username"
                   id="username"
+                  name="username"
                   onChange={(e) => setUsername(e.target.value)}
-                  className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+                  className="form-control focus:outline-accent input h-10 w-full lg:max-w-xs p-1 border-r border-l bg-transparent border-primary/30"
                 />
               </div>
-              <div className="row border-b border-b-primary/30">
+              <div className="row flex flex-col gap-1">
+                <label
+                  htmlFor="password"
+                  className="text-primary/60 font-semibold text-sm"
+                >
+                  Contraseña:
+                </label>
                 <input
                   type="password"
-                  placeholder="Contraseña"
                   name="password"
                   id="password"
                   onChange={(e) => setPassword(e.target.value)}
-                  className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+                  className="form-control focus:outline-accent input h-10 w-full lg:max-w-xs p-1 border-r border-l bg-transparent border-primary/30"
                 />
               </div>
             </div>
-            <div className="row border-b border-b-primary/30">
+            <div className="row flex flex-col gap-1">
+              <label
+                htmlFor="email"
+                className="text-primary/60 font-semibold text-sm"
+              >
+                Email:
+              </label>
               <input
                 type="email"
-                placeholder="Email"
                 name="email"
                 id="email"
                 onChange={(e) => setEmail(e.target.value)}
-                className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+                className="form-control focus:outline-accent input h-10 w-full lg:max-w-xs p-1 border-r border-l bg-transparent border-primary/30"
               />
             </div>
-            <div className="row border-b border-b-primary/30">
+            <div className="row flex flex-col gap-1">
+              <label
+                htmlFor="phone"
+                className="text-primary/60 font-semibold text-sm"
+              >
+                Celular:
+              </label>
               <input
                 type="text"
-                placeholder="Celular"
                 name="phone"
                 id="phone"
                 onChange={(e) => setPhone(e.target.value)}
-                className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+                className="form-control focus:outline-accent input h-10 w-full lg:max-w-xs p-1 border-r border-l bg-transparent border-primary/30"
               />
             </div>
             <div className="row pt-4">
