@@ -32,4 +32,10 @@
   .profile-img-container {
     box-shadow: rgba(0, 0, 0, 0.2) -1px 1px 3px inset;
   }
+  .error-msj {
+    display: none;
+  }
+  input:invalid[focused="true"] ~ .error-msj {
+    display: block;
+  }
 }

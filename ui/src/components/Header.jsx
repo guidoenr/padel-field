@@ -33,7 +33,7 @@ const Header = () => {
   });
 
   return (
-    <header className="relative w-full h-[9vh] flex shadow-2xl z-50">
+    <header className="relative w-full h-[4.5rem] flex shadow-2xl z-50">
       <div className="container m-auto px-1 navbar flex justify-between">
         <div className="navbar-start w-auto">
           <Link

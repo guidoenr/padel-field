@@ -72,7 +72,7 @@ const Login = () => {
   Tmb puedo mostrar un layout u otro dependiendo
   de que se cumpla o no alguna condicion.
       Ejemplo:
-          If (userLoggedIn === 'false') {
+          If (userLoggedIn === false) {
 
               Fijar un cartel o un button en la pantalla
               que diga que se tiene que loguear 
