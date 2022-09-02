@@ -1,8 +1,33 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
+import {SyntheticEvent} from "react";
 
 const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false)
+
+  const submit = async (e: SyntheticEvent) => {
+    e.preventDefault()
+    const response = await fetch("http://localhost:8080/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    });
+    if (response.ok){
+      setRedirect(true)
+    }
+
+  }
+  if (redirect) {
+    return <Navigate to="/"> </Navigate>
+  }
+
   return (
     <section className="login w-full h-[90vh] flex items-center">
       <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container pt-12 lg:pt-0 w-[95%] h-[74%] lg:h-[85%] m-auto p-8 md:flex md:justify-between md:items-center md:max-w-6xl relative">
@@ -19,14 +44,16 @@ const Login = () => {
           <p className="form-text text-sm text-primary/60">
             Entra a tu cuenta para poder reservar tu turno.
           </p>
-          <form className="flex flex-col gap-3">
+          <form className="flex flex-col gap-3" onSubmit={submit}>
             <div className="row border-b border-b-primary/30">
               <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                id="email"
-                className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+                type="text"
+                placeholder="Nombre de usuario"
+                name="username"
+                id="username"
+                required
+                onChange={e => setUsername(e.target.value)}
+                className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
               />
             </div>
             <div className="row border-b border-b-primary/30">
@@ -35,7 +62,9 @@ const Login = () => {
                 placeholder="Contraseña"
                 name="password"
                 id="password"
-                className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+                required
+                onChange={e => setPassword(e.target.value)}
+                className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
               />
             </div>
             <div className="row pt-4">

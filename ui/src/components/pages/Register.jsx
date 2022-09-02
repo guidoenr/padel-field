@@ -1,5 +1,7 @@
 import React, { SyntheticEvent, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { Navigate } from 'react-router-dom';
+
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -8,6 +10,7 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [redirect, setRedirect] = useState(false)
 
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -23,11 +26,13 @@ const Register = () => {
         username,
       }),
     });
-    const bbb = response.body;
-    console.log(response);
-    console.log(bbb);
-  };
-
+    if (response.ok){
+      setRedirect(true)
+    }
+  }
+  if (redirect) {
+    return <Navigate to="/login"> </Navigate>
+  }
   return (
     <section className="register w-full h-[90vh] flex items-center">
       <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container w-[95%] mt-5 lg:mt-0 lg:w-[90%] lg:h-[90%] mx-auto p-8 lg:flex lg:justify-between lg:items-center lg:max-w-7xl relative">

@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -20,8 +21,9 @@ func ListenAndServe() {
 	router := gin.Default()
 
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
-		AllowHeaders:     []string{"Origin", "Content-Type"},
+		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowMethods:     []string{"GET, POST"},
+		AllowHeaders:     []string{"Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
@@ -33,28 +35,24 @@ func ListenAndServe() {
 	users := router.Group("/users")
 	auth := router.Group("/auth")
 
-	// turnos
 	{
+		// turnos
 		turnos.GET("/", showTurnos())
 		turnos.GET("/:id", showTurnoByID())
 		turnos.GET("/day/:day", showTurnosByDay())
 		turnos.POST("/:id/reserve", reserveTurno())
 		turnos.POST("/:id/cancel", cancelTurno())
-	}
 
-	// users
-	{
+		// users
 		users.GET("/:id/turnos", showTurnosByOwnerId())
-	}
 
-	// auth
-	{
+		// auth
 		auth.POST("/register", register())
 		auth.POST("/login", login())
 		auth.POST("/logout", logout())
 		auth.GET("/user", userGet())
 	}
-	// listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+
 	router.Run()
 }
 
@@ -149,14 +147,15 @@ func cancelTurno() gin.HandlerFunc {
 // login
 func login() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		user := models.User{
-			Username: c.Request.PostFormValue("username"),
-			Password: c.Request.PostFormValue("password"),
-		}
+
+		var user models.User
+		err := c.BindJSON(&user)
+
+		fmt.Printf("user: %v", user.String())
 		var cookie *http.Cookie
 
-		cookie, err := controllers.Login(&user)
-		switch err.StatusCode {
+		cookie, reqErr := controllers.Login(&user)
+		switch reqErr.StatusCode {
 		case -1:
 			c.IndentedJSON(http.StatusInternalServerError, err.Error())
 		case 3: // username does not exist

@@ -62,6 +62,7 @@ func Register(newUser *models.User) errs.RequestError {
 func Login(user *models.User) (*http.Cookie, errs.RequestError) {
 	db := models.InitDB()
 
+	logger.Loginfo.Printf("username:::::: %s", user.Username)
 	// find if the username or email exists
 	exists, err := db.NewSelect().
 		Table("users").
