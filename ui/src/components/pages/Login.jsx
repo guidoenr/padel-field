@@ -22,11 +22,40 @@ const Login = () => {
     if (response.ok){
       setRedirect(true)
     }
-
   }
   if (redirect) {
     return <Navigate to="/"> </Navigate>
   }
+  /*
+  @marcos: asi no me olvido
+
+  el estado de esta page va a depender del http status code de la response,
+  (eso olvidate que lo manejo yo que ya me di maña con react)
+  lo que te voy a pedir es, una serie de cartelitos/aviso (vos sabras como hacerlo lindo)
+  que salten en el login, y digan algo asi:
+
+  [para el login, osea en esta page]
+   - usuario no existe
+   - email no existe
+   - contraseña incorrecta
+   - error interno
+
+   [para el register]
+    - usuario ya registrado
+    - email ya registrado
+    - error interno
+
+  entiendo que esto es totalmente dynamic, porque cuando jugue con los <Navigate to> me di cuenta
+  que puedo hacer ifs para chequear el estado de algunas variables que van cambiando a medida
+  que el user va usando la pag (+1 puntito para react)
+  hace que se muestre cada uno en cada field, es decir:
+  (e.g: "usuario no existe" que se muestre en el field 'Nombre de usuario', and go on...)
+
+  lo de las cookies, register, login.. toodo anda flamaaaaa (duran 3 horas las cookies)
+
+  happy coding
+
+  */
 
   return (
     <section className="login w-full h-[90vh] flex items-center">

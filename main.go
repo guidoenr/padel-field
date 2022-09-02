@@ -4,7 +4,7 @@ import (
 	"flag"
 	"github.com/guidoenr/padel-field/api"
 	"github.com/guidoenr/padel-field/logger"
-	"github.com/guidoenr/padel-field/models"
+	"github.com/guidoenr/padel-field/models/psdb"
 )
 
 func main() {
@@ -30,10 +30,10 @@ func main() {
 
 // resetDbAndCreateSchemas restart the entire DB and create all the schemas
 func resetDbAndCreateSchemas() {
-	db := models.InitDB()
+	db := psdb.InitDB()
 
 	// restarting the DB
-	err := models.RestartDb(db)
+	err := psdb.RestartDb(db)
 	if err != nil {
 		logger.Logerror.Println(err)
 	}

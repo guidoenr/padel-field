@@ -5,6 +5,7 @@ import (
 	"github.com/guidoenr/padel-field/api/controllers"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
+	"github.com/guidoenr/padel-field/models/psdb"
 	"github.com/guidoenr/padel-field/tools"
 	"time"
 )
@@ -54,7 +55,7 @@ func UpdateTurnos() {
 	//var outdatedTurnos []models.Turno
 	logger.Loginfo.Println("Updating out-of-date turnos")
 	todayDate, _ := tools.GetTodayDate()
-	db := models.InitDB()
+	db := psdb.InitDB()
 
 	turno := new(models.Turno)
 
@@ -104,7 +105,7 @@ func getWeekDay(datetime time.Time) string {
 
 func InitializeUsers() error {
 	logger.Logwarning.Println("initialazing users..")
-	db := models.InitDB()
+	db := psdb.InitDB()
 	rootUser := models.User{
 		Username:  "root",
 		Password:  "rootoor",

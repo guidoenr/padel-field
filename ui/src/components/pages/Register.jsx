@@ -33,6 +33,34 @@ const Register = () => {
   if (redirect) {
     return <Navigate to="/login"> </Navigate>
   }
+
+  /*
+@marcos: asi no me olvido v2
+
+me gustaria que la foto del login/register cambie, osea no que sea la misma porque me paso a mi por ejemplo
+( q soy bastante crack ) de confundirme las dos pages, pensando que estaba por logearme y me estaba registrando
+me gustaria que
+- cambies la foto de c/u
+- y que cambies de lugar las dos cosas, es decir, del lado derecho la foto para el login y el izquierdo para el register
+
+ej: (ponelo como quieras me chupa un huevo a mi)
+
+|-----------LOGIN-----------|
+| Username    |      foto   |
+| Password    |             |
+----------------------------
+
+|-----------REGISTER---------|
+|          |      Username   |
+|          |       Password   |
+|    foto  |       Email      |
+|          |       Nombre     |
+|          |       Phone      |
+----------------------------
+
+happy coding
+
+*/
   return (
     <section className="register w-full h-[90vh] flex items-center">
       <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container w-[95%] mt-5 lg:mt-0 lg:w-[90%] lg:h-[90%] mx-auto p-8 lg:flex lg:justify-between lg:items-center lg:max-w-7xl relative">

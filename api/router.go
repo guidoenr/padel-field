@@ -1,11 +1,11 @@
 package api
 
 import (
-	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	controllers "github.com/guidoenr/padel-field/api/controllers"
+	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
 	"net/http"
 	"time"
@@ -151,9 +151,9 @@ func login() gin.HandlerFunc {
 		var user models.User
 		err := c.BindJSON(&user)
 
-		fmt.Printf("user: %v", user.String())
 		var cookie *http.Cookie
 
+		// loggin and storing the cookie
 		cookie, reqErr := controllers.Login(&user)
 		switch reqErr.StatusCode {
 		case -1:
@@ -167,6 +167,7 @@ func login() gin.HandlerFunc {
 		default:
 			c.SetCookie(cookie.Name, cookie.Value, cookie.MaxAge, cookie.Path, cookie.Domain, cookie.Secure, cookie.HttpOnly)
 			c.IndentedJSON(http.StatusOK, gin.H{"ok": "Logged in"})
+			logger.Loginfo.Printf("user '%s' logged in", user.Username)
 		}
 
 	}
@@ -194,12 +195,13 @@ func register() gin.HandlerFunc {
 			c.IndentedJSON(http.StatusConflict, gin.H{"error": "the email already exist"})
 		default:
 			c.IndentedJSON(http.StatusOK, gin.H{"ok": "User registered"})
+			logger.Loginfo.Printf("user '%s' registered", newUser.Username)
 		}
 
 	}
 }
 
-// login
+// userGet
 func userGet() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		cookie, err := c.Cookie("jwt")

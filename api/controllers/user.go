@@ -7,6 +7,7 @@ import (
 	"github.com/guidoenr/padel-field/api/errs"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
+	"github.com/guidoenr/padel-field/models/psdb"
 	"net/http"
 	"strconv"
 	"time"
@@ -18,7 +19,7 @@ const (
 
 // Register has the purpose of authenticate the user credentials
 func Register(newUser *models.User) errs.RequestError {
-	db := models.InitDB()
+	db := psdb.InitDB()
 	newUser.Role = models.NORMAL
 
 	// get all the usernames from the database
@@ -60,9 +61,8 @@ func Register(newUser *models.User) errs.RequestError {
 
 // Login has the purpose of authenticate the user credentials
 func Login(user *models.User) (*http.Cookie, errs.RequestError) {
-	db := models.InitDB()
+	db := psdb.InitDB()
 
-	logger.Loginfo.Printf("username:::::: %s", user.Username)
 	// find if the username or email exists
 	exists, err := db.NewSelect().
 		Table("users").
@@ -113,7 +113,7 @@ func Login(user *models.User) (*http.Cookie, errs.RequestError) {
 
 func GetUserById(id string) (models.User, errs.RequestError) {
 	var user models.User
-	db := models.InitDB()
+	db := psdb.InitDB()
 
 	err := db.NewSelect().
 		Model(&user).

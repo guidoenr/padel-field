@@ -5,6 +5,7 @@ import (
 	"github.com/guidoenr/padel-field/api/errs"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
+	"github.com/guidoenr/padel-field/models/psdb"
 	"github.com/guidoenr/padel-field/tools"
 	"strconv"
 	"strings"
@@ -15,7 +16,7 @@ func GetAvailableTurnos() ([]models.Turno, errs.RequestError) {
 	var availableTurnos []models.Turno
 	logger.Loginfo.Println("getting availabale turnos")
 	// initialize the DB cursor
-	db := models.InitDB()
+	db := psdb.InitDB()
 
 	// select * from turnos where status = "DISPONIBLE"
 	err := db.NewSelect().
@@ -36,7 +37,7 @@ func GetAvailableTurnosByDay(day string) ([]models.Turno, errs.RequestError) {
 	var availableTurnos []models.Turno
 	logger.Loginfo.Printf("getting availabale turnos for day: %s", day)
 	// initialize the DB cursor
-	db := models.InitDB()
+	db := psdb.InitDB()
 
 	today, _ := tools.GetTodayDate()
 	oneWeek := today.AddDate(0, 0, 7)
@@ -61,7 +62,7 @@ func GetTurnosByOwnerId(ownerId string) ([]models.Turno, errs.RequestError) {
 	var turnosByOwner []models.Turno
 	logger.Loginfo.Printf("getting turnos for user '%d'", ownerId)
 	// initialize the DB cursor
-	db := models.InitDB()
+	db := psdb.InitDB()
 
 	// select * from turnos where status = "DISPONIBLE"
 	err := db.NewSelect().
@@ -84,7 +85,7 @@ func GetTurnoById(id string) (models.Turno, errs.RequestError) {
 
 	logger.Loginfo.Printf("finding turno by id: '%d'", id)
 	// initialize the DB cursor
-	db := models.InitDB()
+	db := psdb.InitDB()
 
 	err := db.NewSelect().
 		Model(&turnoById).
@@ -103,7 +104,7 @@ func GetTurnoById(id string) (models.Turno, errs.RequestError) {
 // which means that turno is not related to any user
 func CancelTurno(id string, ownerId int64) errs.RequestError {
 	logger.Loginfo.Println("canceling turno")
-	db := models.InitDB()
+	db := psdb.InitDB()
 
 	turno := new(models.Turno)
 
@@ -126,7 +127,7 @@ func CancelTurno(id string, ownerId int64) errs.RequestError {
 // that made the request of reserve
 func ReserveTurno(id string, ownerId int64) errs.RequestError {
 	logger.Loginfo.Println("reserving turno")
-	db := models.InitDB()
+	db := psdb.InitDB()
 
 	turno := new(models.Turno)
 
@@ -147,7 +148,7 @@ func ReserveTurno(id string, ownerId int64) errs.RequestError {
 
 // PersistTurnos is a built-in function to map turnos into the db
 func PersistTurnos(turnos []models.Turno) errs.RequestError {
-	db := models.InitDB()
+	db := psdb.InitDB()
 	_, err := db.NewInsert().
 		Model(&turnos).
 		Exec(context.Background())

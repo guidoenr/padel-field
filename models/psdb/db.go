@@ -1,9 +1,10 @@
-package models
+package psdb
 
 import (
 	"context"
 	"database/sql"
 	"github.com/guidoenr/padel-field/logger"
+	"github.com/guidoenr/padel-field/models"
 	"github.com/joho/godotenv"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
@@ -43,11 +44,11 @@ func RestartDb(db *bun.DB) error {
 func createSchemas(db *bun.DB) error {
 	var err error
 	_, err = db.NewCreateTable().
-		Model((*User)(nil)).
+		Model((*models.User)(nil)).
 		Exec(context.Background())
 
 	_, err = db.NewCreateTable().
-		Model((*Turno)(nil)).
+		Model((*models.Turno)(nil)).
 		Exec(context.Background())
 
 	return err
@@ -55,7 +56,7 @@ func createSchemas(db *bun.DB) error {
 
 // loadDBConnector load the environment variables from `local.env` // TODO, change later to heroku maybe?
 func loadDBConnector() *pgdriver.Connector {
-	err := godotenv.Load("models/local.env")
+	err := godotenv.Load("models/psdb/local.env")
 	if err != nil {
 		logger.Logerror.Printf("error reading 'local.env' file err: %v \n", err)
 	}
