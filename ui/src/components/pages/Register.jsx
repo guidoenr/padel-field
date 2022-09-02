@@ -68,7 +68,13 @@ happy coding
 
 @MARCOS: Listorti, habia puesto la misma img solo de ejemplo :)
 
------------------------------------------------------ ready --------------------------------------------------------------
+   [para el register]
+    - usuario ya registrado
+    - email ya registrado
+    - error interno
+    - estado required y error caracteres invalidos por cada input. 
+    - refactor code
+    - create input component & refactor code
 
 
 */

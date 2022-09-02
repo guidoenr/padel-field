@@ -81,7 +81,14 @@ const Login = () => {
               O tmb que cuando haga click en Reservar, redireccionarlo
               a Login y no a confirmar reserva.
           }
-          
+    
+      [para el login, osea en esta page]
+   - usuario no existe
+   - email no existe
+   - contraseña incorrecta
+   - error interno
+    - estado required y error caracteres invalidos por cada input. 
+    - create input component & refactor code
   */
 
   return (
