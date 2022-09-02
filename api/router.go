@@ -219,10 +219,11 @@ func userGet() gin.HandlerFunc {
 			return
 		}
 
-		claims := token.Claims.(*jwt.StandardClaims)
-		user, _ := controllers.GetUserById(claims.Issuer)
+		// TODO THIS IS BROKEN , I WANT TO SHOW THAT
+		_ = token.Claims.(*jwt.StandardClaims)
+		user, _ := controllers.GetUserById("1")
 
-		c.IndentedJSON(http.StatusOK, gin.H{"userGet": user})
+		c.IndentedJSON(http.StatusOK, gin.H{"userData": user.Username})
 	}
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -14,11 +14,25 @@ const Header = () => {
   const [profileMenu, setProfileMenu] = useState(false);
   const [profileImg, setProfileImg] = useState(true);
   const [signOut, setSignOut] = useState(false);
+  const [username, setUsername] = useState("");
 
   const handleMenu = () => setNav(!nav);
   const handleProfileImg = () => setProfileImg(!profileImg);
   const handleProfileMenu = () => setProfileMenu(!profileMenu);
   const handleClose = () => setNav(!nav);
+
+  useEffect(() => {
+    (
+        async () => {
+          const response = await fetch("http://localhost:8080/auth/user", {
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+          });
+          const content = await response.json();
+          setUsername(content["userData"])
+        }
+    )();
+  });
 
   return (
     <header className="relative w-full h-[9vh] flex shadow-2xl z-50">
@@ -28,7 +42,7 @@ const Header = () => {
             to="/"
             className="cursor-pointer font-secondary-font text-4xl text-primary"
           >
-            Pádel-Logo
+            Bienvenido {username}
           </Link>
         </div>
 
