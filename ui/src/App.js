@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="App bg-gradient-to-t from-[#8e9eab] to-base-100">
       <Header />
-      <AnimatePresence>
+      <AnimatePresence exitBeforeEnter>
         <Routes location={location} key={location.key}>
           <Route path="/" element={<Reservation />} />
           <Route path="confirmreservation" element={<ConfirmReservation />} />
