@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, Navigate } from "react-router-dom";
 import { SyntheticEvent } from "react";
+import { motion } from "framer-motion";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -26,6 +27,29 @@ const Login = () => {
   if (redirect) {
     return <Navigate to="/"> </Navigate>;
   }
+
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+      x: "100vw",
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        bounce: 0.25,
+      },
+    },
+    exit: {
+      x: "-100vw",
+      transition: {
+        type: "spring",
+        bounce: 0.25,
+      },
+    },
+  };
+
   /*
   @marcos: asi no me olvido
 
@@ -93,7 +117,13 @@ const Login = () => {
 
   return (
     <section className="login w-full h-[90vh] flex items-center">
-      <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container pt-12 lg:pt-8 w-[95%] h-[74%] lg:h-[90%] m-auto p-8 lg:flex lg:justify-between lg:items-center lg:max-w-7xl relative">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container pt-12 lg:pt-8 w-[95%] h-[74%] lg:h-[90%] m-auto p-8 lg:flex lg:justify-between lg:items-center lg:max-w-7xl relative"
+      >
         <div className="form-container flex flex-col gap-2 lg:w-[50%]">
           <div className="lg:absolute lg:top-8 lg:left-8 pb-2">
             <a
@@ -163,7 +193,7 @@ const Login = () => {
         <div className="login-img-container hidden lg:flex w-[45%] h-[40rem] rounded-lg">
           <div className="hero-overlay bg-opacity-30 bg-[#151515] rounded-lg"></div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

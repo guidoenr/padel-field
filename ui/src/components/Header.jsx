@@ -73,14 +73,14 @@ const Header = () => {
               </li>
               <li className="text-sm">
                 <NavLink
-                  to="/nosotros"
+                  to="/profile"
                   className={({ isActive }) =>
                     isActive
                       ? "italic font-bold text-accent uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                       : "italic font-medium uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                   }
                 >
-                  Nosotros
+                  Mi Perfil
                 </NavLink>
               </li>
               <li className="flex items-center border-r border-l border-r-primary/30 border-l-primary/30 px-7">

@@ -1,6 +1,7 @@
 import React, { SyntheticEvent, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Navigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { BiErrorAlt } from "react-icons/bi";
 
 const Register = () => {
@@ -39,6 +40,27 @@ const Register = () => {
     setFocused(true);
   };
 
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+      x: "100vw",
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        bounce: 0.25,
+      },
+    },
+    exit: {
+      x: "-100vw",
+      transition: {
+        type: "spring",
+        bounce: 0.25,
+      },
+    },
+  };
   /*
 @marcos: asi no me olvido v2
 
@@ -73,14 +95,19 @@ happy coding
     - email ya registrado
     - error interno
     - estado required y error caracteres invalidos por cada input. 
-    - refactor code
     - create input component & refactor code
 
 
 */
   return (
     <section className="register w-full h-[100vh] lg:h-[90vh] lg:flex lg:items-center">
-      <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container mt-8 w-[95%] lg:mt-0 lg:w-[90%] lg:h-[90%] mx-auto p-8 lg:flex lg:justify-between lg:items-center lg:max-w-7xl relative">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container mt-8 w-[95%] lg:mt-0 lg:w-[90%] lg:h-[90%] mx-auto p-8 lg:flex lg:justify-between lg:items-center lg:max-w-7xl relative"
+      >
         <div className="form-container flex flex-col gap-2 lg:w-[50%] lg:order-2">
           <div className="hidden lg:flex lg:absolute lg:top-8 lg:right-8">
             <a
@@ -241,7 +268,7 @@ happy coding
         <div className="register-img-container hidden lg:flex w-[45%] h-[40rem] rounded-lg">
           <div className="hero-overlay bg-opacity-20 bg-[#151515] rounded-lg"></div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

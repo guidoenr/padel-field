@@ -1,13 +1,48 @@
 import React from "react";
 import { useState } from "react";
 import { BiTimeFive, BiDollar } from "react-icons/bi";
+import { motion } from "framer-motion";
+import { NavLink, Link } from "react-router-dom";
 
-const ConfirmReservation = ({ day = "23/10", hr = "20:00", price = 300 }) => {
+const ConfirmReservation = ({
+  day = "23/10",
+  hr = "20:00",
+  price = 300,
+  handleReservedTurns,
+}) => {
   const [hour, setHour] = useState("1 hora");
+
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+      x: "100vw",
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        bounce: 0.25,
+      },
+    },
+    exit: {
+      x: "-100vw",
+      transition: {
+        type: "spring",
+        bounce: 0.25,
+      },
+    },
+  };
 
   return (
     <section className="login w-full h-[80vh] flex items-center">
-      <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container w-[95%] max-w-lg mx-auto p-8 relative">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container w-[95%] max-w-lg mx-auto p-8 relative"
+      >
         <div className="form-container flex flex-col gap-2">
           <h3 className="form-title text-2xl font-semibold text-center">
             Confirmar Turno
@@ -47,16 +82,17 @@ const ConfirmReservation = ({ day = "23/10", hr = "20:00", price = 300 }) => {
               </p>
             </div>
             <div className="row pt-4">
-              <button
-                type="submit"
+              <NavLink
+                to="/misturnos"
                 className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
+                onClick={handleReservedTurns}
               >
                 Confirmar
-              </button>
+              </NavLink>
             </div>
           </form>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
