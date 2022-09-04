@@ -32,6 +32,10 @@ const Header = () => {
     })();
   });
 
+  // Esto es lo que me querias explicar en tu casa:
+  // Bienvenido {username}
+  // Quedó piolaa!
+
   return (
     <header className="relative w-full h-[4.5rem] flex shadow-2xl z-50">
       <div className="container m-auto px-1 navbar flex justify-between">

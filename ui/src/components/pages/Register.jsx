@@ -2,31 +2,86 @@ import React, { SyntheticEvent, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { BiErrorAlt } from "react-icons/bi";
+import FormInput from "../FormInput";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const [focused, setFocused] = useState(false);
+  const [values, setValues] = useState({
+    name: "",
+    surname: "",
+    username: "",
+    password: "",
+    email: "",
+    phone: "",
+  });
+
+  const inputs = [
+    {
+      id: 1,
+      name: "name",
+      label: "Nombre:",
+      type: "text",
+      errorMessage: "Tu nombre debe contener entre 3 y 16 caracteres",
+      required: true,
+      pattern: "^[A-Za-z0-9]{3,16}$",
+    },
+    {
+      id: 2,
+      name: "surname",
+      label: "Apellido:",
+      type: "text",
+      errorMessage: "Tu apellido debe contener entre 3 y 16 caracteres",
+      required: true,
+      pattern: "^[A-Za-z0-9]{3,16}$",
+    },
+    {
+      id: 3,
+      name: "username",
+      label: "Nombre de Usuario:",
+      type: "text",
+      errorMessage:
+        "Tu nombre de usuario debe contener entre 3 y 16 caracteres",
+      required: true,
+      pattern: "^[A-Za-z0-9]{3,16}$",
+    },
+    {
+      id: 4,
+      name: "password",
+      label: "Contraseña:",
+      type: "password",
+      errorMessage: "Tu contraseña debe contener entre 3 y 16 caracteres",
+      required: true,
+      pattern: "^[A-Za-z0-9]{3,16}$",
+    },
+    {
+      id: 5,
+      name: "email",
+      label: "Email:",
+      type: "email",
+      errorMessage: "Debe ser un email válido",
+      required: true,
+    },
+    {
+      id: 6,
+      name: "phone",
+      label: "Celular:",
+      type: "tel",
+      errorMessage: "Debe ser un número celular que exista.",
+      required: true,
+      pattern: "/^([+]d{2})? d{10}$/", // Check regex
+    },
+  ];
+
+  const onChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     const response = await fetch("http://localhost:8080/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        surname,
-        email,
-        phone,
-        password,
-        username,
-      }),
+      body: JSON.stringify(values),
     });
     if (response.ok) {
       setRedirect(true);
@@ -36,9 +91,7 @@ const Register = () => {
     return <Navigate to="/login"> </Navigate>;
   }
 
-  const handleFocus = (e) => {
-    setFocused(true);
-  };
+  // framer motion
 
   const containerVariants = {
     hidden: {
@@ -61,30 +114,10 @@ const Register = () => {
       },
     },
   };
+
   /*
+
 @marcos: asi no me olvido v2
-
-me gustaria que la foto del login/register cambie, osea no que sea la misma porque me paso a mi por ejemplo
-( q soy bastante crack ) de confundirme las dos pages, pensando que estaba por logearme y me estaba registrando
-me gustaria que
-- cambies la foto de c/u
-- y que cambies de lugar las dos cosas, es decir, del lado derecho la foto para el login y el izquierdo para el register
-
-ej: (ponelo como quieras me chupa un huevo a mi)
-
-|-----------LOGIN-----------|
-| Username    |      foto   |
-| Password    |             |
-----------------------------
-
-|-----------REGISTER---------|
-|          |      Username   |
-|          |       Password   |
-|    foto  |       Email      |
-|          |       Nombre     |
-|          |       Phone      |
-----------------------------
-
 happy coding
 
 
@@ -96,7 +129,6 @@ happy coding
     - error interno
     - estado required y error caracteres invalidos por cada input. 
     - create input component & refactor code
-
 
 */
   return (
@@ -122,119 +154,14 @@ happy coding
             Una vez que tengas tu cuenta, podrás reservar tu turno.
           </p>
           <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-2 lg:flex-row lg:w-full lg:gap-4">
-              <div className="row form-input flex flex-col gap-1 lg:w-[50%]">
-                <label
-                  htmlFor="name"
-                  className="text-primary/60 font-semibold text-sm"
-                >
-                  Nombre:
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  onChange={(e) => setName(e.target.value)}
-                  className="focus:outline-accent input h-10 w-full p-1 border-r border-l bg-transparent border-primary/30"
-                  pattern="^[A-Za-z0-9]{3,16}$"
-                  onBlur={handleFocus}
-                  focused={focused.toString()}
-                  required
-                />
-                <p className="error-msj text-red-700 text-sm">
-                  <span>
-                    <BiErrorAlt className="inline text-lg" /> Tu nombre debe
-                    contener entre 3 y 16 caracteres y no debe contener ningun
-                    caracter especial!
-                  </span>
-                </p>
-              </div>
-              <div className="row form-input flex flex-col gap-1 lg:w-[50%]">
-                <label
-                  htmlFor="surname"
-                  className="text-primary/60 font-semibold text-sm"
-                >
-                  Apellido:
-                </label>
-                <input
-                  id="surname"
-                  name="surname"
-                  type="text"
-                  onChange={(e) => setSurname(e.target.value)}
-                  className="form-control focus:outline-accent input h-10 w-full p-1 border-r border-l bg-transparent border-primary/30"
-                  pattern="^[A-Za-z0-9]{3,16}$"
-                />
-                <p className="error-msj text-red-700 text-sm">
-                  <span>
-                    <BiErrorAlt className="inline text-lg" /> Tu nombre debe
-                    contener entre 3 y 16 caracteres y no debe contener ningun
-                    caracter especial!
-                  </span>
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-2 lg:flex-row lg:w-full lg:gap-4">
-              <div className="row form-input flex flex-col gap-1 lg:w-[50%]">
-                <label
-                  htmlFor="username"
-                  className="text-primary/60 font-semibold text-sm"
-                >
-                  Nombre de usuario:
-                </label>
-                <input
-                  type="username"
-                  id="username"
-                  name="username"
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="form-control focus:outline-accent input h-10 w-full p-1 border-r border-l bg-transparent border-primary/30"
-                />
-              </div>
-              <div className="row form-input flex flex-col gap-1 lg:w-[50%]">
-                <label
-                  htmlFor="password"
-                  className="text-primary/60 font-semibold text-sm"
-                >
-                  Contraseña:
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="form-control focus:outline-accent input h-10 w-full p-1 border-r border-l bg-transparent border-primary/30"
-                />
-              </div>
-            </div>
-            <div className="row form-input flex flex-col gap-1">
-              <label
-                htmlFor="email"
-                className="text-primary/60 font-semibold text-sm"
-              >
-                Email:
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                onChange={(e) => setEmail(e.target.value)}
-                className="form-control focus:outline-accent input h-10 w-full p-1 border-r border-l bg-transparent border-primary/30"
+            {inputs.map((input) => (
+              <FormInput
+                key={input.id}
+                {...input}
+                value={values[input.name]}
+                onChange={onChange}
               />
-            </div>
-            <div className="row form-input flex flex-col gap-1">
-              <label
-                htmlFor="phone"
-                className="text-primary/60 font-semibold text-sm"
-              >
-                Celular:
-              </label>
-              <input
-                type="text"
-                name="phone"
-                id="phone"
-                onChange={(e) => setPhone(e.target.value)}
-                className="form-control focus:outline-accent input h-10 w-full p-1 border-r border-l bg-transparent border-primary/30"
-              />
-            </div>
+            ))}
             <div className="row pt-4">
               <button
                 type="submit"
