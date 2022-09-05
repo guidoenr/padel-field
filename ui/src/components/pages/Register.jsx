@@ -142,12 +142,9 @@ const Register = () => {
       >
         <div className="form-container flex flex-col gap-2 lg:w-[50%] lg:order-2">
           <div className="hidden lg:flex lg:absolute lg:top-8 lg:right-8">
-            <a
-              className="cursor-pointer font-secondary-font text-4xl text-primary"
-              href="#home"
-            >
+            <span className="select-none font-secondary-font text-4xl text-primary">
               Pádel-Logo
-            </a>
+            </span>
           </div>
           <h3 className="form-title text-2xl font-semibold">Crear cuenta</h3>
           <p className="form-text text-sm text-primary/60">

@@ -3,24 +3,55 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, Navigate } from "react-router-dom";
 import { SyntheticEvent } from "react";
 import { motion } from "framer-motion";
+import FormInput from "../FormInput";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+
+  const [values, setValues] = useState({
+    username: "",
+    password: "",
+  });
+
+  const inputs = [
+    {
+      id: 1,
+      name: "username",
+      label: "Nombre de Usuario:",
+      type: "text",
+      errorMessage: "Usuario no existe",
+      required: true,
+      pattern: "^[A-Za-z0-9]{3,16}$",
+    },
+    {
+      id: 2,
+      name: "password",
+      label: "Contraseña:",
+      type: "password",
+      errorMessage: "Contraseña incorrecta",
+      required: true,
+      pattern: "^[A-Za-z0-9]{3,16}$",
+    },
+  ];
+
+  const onChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
+    setIsPending(true);
     const response = await fetch("http://localhost:8080/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({
-        username,
-        password,
-      }),
+      body: JSON.stringify(values),
     });
     if (response.ok) {
+      setIsPending(false);
+      console.log(response);
+      console.log(values);
       setRedirect(true);
     }
   };
@@ -122,51 +153,44 @@ const Login = () => {
         initial="hidden"
         animate="visible"
         exit="exit"
-        className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container pt-12 lg:pt-8 w-[95%] h-[74%] lg:h-[90%] m-auto p-8 lg:flex lg:justify-between lg:items-center lg:max-w-7xl relative"
+        className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container pt-12 lg:pt-8 w-[95%] lg:h-[90%] m-auto p-8 lg:flex lg:justify-between lg:items-center lg:max-w-7xl relative"
       >
         <div className="form-container flex flex-col gap-2 lg:w-[50%]">
-          <div className="lg:absolute lg:top-8 lg:left-8 pb-2">
-            <a
-              className="cursor-pointer font-secondary-font text-4xl text-primary"
-              href="#home"
-            >
+          <div className="relative bottom-5 lg:absolute lg:top-8 lg:left-8 pb-2">
+            <span className="select-none font-secondary-font text-4xl text-primary">
               Pádel-Logo
-            </a>
+            </span>
           </div>
           <h3 className="form-title text-2xl font-semibold">Iniciar sesion</h3>
           <p className="form-text text-sm text-primary/60">
             Entra a tu cuenta para poder reservar tu turno.
           </p>
           <form className="flex flex-col gap-3" onSubmit={submit}>
-            <div className="row border-b border-b-primary/30">
-              <input
-                type="text"
-                placeholder="Nombre de usuario"
-                name="username"
-                id="username"
-                required
-                onChange={(e) => setUsername(e.target.value)}
-                className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+            {inputs.map((input) => (
+              <FormInput
+                key={input.id}
+                {...input}
+                value={values[input.name]}
+                onChange={onChange}
               />
-            </div>
-            <div className="row border-b border-b-primary/30">
-              <input
-                type="password"
-                placeholder="Contraseña"
-                name="password"
-                id="password"
-                required
-                onChange={(e) => setPassword(e.target.value)}
-                className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
-              />
-            </div>
+            ))}
             <div className="row pt-4">
-              <button
-                type="submit"
-                className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
-              >
-                Entrar
-              </button>
+              {!isPending && (
+                <button
+                  type="submit"
+                  className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
+                >
+                  Entrar
+                </button>
+              )}
+              {isPending && (
+                <button
+                  type="submit"
+                  className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
+                >
+                  Entrando...
+                </button>
+              )}
             </div>
             <div className="row">
               <button
