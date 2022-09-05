@@ -91,7 +91,7 @@ func Login(user *models.User) (*http.Cookie, errs.RequestError) {
 	}
 
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
-		Issuer:    strconv.FormatInt(user.ID, 10),
+		Issuer:    strconv.FormatInt(userFound.ID, 10),
 		ExpiresAt: time.Now().Add(time.Hour * 3).Unix(), // 3 hours
 	})
 
