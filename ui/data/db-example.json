@@ -9,7 +9,6 @@
       "email": "cabezadehuevo@gmail.com",
       "phone": "2273433229"
     },
-
     {
       "id": 2,
       "name": "Gaston",
@@ -19,7 +18,6 @@
       "email": "mcdermottcompeticiones@gmail.com",
       "phone": "2273435533"
     },
-
     {
       "id": 3,
       "name": "Ignacio",
@@ -37,6 +35,33 @@
       "password": "asdasd123",
       "email": "minolas99@gmail.com",
       "phone": "2273433229"
+    },
+    {
+      "name": "asdasd",
+      "surname": "asddas",
+      "username": "asds",
+      "password": "asddasdsa",
+      "email": "asd@asd.com",
+      "phone": "2222",
+      "id": 5
+    },
+    {
+      "name": "Marcos",
+      "surname": "Fitzsimons",
+      "username": "Marcossssf98",
+      "password": "marcos",
+      "email": "marcosfitzsimons@gmail.com",
+      "phone": "2273433863",
+      "id": 6
+    },
+    {
+      "name": "asdsda",
+      "surname": "asasda",
+      "username": "asdasdas",
+      "password": "asdasdas",
+      "email": "asdasd@asd.ocom",
+      "phone": "433434",
+      "id": 7
     }
   ]
 }

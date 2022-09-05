@@ -21,7 +21,7 @@ const Header = () => {
   const handleProfileMenu = () => setProfileMenu(!profileMenu);
   const handleClose = () => setNav(!nav);
 
-  useEffect(() => {
+  /* useEffect(() => {
     (async () => {
       const response = await fetch("http://localhost:8080/auth/user", {
         headers: { "Content-Type": "application/json" },
@@ -31,6 +31,7 @@ const Header = () => {
       setUsername(content["userData"]);
     })();
   });
+*/
 
   // Esto es lo que me querias explicar en tu casa:
   // Bienvenido {username}

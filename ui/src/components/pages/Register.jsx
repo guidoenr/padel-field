@@ -5,9 +5,10 @@ import { motion } from "framer-motion";
 import FormInput from "../FormInput";
 
 const Register = () => {
+  const [isPending, setIsPending] = useState(false);
+  const [redirect, setRedirect] = useState(false);
   // form validation
 
-  const [redirect, setRedirect] = useState(false);
   const [values, setValues] = useState({
     name: "",
     surname: "",
@@ -69,8 +70,7 @@ const Register = () => {
       label: "Celular:",
       type: "tel",
       errorMessage: "Debe ser un número celular que exista.",
-      required: true,
-      pattern: "/^([+]d{2})? d{10}$/", // Check regex
+      required: true, // Check regex
     },
   ];
 
@@ -79,19 +79,23 @@ const Register = () => {
   };
 
   const handleSubmit = async (e: SyntheticEvent) => {
-    // const url = ""; // "http://localhost:8080/auth/register"
+    const url = "http://localhost:8000/users"; // "http://localhost:8080/auth/register"
     e.preventDefault();
-    // const response = await fetch(url, {
-    //  method: "POST",
-    //  headers: { "Content-Type": "application/json" },
-    //  body: JSON.stringify(values),
-    //});
-    //if (response.ok) {
-    //setRedirect(true);
-    //}
+    setIsPending(true);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    if (response.ok) {
+      setIsPending(false);
+      console.log(response);
+      console.log(values);
+      setRedirect(true);
+    }
   };
   if (redirect) {
-    return <Navigate to="/login"> </Navigate>;
+    return <Navigate to="/"> </Navigate>;
   }
 
   // framer motion
@@ -159,13 +163,22 @@ const Register = () => {
               />
             ))}
             <div className="row pt-4">
-              <button
-                type="submit"
-                className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
-                onClick={console.log(values)}
-              >
-                Crear cuenta
-              </button>
+              {!isPending && (
+                <button
+                  type="submit"
+                  className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
+                >
+                  Crear cuenta
+                </button>
+              )}
+              {isPending && (
+                <button
+                  disabled
+                  className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
+                >
+                  Creando Cuenta...
+                </button>
+              )}
             </div>
             <div className="row">
               <button
