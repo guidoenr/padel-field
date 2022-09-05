@@ -79,7 +79,7 @@ const Register = () => {
   };
 
   const handleSubmit = async (e: SyntheticEvent) => {
-    const url = "http://localhost:8000/users"; // "http://localhost:8080/auth/register"
+    const url = "http://localhost:8080/auth/register"; // ""
     e.preventDefault();
     setIsPending(true);
     const response = await fetch(url, {
@@ -87,14 +87,27 @@ const Register = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     });
+
     if (response.ok) {
       setIsPending(false);
       console.log(response);
       console.log(values);
       setRedirect(true);
+    } else {
+      switch (response.status){
+        case 409:
+          // el username ya existe
+          // @ marcos ,hace lo que quieras aca, mostrale lo que se te cante al usuario
+        case 406:
+          // el email ya existe
+      }
     }
   };
   if (redirect) {
+    // @marcos, se puede aca redireccionarlo al /home ya con la cuenta logeada?
+    // osea se que se puede si le meto toda la funcion del pegado a la api que esta en login
+    // pero hay alguna forma de redireccionarlo con los parametros que lleno aca? para que sea mas lindo obvio
+    // entiendo que si hacemos que la funcion reciba parametros si, sino decime vos
     return <Navigate to="/"> </Navigate>;
   }
 
@@ -123,12 +136,6 @@ const Register = () => {
   };
 
   /*
-
-   [para el register]
-    - usuario ya registrado
-    - email ya registrado
-    - error interno
-    - estado required y error caracteres invalidos por cada input. 
 
   */
   return (

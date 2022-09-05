@@ -22,7 +22,17 @@ const Login = () => {
     });
     if (response.ok) {
       setRedirect(true);
+    } else {
+      switch (response.status){
+        case 400:
+          // no existe el usuario
+        case 401:
+          // mala password
+        case 406:
+          // mal email
+      }
     }
+
   };
   if (redirect) {
     return <Navigate to="/"> </Navigate>;
@@ -49,71 +59,6 @@ const Login = () => {
       },
     },
   };
-
-  /*
-  @marcos: asi no me olvido
-
-  el estado de esta page va a depender del http status code de la response,
-  (eso olvidate que lo manejo yo que ya me di maña con react)
-  lo que te voy a pedir es, una serie de cartelitos/aviso (vos sabras como hacerlo lindo)
-  que salten en el login, y digan algo asi:
-
-  [para el login, osea en esta page]
-   - usuario no existe
-   - email no existe
-   - contraseña incorrecta
-   - error interno
-
-   [para el register]
-    - usuario ya registrado
-    - email ya registrado
-    - error interno
-
-  entiendo que esto es totalmente dynamic, porque cuando jugue con los <Navigate to> me di cuenta
-  que puedo hacer ifs para chequear el estado de algunas variables que van cambiando a medida
-  que el user va usando la pag (+1 puntito para react)
-  hace que se muestre cada uno en cada field, es decir:
-  (e.g: "usuario no existe" que se muestre en el field 'Nombre de usuario', and go on...)
-
-  lo de las cookies, register, login.. toodo anda flamaaaaa (duran 3 horas las cookies)
-
-  happy coding
-
-
-  @MARCOS: 
-  
-  Joyaaa. 
-
-  "puedo hacer ifs para chequear el estado de algunas variables que van cambiando a medida
-  que el user va usando la pag" ---> Si.
-
-  Puedo mostrar distintos mensajes dependiendo
-  de lo que escribe el usuario en el input
-      Ejemplo: 
-          Si el nombre de usuario ya existe,
-          que salte un cartel "nombre de usuario ya registrado".
-
-  Tmb puedo mostrar un layout u otro dependiendo
-  de que se cumpla o no alguna condicion.
-      Ejemplo:
-          If (userLoggedIn === false) {
-
-              Fijar un cartel o un button en la pantalla
-              que diga que se tiene que loguear 
-              primero para poder sacar turno.
-
-              O tmb que cuando haga click en Reservar, redireccionarlo
-              a Login y no a confirmar reserva.
-          }
-    
-      [para el login, osea en esta page]
-   - usuario no existe
-   - email no existe
-   - contraseña incorrecta
-   - error interno
-    - estado required y error caracteres invalidos por cada input. 
-    - create input component & refactor code
-  */
 
   return (
     <section className="login w-full h-[90vh] flex items-center">

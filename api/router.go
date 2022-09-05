@@ -163,7 +163,7 @@ func login() gin.HandlerFunc {
 		case 4: // wrong password
 			c.IndentedJSON(http.StatusUnauthorized, err.Error())
 		case 5: // wrong email
-			c.IndentedJSON(http.StatusUnauthorized, err.Error())
+			c.IndentedJSON(http.StatusNotAcceptable, err.Error())
 		default:
 			c.SetCookie(cookie.Name, cookie.Value, cookie.MaxAge, cookie.Path, cookie.Domain, cookie.Secure, cookie.HttpOnly)
 			c.IndentedJSON(http.StatusOK, gin.H{"ok": "Logged in"})
@@ -192,7 +192,7 @@ func register() gin.HandlerFunc {
 		case 1: // existing username
 			c.IndentedJSON(http.StatusConflict, gin.H{"error": "the username already exist"})
 		case 2: // existing email
-			c.IndentedJSON(http.StatusConflict, gin.H{"error": "the email already exist"})
+			c.IndentedJSON(http.StatusNotAcceptable, gin.H{"error": "the email already exist"})
 		default:
 			c.IndentedJSON(http.StatusOK, gin.H{"ok": "User registered"})
 			logger.Loginfo.Printf("user '%s' registered", newUser.Username)
@@ -219,9 +219,12 @@ func userGet() gin.HandlerFunc {
 			return
 		}
 
-		// TODO THIS IS BROKEN , I WANT TO SHOW THAT
-		_ = token.Claims.(*jwt.StandardClaims)
-		user, _ := controllers.GetUserById("1")
+		claims := token.Claims.(*jwt.StandardClaims)
+		user, reqErr := controllers.GetUserById(claims.Issuer)
+		if reqErr.Err != nil {
+			c.IndentedJSON(http.StatusUnauthorized, gin.H{"error": "getting user"})
+			return
+		}
 
 		c.IndentedJSON(http.StatusOK, gin.H{"userData": user.Username})
 	}
