@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import FormInput from "../FormInput";
 
 const Register = () => {
+  // form validation
+
   const [redirect, setRedirect] = useState(false);
   const [values, setValues] = useState({
     name: "",
@@ -77,15 +79,16 @@ const Register = () => {
   };
 
   const handleSubmit = async (e: SyntheticEvent) => {
+    // const url = ""; // "http://localhost:8080/auth/register"
     e.preventDefault();
-    const response = await fetch("http://localhost:8080/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
-    if (response.ok) {
-      setRedirect(true);
-    }
+    // const response = await fetch(url, {
+    //  method: "POST",
+    //  headers: { "Content-Type": "application/json" },
+    //  body: JSON.stringify(values),
+    //});
+    //if (response.ok) {
+    //setRedirect(true);
+    //}
   };
   if (redirect) {
     return <Navigate to="/login"> </Navigate>;
@@ -117,20 +120,13 @@ const Register = () => {
 
   /*
 
-@marcos: asi no me olvido v2
-happy coding
-
-
-@MARCOS: Listorti, habia puesto la misma img solo de ejemplo :)
-
    [para el register]
     - usuario ya registrado
     - email ya registrado
     - error interno
     - estado required y error caracteres invalidos por cada input. 
-    - create input component & refactor code
 
-*/
+  */
   return (
     <section className="register w-full h-[100vh] lg:h-[90vh] lg:flex lg:items-center">
       <motion.div
@@ -166,6 +162,7 @@ happy coding
               <button
                 type="submit"
                 className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
+                onClick={console.log(values)}
               >
                 Crear cuenta
               </button>

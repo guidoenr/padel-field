@@ -1,0 +1,42 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Guido",
+      "surname": "Enrique",
+      "username": "guidoenr3",
+      "password": "asdasd123",
+      "email": "cabezadehuevo@gmail.com",
+      "phone": "2273433229"
+    },
+
+    {
+      "id": 2,
+      "name": "Gaston",
+      "surname": "Mc Dermott",
+      "username": "pitochico12",
+      "password": "123456",
+      "email": "mcdermottcompeticiones@gmail.com",
+      "phone": "2273435533"
+    },
+
+    {
+      "id": 3,
+      "name": "Ignacio",
+      "surname": "Rivarola",
+      "username": "lisiado22",
+      "password": "asdasd",
+      "email": "ignaciocarp@gmail.com",
+      "phone": "2273438449"
+    },
+    {
+      "id": 4,
+      "name": "Tomas",
+      "surname": "Truzzi",
+      "username": "tomastruzzi",
+      "password": "asdasd123",
+      "email": "minolas99@gmail.com",
+      "phone": "2273433229"
+    }
+  ]
+}
