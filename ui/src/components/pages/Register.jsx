@@ -7,8 +7,8 @@ import FormInput from "../FormInput";
 const Register = () => {
   const [isPending, setIsPending] = useState(false);
   const [redirect, setRedirect] = useState(false);
-  // form validation
 
+  // form validation
   const [values, setValues] = useState({
     name: "",
     surname: "",
@@ -153,7 +153,10 @@ const Register = () => {
           <p className="form-text text-sm text-primary/60">
             Una vez que tengas tu cuenta, podrás reservar tu turno.
           </p>
-          <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+          <form
+            className="flex flex-col gap-3 lg:grid lg:grid-cols-2"
+            onSubmit={handleSubmit}
+          >
             {inputs.map((input) => (
               <FormInput
                 key={input.id}
@@ -180,7 +183,7 @@ const Register = () => {
                 </button>
               )}
             </div>
-            <div className="row">
+            <div className="row pt-4">
               <button
                 type="button"
                 className="btn w-full bg-transparent flex gap-1 normal-case text-primary border-primary hover:border-primary hover:bg-primary/10 hover:scale-105 transition ease-in-out"

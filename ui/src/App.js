@@ -13,11 +13,6 @@ import { useState } from "react";
 
 function App() {
 
-
-
-  const [emptyTurns, setEmptyTurns] = useState(true);
-  const [nextTurns, setNextTurns] = useState(false);
-
   const location = useLocation()
 
   return (
