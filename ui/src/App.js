@@ -20,7 +20,7 @@ function App() {
       <Header />
       <AnimatePresence exitBeforeEnter>
         <Routes location={location} key={location.key}>
-          <Route path="/" element={<Reservation />} />
+          <Route path="/" exact element={<Reservation />} />
           <Route path="confirmreservation" element={<ConfirmReservation />} />
           <Route path="misturnos" element={<MyTurns />} />
           <Route path="profile" element={<Profile />} />

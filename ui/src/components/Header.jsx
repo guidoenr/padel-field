@@ -16,7 +16,7 @@ const Header = () => {
   // el endpoint userGet para tener eso, no me gusta la foto del mono esa
   const [profileImg, setProfileImg] = useState(true);
   const [signOut, setSignOut] = useState(false);
-  const [username, setUsername] = useState("");
+  const [userName, setUsername] = useState("");
 
   const handleMenu = () => setNav(!nav);
   const handleProfileImg = () => setProfileImg(!profileImg);
@@ -30,10 +30,10 @@ const Header = () => {
         credentials: "include",
       });
       const content = await response.json();
-      setUsername(content["userData"]);
+      setUsername(content.name);
+      setSignOut(true);
     })();
   });
-
 
   // Esto es lo que me querias explicar en tu casa:
   // Bienvenido {username}
@@ -47,7 +47,7 @@ const Header = () => {
             to="/"
             className="cursor-pointer font-secondary-font text-4xl text-primary"
           >
-            Bienvenido {username}
+            Bienvenido {userName}
           </Link>
         </div>
 

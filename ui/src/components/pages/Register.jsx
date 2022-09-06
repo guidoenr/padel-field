@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -78,7 +78,7 @@ const Register = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  const handleSubmit = async (e) => {
     const url = "http://localhost:8080/auth/register"; // ""
     e.preventDefault();
     setIsPending(true);
@@ -94,22 +94,15 @@ const Register = () => {
       console.log(values);
       setRedirect(true);
     } else {
-      switch (response.status){
+      switch (response.status) {
         case 409:
-          // el username ya existe
-          // @ marcos ,hace lo que quieras aca, mostrale lo que se te cante al usuario
+        // el username ya existe
+        // @ marcos ,hace lo que quieras aca, mostrale lo que se te cante al usuario
         case 406:
-          // el email ya existe
+        // el email ya existe
       }
     }
   };
-  if (redirect) {
-    // @marcos, se puede aca redireccionarlo al /home ya con la cuenta logeada?
-    // osea se que se puede si le meto toda la funcion del pegado a la api que esta en login
-    // pero hay alguna forma de redireccionarlo con los parametros que lleno aca? para que sea mas lindo obvio
-    // entiendo que si hacemos que la funcion reciba parametros si, sino decime vos
-    return <Navigate to="/"> </Navigate>;
-  }
 
   // framer motion
 
@@ -140,6 +133,7 @@ const Register = () => {
   */
   return (
     <section className="register w-full h-[100vh] lg:h-[90vh] lg:flex lg:items-center">
+      {redirect && <Navigate replace to="/" />}
       <motion.div
         variants={containerVariants}
         initial="hidden"

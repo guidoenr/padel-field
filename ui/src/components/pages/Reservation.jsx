@@ -1,8 +1,19 @@
 import React from "react";
 import ReservationCard from "../ReservationCard";
 import { Link, animateScroll as scroll } from "react-scroll";
+// import { useEffect } from "react";
 
 const Reservation = () => {
+  /*useEffect(() => {
+    (async () => {
+      // fetch to user url
+      await fetch("http://localhost:8080/auth/user", {
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+    })();
+  }); */
+
   return (
     <main className="reservation w-full flex flex-col items-center">
       <div className="introimg hero h-[35rem] w-full mb-10 relative">

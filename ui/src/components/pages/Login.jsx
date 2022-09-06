@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, Navigate } from "react-router-dom";
-import { SyntheticEvent } from "react";
 import { motion } from "framer-motion";
 import FormInput from "../FormInput";
 
@@ -39,7 +38,7 @@ const Login = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const submit = async (e: SyntheticEvent) => {
+  const submit = async (e) => {
     e.preventDefault();
     setIsPending(true);
     const response = await fetch("http://localhost:8080/auth/login", {
@@ -54,20 +53,16 @@ const Login = () => {
       console.log(values);
       setRedirect(true);
     } else {
-      switch (response.status){
+      switch (response.status) {
         case 400:
-          // no existe el usuario
+        // no existe el usuario
         case 401:
-          // mala password
+        // mala password
         case 406:
-          // mal email
+        // mal email
       }
     }
-
   };
-  if (redirect) {
-    return <Navigate to="/"> </Navigate>;
-  }
 
   const containerVariants = {
     hidden: {
@@ -93,6 +88,7 @@ const Login = () => {
 
   return (
     <section className="login w-full h-[90vh] flex items-center">
+      {redirect && <Navigate replace to="/" />}
       <motion.div
         variants={containerVariants}
         initial="hidden"
