@@ -19,6 +19,7 @@ const (
 // routes and endpoints
 func ListenAndServe() {
 	router := gin.Default()
+	router.LoadHTMLGlob("api.html")
 
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:3000"},
@@ -61,7 +62,7 @@ func ListenAndServe() {
 // showIndex is the main page for the turnos website
 func showIndex() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", gin.H{
+		c.HTML(http.StatusOK, "api.html", gin.H{
 			"title": "index",
 		})
 	}
