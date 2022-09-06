@@ -20,9 +20,10 @@ RUN apt-get install -y apt-transport-https  \
 
 WORKDIR /padel-field
 
-COPY --from=build-base /base/padel-field/ /padel-field
+COPY --from=build-base /base/padel-field/ /padel-field/
 COPY --from=build-base /base/padel-field/bin/padelField /padel-field/bin/padelField
 
+ENV GIN_MODE=release
 ENV READY="http://0.0.0.0:8080/"
 EXPOSE 8080
 

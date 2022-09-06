@@ -4,7 +4,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	controllers "github.com/guidoenr/padel-field/api/controllers"
+	"github.com/guidoenr/padel-field/api/controllers"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
 	"net/http"
@@ -19,7 +19,7 @@ const (
 // routes and endpoints
 func ListenAndServe() {
 	router := gin.Default()
-	router.LoadHTMLGlob("api.html")
+	router.LoadHTMLGlob("api/templates/*")
 
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:3000"},
@@ -236,7 +236,7 @@ func logout() gin.HandlerFunc {
 		cookie := http.Cookie{
 			Name:     "jwt",
 			Value:    "",
-			Expires:  time.Now().Add(-time.Hour), // this expires the cookie because set the expire time at the past
+			Expires:  time.Now().Add(-time.Hour), // this expires the cookie because set the expiry time at the past
 			HttpOnly: true,
 		}
 		c.SetCookie(cookie.Name, cookie.Value, cookie.MaxAge, cookie.Path, cookie.Domain, cookie.Secure, cookie.HttpOnly)

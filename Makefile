@@ -4,6 +4,7 @@ NAME = padel-field
 # Relative path to bin (scripts) directory (you may need to add/remove ".." paths)
 DIR_API = /api
 DIR_UI = /ui
+DIR_RESOURCES = /resources
 
 .DEFAULT_GOAL := help
 help: ## Print the list of makefile targets
@@ -13,10 +14,10 @@ help: ## Print the list of makefile targets
 #  BUILD AND RUN
 #
 
-build: ## Build the docker image
-	docker build . -t $(NAME) -f 'Dockerfile'
+build: clean # Build the docker image
+	 docker build . -t $(NAME) -f 'Dockerfile'
 
-run: # start the engine in the test framework
+run: # start the app
 	docker run --rm -p 8080:8080 $(NAME)
 
 #
@@ -24,9 +25,10 @@ run: # start the engine in the test framework
 #
 
 clean: ## Deletes all renewable artifacts, for build and install
-	${DIR_RESOURCES}/clean.sh
+	docker rmi -f $(NAME):latest || echo "No such image:" \
+	.$(DIR_RESOURCES)/clean.sh
 
-compile: ## Compiles intermediate artifacts
+compile: ## Compiles intermediate artifacts (in Dockerfile)
 	GOOS=linux GOARCH=amd64 go build -o ./bin/padelField
 
 test-local: ## Run unit tests on local system (not container)
