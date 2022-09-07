@@ -34,8 +34,6 @@ clean: ## Deletes all renewable artifacts, for build and install
 	docker rmi -f $(NAME):latest || echo "No such image:" \
 	.$(DIR_RESOURCES)/clean.sh
 
-compile: ## Compiles intermediate artifacts (in Dockerfile)
-	GOOS=linux GOARCH=amd64 go build -o ./bin/padelField
 
 test-local: ## Run unit tests on local system (not container)
 	go test -v ./...

@@ -1,4 +1,4 @@
-# BUILD stage (uses native archetecture)
+# BUILD stage (using go image to build)
 FROM golang:1.18 AS build-base
 
 RUN apt-get update && \
@@ -10,15 +10,17 @@ WORKDIR /padel-field
 ADD . /padel-field/
 
 ENV GOPATH /go
-RUN make compile
+# compiling
+RUN GOOS=linux GOARCH=amd64 go build -o ./bin/padelField
 
 # FINAL stage
 FROM alpine:3.16.2 as run-padelfield
 
 WORKDIR /app
 RUN apk add --no-cache libc6-compat
+
 # binary
-COPY --from=build-base /padel-field/bin/padelField /app/bin/padelField
+COPY --from=build-base /padel-field/bin/padelField /app/bin/run
 
 # other resources
 COPY --from=build-base /padel-field/api/templates/* /app/api/templates/
@@ -35,6 +37,6 @@ ENV READY="http://0.0.0.0:8080/"
 
 EXPOSE 8080
 
-ENTRYPOINT ["/app/bin/padelField"]
+ENTRYPOINT ["/app/bin/run"]
 CMD ["-s"]
 
