@@ -5,26 +5,35 @@ RUN apt-get update && \
     apt-get --allow-unauthenticated install -y  git tree && \
     go env
 
-WORKDIR /base/padel-field
-ADD . /base/padel-field/
+WORKDIR /padel-field
+# copying the entire repo inside /padel-field/
+ADD . /padel-field/
 
 ENV GOPATH /go
 RUN make compile
 
 # FINAL stage
-FROM ubuntu/postgres as run-padelfield
+FROM alpine:3.16.2 as run-padelfield
 
-RUN apt-get update
-RUN apt-get install -y apt-transport-https  \
-    ca-certificates curl gnupg lsb-release
+WORKDIR /app
+RUN apk add --no-cache libc6-compat
+# binary
+COPY --from=build-base /padel-field/bin/padelField /app/bin/padelField
 
-WORKDIR /padel-field
+# other resources
+COPY --from=build-base /padel-field/api/templates/* /app/api/templates/
+COPY --from=build-base /padel-field/resources/* /app/resources/
 
-COPY --from=build-base /base/padel-field/ /padel-field/
-COPY --from=build-base /base/padel-field/bin/padelField /padel-field/bin/padelField
+# db
+ENV ADDR=localhost:5432
+ENV DB_USER=postgres
+ENV PASSWORD=postgres
+ENV DATABASE=padelfield
 
 ENV GIN_MODE=release
 ENV READY="http://0.0.0.0:8080/"
+
 EXPOSE 8080
 
-ENTRYPOINT ["/padel-field/bin/padelField", "-r", "-s"]
+ENTRYPOINT ["/app/bin/padelField"]
+CMD ["-s"]

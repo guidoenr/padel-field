@@ -50,11 +50,11 @@ func resetDbAndCreateSchemas() {
 		logger.Logerror.Println(err)
 	}
 
-	defer logger.Loginfo.Println("Listen and Serving..")
 	defer db.Close()
 }
 
 func startServer() {
+	logger.Loginfo.Println("listen and serving on http://localhost:8080")
+	logger.Loginfo.Println("si llegaste hasta aca marcos felicidades.. y bienvenido a la magia de docker")
 	api.ListenAndServe() // gin gonic server on 8080
-	defer logger.Loginfo.Println("Listen and Serving..")
 }
