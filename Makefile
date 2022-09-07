@@ -4,6 +4,7 @@ NAME = padel-field
 # Relative path to bin (scripts) directory (you may need to add/remove ".." paths)
 DIR_API = /api
 DIR_UI = /ui
+DIR_DB = /models/psdb/
 DIR_RESOURCES = /resources
 
 .DEFAULT_GOAL := help
@@ -19,6 +20,11 @@ build: clean # Build the docker image
 
 run: # start the app
 	docker run --rm -p 8080:8080 $(NAME)
+
+start-db:
+	docker run -e POSTGRES_USER=docker -e POSTGRES_PASSWORD=root -e POSTGRES_DB=padelfield library/postgres
+
+
 
 #
 #  Other targets

@@ -26,8 +26,8 @@ COPY --from=build-base /padel-field/resources/* /app/resources/
 
 # db
 ENV ADDR=localhost:5432
-ENV DB_USER=postgres
-ENV PASSWORD=postgres
+ENV DB_USER=docker
+ENV PASSWORD=root
 ENV DATABASE=padelfield
 
 ENV GIN_MODE=release
@@ -37,3 +37,4 @@ EXPOSE 8080
 
 ENTRYPOINT ["/app/bin/padelField"]
 CMD ["-s"]
+
