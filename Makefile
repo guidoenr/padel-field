@@ -23,30 +23,26 @@ help: ## Print the list of makefile targets
 #  BUILD AND RUN
 #
 
-run: build-api start-api start-db create-network
+
+start-env: # start the network
+	docker network rm $(NETWORK_NAME)
+	docker network create $(NETWORK_NAME)
+
+
+start-api: # start the api
+	docker run --rm --name $(API_CONTAINER_NAME) --network=$(NETWORK_NAME) -p 8080:8080 $(API_IMAGE_NAME)
+
+
+start-db: # start the db: to access -> localhost:5416
+	docker run --rm --name $(DB_CONTAINER_NAME) --network=$(NETWORK_NAME) -P -p 5416:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=padelfield $(DB_IMAGE_NAME)
+
 
 build-api: # Build the docker image
 	docker build . -t $(API_IMAGE_NAME) -f 'Dockerfile'
 
-
-start-api: build-api # start the api
-	docker run --rm --name $(API_CONTAINER_NAME) -p 8080:8080 $(API_IMAGE_NAME)
-
-
-start-db: # start the db: to access -> localhost:5416
-	docker run --rm --name $(DB_CONTAINER_NAME) -P -p 5416:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=padelfield $(DB_IMAGE_NAME)
-
-
-create-network: # start the network and connect the containers
-	docker network rm $(NETWORK_NAME) || echo "No network"
-	docker network create $(NETWORK_NAME)
-	docker network connect $(NETWORK_NAME) $(API_CONTAINER_NAME)
-	docker network connect $(NETWORK_NAME) $(DB_CONTAINER_NAME)
-
 #
 #  Other targets
 #
-
 
 clean-images: ## Deletes all renewable artifacts, for build and install
 	docker rmi -f $(API_IMAGE_NAME):latest

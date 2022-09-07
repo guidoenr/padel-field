@@ -27,7 +27,7 @@ COPY --from=build-base /padel-field/api/templates/* /app/api/templates/
 COPY --from=build-base /padel-field/resources/* /app/resources/
 
 # db
-ENV ADDR=localhost:5416
+ENV ADDR=0.0.0.0:5432
 ENV DB_USER=root
 ENV PASSWORD=root
 ENV DATABASE=padelfield
@@ -37,5 +37,5 @@ ENV GIN_MODE=release
 EXPOSE 8080
 
 ENTRYPOINT ["/app/bin/run"]
-CMD ["-s", "-r"]
+CMD ["-s"]
 
