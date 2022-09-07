@@ -1,4 +1,0 @@
-CREATE USER docker;
-ALTER USER docker WITH PASSWORD 'root';
-CREATE DATABASE padelfield;
-GRANT ALL PRIVILEGES ON DATABASE padelfield TO docker;
