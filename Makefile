@@ -33,8 +33,8 @@ start-api: build-api # start the api
 	docker run --rm --name $(API_CONTAINER_NAME) -p 8080:8080 $(API_IMAGE_NAME)
 
 
-start-db: # start the db
-	docker run --rm --name $(DB_CONTAINER_NAME) -P -p 127.0.0.1:5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=padelfield $(DB_IMAGE_NAME)
+start-db: # start the db: to access -> localhost:5416
+	docker run --rm --name $(DB_CONTAINER_NAME) -P -p 5416:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=padelfield $(DB_IMAGE_NAME)
 
 
 create-network: # start the network and connect the containers
