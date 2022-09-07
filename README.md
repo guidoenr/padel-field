@@ -9,7 +9,9 @@
 ## Run the api
 1. `git clone https://github.com/guidoenr/padel-field`
 2. `cd /padel-field`
-3. `make build`
-4. `make run`
-5. enter `http://localhost:8080` or `http://127.0.0.1:8080`
-6. you will see the main page of the api, that means the api is working
+3. `make start-env`
+4. `make build-api`
+5. `make start-api`
+6. enter `http://localhost:8080` or `http://127.0.0.1:8080`
+7. you will see the main page of the api, that means the api is working
+8. DB NOT WORKING
