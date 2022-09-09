@@ -35,7 +35,16 @@ Be sure to run both `3` and `4` steps in **different** terminals.
 ### Extra notes:
 - Is **NOT necessary** to do `make start env` twice, once you did it the first time, then the docker network will live in your system.
 - You can see in both terminals the behavior of each component (api and db).
-- run a `make help` if you don't remember any command.
+- run a `make help` if you don't remember any command and an output like the follow will pop up:
+```go
+build-api          build the api docker image
+clean-images       deletes all renewable artifacts, for build and install
+help               Print the list of makefile targets
+start-api          start the api
+start-db           start the db
+start-env          start the network
+test-local         run unit tests on local system (not container) - no tests at the moment
+```
 
 # Stop the app
 1. `docker kill db-postgres`
