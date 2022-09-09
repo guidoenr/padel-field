@@ -2,16 +2,38 @@
 
 ## **Setup** - Windows 10
 1. Download [Docker](https://runnable.com/docker/install-docker-on-windows-10) for windows
-2. Once installed, open a `cmd` and type `docker --version`
-3. The output will be something like `Docker version 20.10.17, build 100c701`, that means you have installed docker succesfully
+2. Once installed, open a `cmd` terminal and type `docker --version`
+3. The output will be something like:
+```bash
+Docker version 20.10.17, build 100c701
+```
+4. If you can see that version message, docker has successfully installed.
+5. Install [Makefile](https://stackoverflow.com/questions/2532234/how-to-run-a-makefile-in-windows) for windows. \
+*Note this stackoverflow post has also a comment for doing it in visual studio*
+---
+# Network Topology
+Before starting to run the app, is truly important to understand the entire docker network topology in order to be able to 
+interact with this system. \
+This diagram will be useful:
+![](resources/docker-topology.png)
 
+You will notice that the ports exported to the "outside" (or, your local system) are `8080` and `6543`. \
+This explains everything so lets start.
 
-## Run the api
-1. `git clone https://github.com/guidoenr/padel-field`
-2. `cd /padel-field`
-3. `make start-env`
-4. `make build-api`
-5. `make start-api`
-6. enter `http://localhost:8080` or `http://127.0.0.1:8080`
-7. you will see the main page of the api, that means the api is working
-8. DB NOT WORKING
+--- 
+# Run the app
+Be sure to run both `3` and `4` steps in **different** terminals.
+1. cd to `/padel-field/`
+2. `make start-env` starts the environment (network)
+3. `make start-api` starts the api
+4. `make start-db` starts the db
+5. go to ---> **`http://localhost:8080`** and you will see the api running.
+
+# Stop the app
+1. `docker kill db-postgres`
+2. `docker kill go-gin-api`
+
+### Clean docker images (not recommended)
+```bash
+make clean images
+```

@@ -31,7 +31,7 @@ start-env: # start the network
 	docker network create --subnet $(NETWORK_SUBNET) $(NETWORK_NAME)
 
 
-start-api: # start the api
+start-api: build-api # start the api
 	docker run --rm --name $(API_CONTAINER_NAME) --network=$(NETWORK_NAME) --ip=$(API_IP) -p 8080:8080 $(API_IMAGE_NAME)
 
 
