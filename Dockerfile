@@ -17,7 +17,9 @@ RUN GOOS=linux GOARCH=amd64 go build -o ./bin/padelField
 FROM alpine:3.16.2 as run-padelfield
 
 WORKDIR /app
-RUN apk add --no-cache libc6-compat
+RUN apk --no-cache add libc6-compat tzdata && \
+    apk add bash && apk update
+
 
 # binary
 COPY --from=build-base /padel-field/bin/padelField /app/bin/run
@@ -27,7 +29,7 @@ COPY --from=build-base /padel-field/api/templates/* /app/api/templates/
 COPY --from=build-base /padel-field/resources/* /app/resources/
 
 # db
-ENV ADDR=0.0.0.0:5432
+ENV ADDR=172.20.0.5:5432
 ENV DB_USER=root
 ENV PASSWORD=root
 ENV DATABASE=padelfield
@@ -37,5 +39,7 @@ ENV GIN_MODE=release
 EXPOSE 8080
 
 ENTRYPOINT ["/app/bin/run"]
-CMD ["-s"]
+# -r: restart the entire DB
+# -s: start gin gonic sv
+CMD ["-r", "-s"]
 

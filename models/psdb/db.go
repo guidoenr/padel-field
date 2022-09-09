@@ -62,6 +62,7 @@ func loadDBConnector() *pgdriver.Connector {
 	addr := os.Getenv("ADDR")
 
 	pgconn := pgdriver.NewConnector(
+		pgdriver.WithInsecure(true), // TODO, ssl not enabled, only for local-test purposes
 		pgdriver.WithUser(user),
 		pgdriver.WithPassword(password),
 		pgdriver.WithDatabase(dbname),

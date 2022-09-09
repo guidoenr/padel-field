@@ -1,13 +1,15 @@
 # API
 API_CONTAINER_NAME = go-gin-api
 API_IMAGE_NAME = go-gin-api-image
-
+API_IP = 172.20.0.4
 # DB
 DB_CONTAINER_NAME = db-postgres
-DB_IMAGE_NAME = postgres:alpine
+DB_IMAGE_NAME = postgres:10-alpine
+DB_IP = 172.20.0.5
 
 # NETWORK
 NETWORK_NAME = network-gin-postgres
+NETWORK_SUBNET = 172.20.0.0/16
 
 # Relative path to bin (scripts) directory (you may need to add/remove ".." paths)
 DIR_API = /api
@@ -26,15 +28,15 @@ help: ## Print the list of makefile targets
 
 start-env: # start the network
 	docker network rm $(NETWORK_NAME)
-	docker network create $(NETWORK_NAME)
+	docker network create --subnet $(NETWORK_SUBNET) $(NETWORK_NAME)
 
 
 start-api: # start the api
-	docker run --rm --name $(API_CONTAINER_NAME) --network=$(NETWORK_NAME) -p 8080:8080 $(API_IMAGE_NAME)
+	docker run --rm --name $(API_CONTAINER_NAME) --network=$(NETWORK_NAME) --ip=$(API_IP) -p 8080:8080 $(API_IMAGE_NAME)
 
 
-start-db: # start the db: to access -> localhost:5416
-	docker run --rm --name $(DB_CONTAINER_NAME) --network=$(NETWORK_NAME) -P -p 5416:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=padelfield $(DB_IMAGE_NAME)
+start-db: # start the db: 										to access -> localhost:6542
+	docker run --rm --name $(DB_CONTAINER_NAME) --network=$(NETWORK_NAME) --ip=$(DB_IP) -P -p 6543:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=padelfield $(DB_IMAGE_NAME)
 
 
 build-api: # Build the docker image
