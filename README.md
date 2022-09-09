@@ -32,6 +32,11 @@ Be sure to run both `3` and `4` steps in **different** terminals.
 6. go to ---> **`http://localhost:8080`** and you will see the api running.
 7. `npm start /padel-field/ui` start the react ui
 
+### Extra notes:
+- Is **NOT necessary** to do `make start env` twice, once you did it the first time, then the docker network will live in your system.
+- You can see in both terminals the behavior of each component (api and db).
+- run a `make help` if you don't remember any command.
+
 # Stop the app
 1. `docker kill db-postgres`
 2. `docker kill go-gin-api`
