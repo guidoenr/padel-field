@@ -23,11 +23,14 @@ This explains everything so lets start.
 --- 
 # Run the app
 Be sure to run both `3` and `4` steps in **different** terminals.
-1. cd to `/padel-field/`
-2. `make start-env` starts the environment (network)
-3. `make start-api` starts the api
-4. `make start-db` starts the db
-5. go to ---> **`http://localhost:8080`** and you will see the api running.
+1. Open a `cmd` terminal
+2. cd to `/padel-field/`
+3. `make start-env` starts the environment (network)
+4. `make start-api` starts the api
+5. Open a second `cmd` terminal
+5. `make start-db` starts the db
+6. go to ---> **`http://localhost:8080`** and you will see the api running.
+7. `npm start /padel-field/ui` start the react ui
 
 # Stop the app
 1. `docker kill db-postgres`
