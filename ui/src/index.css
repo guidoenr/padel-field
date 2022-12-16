@@ -18,12 +18,27 @@
     background-size: cover;
   }
   .login-img-container {
-    background-image: url("./assets/padel-background-4.jpg");
+    background-image: url("./assets/padel-background-3.jpg");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .register-img-container {
+    background-image: url("./assets/padel-background-2.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
   }
   .profile-img-container {
     box-shadow: rgba(0, 0, 0, 0.2) -1px 1px 3px inset;
+  }
+  .error-msj {
+    display: none;
+  }
+  input:invalid[focused="true"] {
+    outline: 2px solid #b91c1c;
+  }
+  input:invalid[focused="true"] ~ .error-msj {
+    display: block;
   }
 }

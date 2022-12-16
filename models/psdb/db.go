@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
-	"github.com/joho/godotenv"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"
@@ -56,10 +55,6 @@ func createSchemas(db *bun.DB) error {
 
 // loadDBConnector load the environment variables from `local.env` // TODO, change later to heroku maybe?
 func loadDBConnector() *pgdriver.Connector {
-	err := godotenv.Load("models/psdb/local.env")
-	if err != nil {
-		logger.Logerror.Printf("error reading 'local.env' file err: %v \n", err)
-	}
 
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("PASSWORD")
@@ -67,6 +62,7 @@ func loadDBConnector() *pgdriver.Connector {
 	addr := os.Getenv("ADDR")
 
 	pgconn := pgdriver.NewConnector(
+		pgdriver.WithInsecure(true), // TODO, ssl not enabled, only for local-test purposes
 		pgdriver.WithUser(user),
 		pgdriver.WithPassword(password),
 		pgdriver.WithDatabase(dbname),

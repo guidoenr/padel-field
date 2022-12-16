@@ -1,0 +1,24 @@
+<html>
+<h1>padel-field api</h1>
+<h2>Routes:</h2>
+
+    <ul>
+        <h4>Turnos: http://localhost:8080/turnos</h4>
+        <li>GET /turnos</li>
+        <li>GET /turnos/:id</li>
+        <li>POST /turnos/:id/reserve (e.g: /turnos/23/reserve)</li>
+        <li>POST /turnos/:id/cancel (e.g: /turnos/23/cancel)</li>
+        <li>GET /turnos/day/:day (e.g: /turnos/day/miercoles)</li>
+
+        <h4>Auth: http://localhost:8080/auth</h4>
+        <li>POST auth/register</li>
+        <li>POST auth/login</li>
+        <li>POST auth/logout</li>
+        <li>GET auth/user</li>
+    </ul>
+
+<h3>Stack: </h3>
+- github.com/gin-gonic/gin v1.8.1 </br>
+- github.com/uptrace/bun v1.1.7
+
+</html>

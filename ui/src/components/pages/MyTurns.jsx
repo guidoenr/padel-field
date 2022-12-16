@@ -2,14 +2,48 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbMoodEmpty } from "react-icons/tb";
+import { motion } from "framer-motion";
 
 const MyTurns = () => {
   const [emptyTurns, setEmptyTurns] = useState(true);
   const [nextTurns, setNextTurns] = useState(false);
 
+  const handleReservedTurns = () => {
+    setEmptyTurns(false);
+    setNextTurns(true);
+  };
+
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+      x: "100vw",
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        bounce: 0.25,
+      },
+    },
+    exit: {
+      x: "-100vw",
+      transition: {
+        type: "spring",
+        bounce: 0.25,
+      },
+    },
+  };
+
   return (
     <section className="myturns h-[80vh] py-8 w-full">
-      <div className="myturns-container container mx-auto px-1 flex flex-col">
+      <motion.div
+        className="myturns-container container mx-auto px-1 flex flex-col"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
         <div className="myturns-header relative py-4">
           <h3 className="text-2xl lg:text-3xl font-medium">
             Mis próximos turnos:
@@ -17,9 +51,15 @@ const MyTurns = () => {
           <div className="absolute bottom-1 w-[3rem] h-[.25rem] bg-accent"></div>
           <div className="absolute bottom-[-.25rem] w-[1.5rem] h-[.25rem] bg-accent"></div>
         </div>
+        <button
+          className=" bg-amber-500 font-medium border text-secondary w-[em] mx-auto rounded-md text-sm p-2"
+          onClick={handleReservedTurns}
+        >
+          Cambiar estado
+        </button>
         {emptyTurns && (
-          <div className="text-lg empty-turns pt-8 flex flex-col items-center gap-2 my-6">
-            <p className="flex flex-col gap-3 max-w-md w-[95%] text-center mx-auto py-6 text-lg rounded-md">
+          <div className="text-lg empty-turns pt-8 flex flex-col items-center gap-2 my-6 ">
+            <p className="flex flex-col gap-3 max-w-md w-[95%] text-center mx-auto py-6 text-lg ">
               <span className="w-full flex justify-center">
                 <TbMoodEmpty className="text-[8rem]" />
               </span>
@@ -41,7 +81,7 @@ const MyTurns = () => {
             </p>
           </div>
         )}
-      </div>
+      </motion.div>
     </section>
   );
 };

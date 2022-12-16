@@ -4,7 +4,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	controllers "github.com/guidoenr/padel-field/api/controllers"
+	"github.com/guidoenr/padel-field/api/controllers"
 	"github.com/guidoenr/padel-field/logger"
 	"github.com/guidoenr/padel-field/models"
 	"net/http"
@@ -19,6 +19,7 @@ const (
 // routes and endpoints
 func ListenAndServe() {
 	router := gin.Default()
+	router.LoadHTMLGlob("api/templates/*")
 
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:3000"},
@@ -61,7 +62,7 @@ func ListenAndServe() {
 // showIndex is the main page for the turnos website
 func showIndex() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", gin.H{
+		c.HTML(http.StatusOK, "api.html", gin.H{
 			"title": "index",
 		})
 	}
@@ -163,7 +164,7 @@ func login() gin.HandlerFunc {
 		case 4: // wrong password
 			c.IndentedJSON(http.StatusUnauthorized, err.Error())
 		case 5: // wrong email
-			c.IndentedJSON(http.StatusUnauthorized, err.Error())
+			c.IndentedJSON(http.StatusNotAcceptable, err.Error())
 		default:
 			c.SetCookie(cookie.Name, cookie.Value, cookie.MaxAge, cookie.Path, cookie.Domain, cookie.Secure, cookie.HttpOnly)
 			c.IndentedJSON(http.StatusOK, gin.H{"ok": "Logged in"})
@@ -192,7 +193,7 @@ func register() gin.HandlerFunc {
 		case 1: // existing username
 			c.IndentedJSON(http.StatusConflict, gin.H{"error": "the username already exist"})
 		case 2: // existing email
-			c.IndentedJSON(http.StatusConflict, gin.H{"error": "the email already exist"})
+			c.IndentedJSON(http.StatusNotAcceptable, gin.H{"error": "the email already exist"})
 		default:
 			c.IndentedJSON(http.StatusOK, gin.H{"ok": "User registered"})
 			logger.Loginfo.Printf("user '%s' registered", newUser.Username)
@@ -219,9 +220,12 @@ func userGet() gin.HandlerFunc {
 			return
 		}
 
-		// TODO THIS IS BROKEN , I WANT TO SHOW THAT
-		_ = token.Claims.(*jwt.StandardClaims)
-		user, _ := controllers.GetUserById("1")
+		claims := token.Claims.(*jwt.StandardClaims)
+		user, reqErr := controllers.GetUserById(claims.Issuer)
+		if reqErr.Err != nil {
+			c.IndentedJSON(http.StatusUnauthorized, gin.H{"error": "getting user"})
+			return
+		}
 
 		c.IndentedJSON(http.StatusOK, gin.H{"userData": user.Username})
 	}
@@ -232,7 +236,7 @@ func logout() gin.HandlerFunc {
 		cookie := http.Cookie{
 			Name:     "jwt",
 			Value:    "",
-			Expires:  time.Now().Add(-time.Hour), // this expires the cookie because set the expire time at the past
+			Expires:  time.Now().Add(-time.Hour), // this expires the cookie because set the expiry time at the past
 			HttpOnly: true,
 		}
 		c.SetCookie(cookie.Name, cookie.Value, cookie.MaxAge, cookie.Path, cookie.Domain, cookie.Secure, cookie.HttpOnly)

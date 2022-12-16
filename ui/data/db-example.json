@@ -1,0 +1,85 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Guido",
+      "surname": "Enrique",
+      "username": "guidoenr3",
+      "password": "asdasd123",
+      "email": "cabezadehuevo@gmail.com",
+      "phone": "2273433229"
+    },
+    {
+      "id": 2,
+      "name": "Gaston",
+      "surname": "Mc Dermott",
+      "username": "pitochico12",
+      "password": "123456",
+      "email": "mcdermottcompeticiones@gmail.com",
+      "phone": "2273435533"
+    },
+    {
+      "id": 3,
+      "name": "Ignacio",
+      "surname": "Rivarola",
+      "username": "lisiado22",
+      "password": "asdasd",
+      "email": "ignaciocarp@gmail.com",
+      "phone": "2273438449"
+    },
+    {
+      "id": 4,
+      "name": "Tomas",
+      "surname": "Truzzi",
+      "username": "tomastruzzi",
+      "password": "asdasd123",
+      "email": "minolas99@gmail.com",
+      "phone": "2273433229"
+    },
+    {
+      "name": "asdasd",
+      "surname": "asddas",
+      "username": "asds",
+      "password": "asddasdsa",
+      "email": "asd@asd.com",
+      "phone": "2222",
+      "id": 5
+    },
+    {
+      "name": "Marcos",
+      "surname": "Fitzsimons",
+      "username": "Marcossssf98",
+      "password": "marcos",
+      "email": "marcosfitzsimons@gmail.com",
+      "phone": "2273433863",
+      "id": 6
+    },
+    {
+      "name": "asdsda",
+      "surname": "asasda",
+      "username": "asdasdas",
+      "password": "asdasdas",
+      "email": "asdasd@asd.ocom",
+      "phone": "433434",
+      "id": 7
+    },
+    {
+      "name": "asdsad",
+      "surname": "asdasd",
+      "username": "asdasd",
+      "password": "sad",
+      "email": "asddsa@asd.com",
+      "phone": "226455",
+      "id": 8
+    },
+    {
+      "name": "marcos",
+      "surname": "fitzsimons",
+      "username": "marcossf989",
+      "password": "xXmV3s6sSmu2JJw",
+      "email": "mar@gmail.com",
+      "phone": "44444",
+      "id": 9
+    }
+  ]
+}

@@ -1,152 +1,187 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Navigate } from 'react-router-dom';
-
+import { Navigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import FormInput from "../FormInput";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [redirect, setRedirect] = useState(false)
+  const [isPending, setIsPending] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
-  const submit = async (e: SyntheticEvent) => {
+  // form validation
+  const [values, setValues] = useState({
+    name: "",
+    surname: "",
+    username: "",
+    password: "",
+    email: "",
+    phone: "",
+  });
+
+  const inputs = [
+    {
+      id: 1,
+      name: "name",
+      label: "Nombre:",
+      type: "text",
+      errorMessage: "Tu nombre debe contener entre 3 y 16 caracteres",
+      required: true,
+      pattern: "^[A-Za-z0-9]{3,16}$",
+    },
+    {
+      id: 2,
+      name: "surname",
+      label: "Apellido:",
+      type: "text",
+      errorMessage: "Tu apellido debe contener entre 3 y 16 caracteres",
+      required: true,
+      pattern: "^[A-Za-z0-9]{3,16}$",
+    },
+    {
+      id: 3,
+      name: "username",
+      label: "Nombre de Usuario:",
+      type: "text",
+      errorMessage:
+        "Tu nombre de usuario debe contener entre 3 y 16 caracteres",
+      required: true,
+      pattern: "^[A-Za-z0-9]{3,16}$",
+    },
+    {
+      id: 4,
+      name: "password",
+      label: "Contraseña:",
+      type: "password",
+      errorMessage: "Tu contraseña debe contener entre 3 y 16 caracteres",
+      required: true,
+      pattern: "^[A-Za-z0-9]{3,16}$",
+    },
+    {
+      id: 5,
+      name: "email",
+      label: "Email:",
+      type: "email",
+      errorMessage: "Debe ser un email válido",
+      required: true,
+    },
+    {
+      id: 6,
+      name: "phone",
+      label: "Celular:",
+      type: "tel",
+      errorMessage: "Debe ser un número celular que exista.",
+      required: true, // Check regex
+    },
+  ];
+
+  const onChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    const url = "http://localhost:8080/auth/register"; // ""
     e.preventDefault();
-    const response = await fetch("http://localhost:8080/auth/register", {
+    setIsPending(true);
+    const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        surname,
-        email,
-        phone,
-        password,
-        username,
-      }),
+      body: JSON.stringify(values),
     });
-    if (response.ok){
-      setRedirect(true)
+
+    if (response.ok) {
+      setIsPending(false);
+      console.log(response);
+      console.log(values);
+      setRedirect(true);
+    } else {
+      switch (response.status) {
+        case 409:
+        // el username ya existe
+        // @ marcos ,hace lo que quieras aca, mostrale lo que se te cante al usuario
+        case 406:
+        // el email ya existe
+      }
     }
-  }
-  if (redirect) {
-    return <Navigate to="/login"> </Navigate>
-  }
+  };
+
+  // framer motion
+
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+      x: "100vw",
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        bounce: 0.25,
+      },
+    },
+    exit: {
+      x: "-100vw",
+      transition: {
+        type: "spring",
+        bounce: 0.25,
+      },
+    },
+  };
 
   /*
-@marcos: asi no me olvido v2
 
-me gustaria que la foto del login/register cambie, osea no que sea la misma porque me paso a mi por ejemplo
-( q soy bastante crack ) de confundirme las dos pages, pensando que estaba por logearme y me estaba registrando
-me gustaria que
-- cambies la foto de c/u
-- y que cambies de lugar las dos cosas, es decir, del lado derecho la foto para el login y el izquierdo para el register
-
-ej: (ponelo como quieras me chupa un huevo a mi)
-
-|-----------LOGIN-----------|
-| Username    |      foto   |
-| Password    |             |
-----------------------------
-
-|-----------REGISTER---------|
-|          |      Username   |
-|          |       Password   |
-|    foto  |       Email      |
-|          |       Nombre     |
-|          |       Phone      |
-----------------------------
-
-happy coding
-
-*/
+  */
   return (
-    <section className="register w-full h-[90vh] flex items-center">
-      <div className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container w-[95%] mt-5 lg:mt-0 lg:w-[90%] lg:h-[90%] mx-auto p-8 lg:flex lg:justify-between lg:items-center lg:max-w-7xl relative">
-        <div className="form-container flex flex-col gap-2 lg:w-[45%]">
-          <div className="lg:absolute lg:top-8 lg:left-8">
-            <a
-              className="cursor-pointer font-secondary-font text-4xl text-primary"
-              href="#home"
-            >
+    <section className="register w-full h-[100vh] lg:h-[90vh] lg:flex lg:items-center">
+      {redirect && <Navigate replace to="/" />}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        className="border border-primary/30 shadow-lg bg-neutral/60 rounded-lg login-container container mt-8 w-[95%] lg:mt-0 lg:w-[90%] lg:h-[90%] mx-auto p-8 lg:flex lg:justify-between lg:items-center lg:max-w-7xl relative"
+      >
+        <div className="form-container flex flex-col gap-2 lg:w-[50%] lg:order-2">
+          <div className="hidden lg:flex lg:absolute lg:top-8 lg:right-8">
+            <span className="select-none font-secondary-font text-4xl text-primary">
               Pádel-Logo
-            </a>
+            </span>
           </div>
           <h3 className="form-title text-2xl font-semibold">Crear cuenta</h3>
           <p className="form-text text-sm text-primary/60">
             Una vez que tengas tu cuenta, podrás reservar tu turno.
           </p>
-          <form className="flex flex-col gap-3 " onSubmit={submit}>
-            <div className="lg:flex lg:w-full lg:gap-4">
-              <div className="row border-b border-b-primary/30">
-                <input
-                  type="text"
-                  placeholder="Nombre"
-                  onChange={(e) => setName(e.target.value)}
-                  className="focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
-                />
-              </div>
-              <div className="row border-b border-b-primary/30">
-                <input
-                  type="text"
-                  placeholder="Apellido"
-                  onChange={(e) => setSurname(e.target.value)}
-                  className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
-                />
-              </div>
-            </div>
-            <div className="lg:flex lg:w-full lg:gap-4">
-              <div className="row border-b border-b-primary/30">
-                <input
-                  type="username"
-                  placeholder="Nombre de usuario"
-                  name="username"
-                  id="username"
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
-                />
-              </div>
-              <div className="row border-b border-b-primary/30">
-                <input
-                  type="password"
-                  placeholder="Contraseña"
-                  name="password"
-                  id="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
-                />
-              </div>
-            </div>
-            <div className="row border-b border-b-primary/30">
-              <input
-                type="text"
-                placeholder="Celular"
-                name="phone"
-                id="phone"
-                onChange={(e) => setPhone(e.target.value)}
-                className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
+          <form
+            className="flex flex-col gap-3 lg:grid lg:grid-cols-2"
+            onSubmit={handleSubmit}
+          >
+            {inputs.map((input) => (
+              <FormInput
+                key={input.id}
+                {...input}
+                value={values[input.name]}
+                onChange={onChange}
               />
-            </div>
-            <div className="row border-b border-b-primary/30">
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                id="email"
-                onChange={(e) => setEmail(e.target.value)}
-                className="form-control focus:outline-none input input-ghost w-full max-w-xs p-2 bg-transparent active:border-none border-none placeholder:text-primary/60 placeholder:font-semibold"
-              />
+            ))}
+            <div className="row pt-4">
+              {!isPending && (
+                <button
+                  type="submit"
+                  className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
+                >
+                  Crear cuenta
+                </button>
+              )}
+              {isPending && (
+                <button
+                  disabled
+                  className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
+                >
+                  Creando Cuenta...
+                </button>
+              )}
             </div>
             <div className="row pt-4">
-              <button
-                type="submit"
-                className="btn w-full normal-case bg-accent text-primary border-none hover:bg-accent/70 hover:scale-105 transition ease-in-out"
-              >
-                Crear cuenta
-              </button>
-            </div>
-            <div className="row">
               <button
                 type="button"
                 className="btn w-full bg-transparent flex gap-1 normal-case text-primary border-primary hover:border-primary hover:bg-primary/10 hover:scale-105 transition ease-in-out"
@@ -168,10 +203,10 @@ happy coding
             </button>
           </div>
         </div>
-        <div className="login-img-container hidden lg:flex w-[50%] h-[40rem] rounded-lg">
-          <div className="hero-overlay bg-opacity-30 bg-[#151515] rounded-lg"></div>
+        <div className="register-img-container hidden lg:flex w-[45%] h-[40rem] rounded-lg">
+          <div className="hero-overlay bg-opacity-20 bg-[#151515] rounded-lg"></div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

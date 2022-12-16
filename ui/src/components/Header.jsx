@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -12,9 +12,11 @@ import profileImage from "../assets/profile-example.jpg";
 const Header = () => {
   const [nav, setNav] = useState(false);
   const [profileMenu, setProfileMenu] = useState(false);
+  // @marcos, podes poner para que aca se vea el nombre del usuario? vamos a usar
+  // el endpoint userGet para tener eso, no me gusta la foto del mono esa
   const [profileImg, setProfileImg] = useState(true);
   const [signOut, setSignOut] = useState(false);
-  const [username, setUsername] = useState("");
+  const [userName, setUsername] = useState("");
 
   const handleMenu = () => setNav(!nav);
   const handleProfileImg = () => setProfileImg(!profileImg);
@@ -22,27 +24,30 @@ const Header = () => {
   const handleClose = () => setNav(!nav);
 
   useEffect(() => {
-    (
-        async () => {
-          const response = await fetch("http://localhost:8080/auth/user", {
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-          });
-          const content = await response.json();
-          setUsername(content["userData"])
-        }
-    )();
+    (async () => {
+      const response = await fetch("http://localhost:8080/auth/user", {
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      const content = await response.json();
+      setUsername(content.name);
+      setSignOut(true);
+    })();
   });
 
+  // Esto es lo que me querias explicar en tu casa:
+  // Bienvenido {username}
+  // Quedó piolaa!
+
   return (
-    <header className="relative w-full h-[9vh] flex shadow-2xl z-50">
+    <header className="relative w-full h-[4.5rem] flex shadow-2xl z-50">
       <div className="container m-auto px-1 navbar flex justify-between">
         <div className="navbar-start w-auto">
           <Link
             to="/"
             className="cursor-pointer font-secondary-font text-4xl text-primary"
           >
-            Bienvenido {username}
+            Bienvenido {userName}
           </Link>
         </div>
 
@@ -75,14 +80,14 @@ const Header = () => {
               </li>
               <li className="text-sm">
                 <NavLink
-                  to="/nosotros"
+                  to="/profile"
                   className={({ isActive }) =>
                     isActive
                       ? "italic font-bold text-accent uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                       : "italic font-medium uppercase tracking-widest hover:scale-105 hover:bg-transparent focus:bg-transparent active:bg-transparent active:text-primary transition ease-in-out p-0"
                   }
                 >
-                  Nosotros
+                  Mi Perfil
                 </NavLink>
               </li>
               <li className="flex items-center border-r border-l border-r-primary/30 border-l-primary/30 px-7">

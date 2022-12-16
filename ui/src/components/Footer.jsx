@@ -17,15 +17,17 @@ const Footer = () => {
         </div>
         <ul className="social-links-list flex items-center gap-3 p-3">
           <li className="social-link pr-2 border-r border-r-secondary">
-            <a
+            <a>
               href="<img src="https://www.frontendmentor.io/profile/Marcosfitzsimons"
+
               target="_blank"
               rel="noreferrer"
-            >
+            
               <AiFillInstagram className="text-2xl hover:text-secondary/60 text-secondary/80 cursor-pointer text-center hover:translate-y-[-3px] transition ease-out" />
             </a>
           </li>
           <li className="social-link pr-2 border-r border-r-secondary">
+
             <a
               href="<img src="https://www.frontendmentor.io/profile/Marcosfitzsimons"
               target="_blank"
@@ -40,6 +42,7 @@ const Footer = () => {
               target="_blank"
               rel="noreferrer"
             >
+
               <AiOutlineTwitter className="text-2xl hover:text-secondary/60 text-secondary/80 cursor-pointer text-center hover:translate-y-[-3px] transition ease-out" />
             </a>
           </li>

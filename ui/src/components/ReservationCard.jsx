@@ -3,7 +3,7 @@ import ReservationItem from "./ReservationItem";
 import Weather from "./Weather";
 const ReservationCard = ({ day }) => {
   return (
-    <article className="cardd w-[90%] max-w-sm md:max-w-xs relative rounded-lg mb-20 border border-primary/30 bg-neutral/80 shadow-lg">
+    <article className="cardd w-[90%] max-w-sm md:max-w-xs relative rounded-lg mb-20 border border-primary/30 bg-neutral/60 shadow-lg">
       <div className="container p-4">
         <Weather />
         <div className="card-header text-center">
