@@ -1,6 +1,6 @@
 # padel-field
 
-> :bulb: dependencies are vulnerable.
+> :bulb: dependencies are vulnerable, check https://github.com/dgrijalva/jwt-go/issues/462
 
 ## **Setup** - Windows 10
 1. Download [Docker](https://runnable.com/docker/install-docker-on-windows-10) for windows
