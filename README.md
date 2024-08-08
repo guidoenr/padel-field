@@ -1,5 +1,7 @@
 # padel-field
 
+> :bulb: dependencies are vulnerable.
+
 ## **Setup** - Windows 10
 1. Download [Docker](https://runnable.com/docker/install-docker-on-windows-10) for windows
 2. Once installed, open a `cmd` terminal and type `docker --version`

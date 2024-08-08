@@ -23,11 +23,6 @@ func main() {
 	}
 }
 
-/*
-	author: @github.com/guidoenr
-	repo: github.com/guidoenr/padelfield
-*/
-
 // resetDbAndCreateSchemas restart the entire DB and create all the schemas
 func resetDbAndCreateSchemas() {
 	db := psdb.InitDB()

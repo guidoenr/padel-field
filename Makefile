@@ -25,32 +25,33 @@ help: ## Print the list of makefile targets
 #  BUILD AND RUN
 #
 
-
-start-env: ## start the network
-	docker network rm $(NETWORK_NAME)
+# start network
+start-env: #docker network rm $(NETWORK_NAME)
 	docker network create --subnet $(NETWORK_SUBNET) $(NETWORK_NAME)
 
-
-start-api: build-api ## start the api
+## start the api
+start-api: build-api
 	docker run --rm --name $(API_CONTAINER_NAME) --network=$(NETWORK_NAME) --ip=$(API_IP) -p 8080:8080 $(API_IMAGE_NAME)
 
-
-start-db: ## start the db
+## start the db
+start-db:
 	docker run --rm --name $(DB_CONTAINER_NAME) --network=$(NETWORK_NAME) --ip=$(DB_IP) -P -p 6543:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=padelfield $(DB_IMAGE_NAME)
 
-
-build-api: ## build the api docker image
+## build the api docker image
+build-api:
 	docker build . -t $(API_IMAGE_NAME) -f 'Dockerfile'
 
 #
 #  Other targets
 #
 
-clean-images: ## deletes all renewable artifacts, for build and install
+## deletes all renewable artifacts, for build and install
+clean-images:
 	docker rmi -f $(API_IMAGE_NAME):latest
 	docker rmi -f $(DB_IMAGE_NAME):latest
 
-test-local: ## run unit tests on local system (not container) - no tests at the moment
+## run unit tests on local system (not container) - no tests at the moment
+test-local:
 	go test -v ./...
 
 
